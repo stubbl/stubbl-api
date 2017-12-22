@@ -138,7 +138,7 @@ Task("Pack")
 
       CreateDirectory(artifactsDirectory);
 
-      var artifactFilename = $"{projectName}.zip";
+      var artifactFilename = $"stubbl-api.zip";
       var artifactFilePath = $"{artifactsDirectory}/{artifactFilename}";
 
       Console.Write($"Creating artifact {artifactFilename}...");
