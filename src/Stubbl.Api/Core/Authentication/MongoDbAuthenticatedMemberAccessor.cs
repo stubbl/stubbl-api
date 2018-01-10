@@ -7,11 +7,11 @@ namespace Stubbl.Api.Core.Authentication
    using Exceptions.AuthenticatedMemberNotFound.Version1;
    using MongoDB.Driver;
 
-    public class MongoDbAuthenticatedMemberAccessor : IAuthenticatedMemberAccessor
+    public class MongoDBAuthenticatedMemberAccessor : IAuthenticatedMemberAccessor
    {
       private readonly Lazy<Member> _authenticatedMember;
 
-      public MongoDbAuthenticatedMemberAccessor(ICache cache, ICacheKey cacheKey, IIdentityIdAccessor identityIdAccessor, IMongoCollection<Member> membersCollection)
+      public MongoDBAuthenticatedMemberAccessor(ICache cache, ICacheKey cacheKey, IIdentityIdAccessor identityIdAccessor, IMongoCollection<Member> membersCollection)
       {
          _authenticatedMember = new Lazy<Member>(() =>
          {

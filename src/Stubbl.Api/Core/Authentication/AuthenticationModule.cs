@@ -22,7 +22,7 @@
             .As<IIdentityIdAccessor>()
             .InstancePerLifetimeScope();
 
-         builder.RegisterType<MongoDbAuthenticatedMemberAccessor>()
+         builder.RegisterType<MongoDBAuthenticatedMemberAccessor>()
             .As<IAuthenticatedMemberAccessor>()
             .InstancePerLifetimeScope();
       }

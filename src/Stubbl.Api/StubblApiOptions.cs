@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api
 {
-   public class ApiOptions
+   public class StubblApiOptions
    {
       public string Host { get; set; }
    }

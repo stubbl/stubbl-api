@@ -14,7 +14,7 @@ namespace Stubbl.Api.Core.Data.Migrations
    using MongoDB.Driver;
    using Team = Collections.Teams.Team;
 
-   public class _000000000000000000000003_CreateSeedData : IMongoDbMigration
+   public class _000000000000000000000003_CreateSeedData : IMongoDBMigration
    {
       private readonly IMongoCollection<DefaultRole> _defaultRolesCollection;
       private readonly IHostingEnvironment _hostingEnvironment;

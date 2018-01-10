@@ -13,67 +13,67 @@
    using Module = Autofac.Module;
    using Team = Collections.Teams.Team;
 
-   public class MongoDbModule : Module
+   public class MongoDBModule : Module
    {
       protected override void Load(ContainerBuilder builder)
       {
          builder.Register(cc =>
          {
-            var mongoDbOptions = cc.Resolve<IOptions<MongoDbOptions>>();
+            var mongoDbOptions = cc.Resolve<IOptions<MongoDBOptions>>();
 
             return new MongoClient(mongoDbOptions.Value.ConnectionString);
          })
          .AsSelf()
          .InstancePerDependency();
 
-         builder.RegisterType<MongoDbMigrationsRunner>()
+         builder.RegisterType<MongoDBMigrationsRunner>()
             .AsSelf()
             .SingleInstance();
 
          builder.RegisterAssemblyTypes(Assembly.Load(new AssemblyName("Stubbl.Api")))
-            .Where(t => typeof(IMongoDbMigration).IsAssignableFrom(t))
+            .Where(t => typeof(IMongoDBMigration).IsAssignableFrom(t))
             .SingleInstance()
             .AsImplementedInterfaces();
 
          builder.Register(cc => cc.Resolve<MongoClient>()
-               .GetDatabase(DatabaseNames.Stubbl)
-               .GetCollection<DefaultRole>(CollectionNames.DefaultRoles))
+               .GetDatabase(MongoDBConfig.DatabaseName)
+               .GetCollection<DefaultRole>(MongoDBConfig.CollectionNames.DefaultRoles))
             .As<IMongoCollection<DefaultRole>>()
             .InstancePerDependency();
 
          builder.Register(cc => cc.Resolve<MongoClient>()
-               .GetDatabase(DatabaseNames.Stubbl)
-               .GetCollection<Invitation>(CollectionNames.Invitations))
+               .GetDatabase(MongoDBConfig.DatabaseName)
+               .GetCollection<Invitation>(MongoDBConfig.CollectionNames.Invitations))
             .As<IMongoCollection<Invitation>>()
             .InstancePerDependency();
 
          builder.Register(cc => cc.Resolve<MongoClient>()
-               .GetDatabase(DatabaseNames.Stubbl)
-               .GetCollection<Log>(CollectionNames.Logs))
+               .GetDatabase(MongoDBConfig.DatabaseName)
+               .GetCollection<Log>(MongoDBConfig.CollectionNames.Logs))
             .As<IMongoCollection<Log>>()
             .InstancePerDependency();
 
          builder.Register(cc => cc.Resolve<MongoClient>()
-               .GetDatabase(DatabaseNames.Stubbl)
-               .GetCollection<Member>(CollectionNames.Members))
+               .GetDatabase(MongoDBConfig.DatabaseName)
+               .GetCollection<Member>(MongoDBConfig.CollectionNames.Members))
             .As<IMongoCollection<Member>>()
             .InstancePerDependency();
 
          builder.Register(cc => cc.Resolve<MongoClient>()
-               .GetDatabase(DatabaseNames.Stubbl)
-               .GetCollection<Migration>(CollectionNames.Migrations))
+               .GetDatabase(MongoDBConfig.DatabaseName)
+               .GetCollection<Migration>(MongoDBConfig.CollectionNames.Migrations))
             .As<IMongoCollection<Migration>>()
             .InstancePerDependency();
 
          builder.Register(cc => cc.Resolve<MongoClient>()
-               .GetDatabase(DatabaseNames.Stubbl)
-               .GetCollection<Stub>(CollectionNames.Stubs))
+               .GetDatabase(MongoDBConfig.DatabaseName)
+               .GetCollection<Stub>(MongoDBConfig.CollectionNames.Stubs))
             .As<IMongoCollection<Stub>>()
             .InstancePerDependency();
 
          builder.Register(cc => cc.Resolve<MongoClient>()
-               .GetDatabase(DatabaseNames.Stubbl)
-               .GetCollection<Team>(CollectionNames.Teams))
+               .GetDatabase(MongoDBConfig.DatabaseName)
+               .GetCollection<Team>(MongoDBConfig.CollectionNames.Teams))
             .As<IMongoCollection<Team>>()
             .InstancePerDependency();
       }

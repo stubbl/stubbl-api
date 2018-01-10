@@ -1,6 +1,6 @@
 namespace Stubbl.Api.Core.Data
 {
-   public class MongoDbOptions
+   public class MongoDBOptions
    {
       public string ConnectionString { get; set; }
    }

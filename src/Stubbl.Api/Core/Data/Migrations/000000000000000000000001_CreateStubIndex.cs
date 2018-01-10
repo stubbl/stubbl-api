@@ -6,7 +6,7 @@
    using MongoDB.Bson;
    using MongoDB.Driver;
 
-   public class _000000000000000000000001_CreateStubIndex : IMongoDbMigration
+   public class _000000000000000000000001_CreateStubIndex : IMongoDBMigration
    {
       private readonly IMongoCollection<Stub> _stubsCollection;
 

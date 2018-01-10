@@ -19,7 +19,7 @@
 
       public async Task<CanaryProjection> HandleAsync(CanaryQuery query, CancellationToken cancellationToken)
       {
-         var database = _mongoClient.GetDatabase(DatabaseNames.Stubbl);
+         var database = _mongoClient.GetDatabase(MongoDBConfig.DatabaseName);
          var databaseStatus = "ok";
 
          try

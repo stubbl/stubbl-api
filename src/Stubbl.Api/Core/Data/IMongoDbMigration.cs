@@ -4,7 +4,7 @@
    using System.Threading.Tasks;
    using MongoDB.Bson;
 
-   public interface IMongoDbMigration
+   public interface IMongoDBMigration
    {
       ObjectId Id { get; }
       string Name { get; }

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TrimUnusedDependencies>true</TrimUnusedDependencies>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <UserSecretsId>c491372c-65c7-4318-aedf-202fb2cd7256</UserSecretsId>
+    <TrimUnusedDependencies>true</TrimUnusedDependencies>
+    <UserSecretsId>stubbl-api-c491372c-65c7-4318-aedf-202fb2cd7256</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,8 +24,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
     <PackageReference Include="Serilog.Exceptions" Version="3.0.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="3.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
@@ -42,4 +42,5 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+
 </Project>

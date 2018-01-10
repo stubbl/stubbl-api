@@ -8,32 +8,32 @@ namespace Stubbl.Api.Middleware
 
    public static class MiddlewareExtensions
    {
-      public static IApplicationBuilder UseJsonExceptions(this IApplicationBuilder applicationBuilder)
+      public static IApplicationBuilder UseJsonExceptions(this IApplicationBuilder app)
       {
-         applicationBuilder.UseMiddleware<JsonExceptionsMiddleware>();
+         app.UseMiddleware<JsonExceptionsMiddleware>();
 
-         return applicationBuilder;
+         return app;
       }
 
-      public static IApplicationBuilder UseFakeUser(this IApplicationBuilder applicationBuilder)
+      public static IApplicationBuilder UseFakeUser(this IApplicationBuilder app)
       {
-         applicationBuilder.UseMiddleware<FakeUserMiddleware>();
+         app.UseMiddleware<FakeUserMiddleware>();
 
-         return applicationBuilder;
+         return app;
       }
 
-      public static IApplicationBuilder UseSecureRequests(this IApplicationBuilder applicationBuilder)
+      public static IApplicationBuilder UseSecureRequests(this IApplicationBuilder app)
       {
-         applicationBuilder.UseMiddleware<SecureRequestsMiddleware>();
+         app.UseMiddleware<SecureRequestsMiddleware>();
 
-         return applicationBuilder;
+         return app;
       }
 
-      public static IApplicationBuilder UseStubTester(this IApplicationBuilder applicationBuilder)
+      public static IApplicationBuilder UseStubTester(this IApplicationBuilder app)
       {
-         applicationBuilder.UseMiddleware<StubTesterMiddleware>();
+         app.UseMiddleware<StubTesterMiddleware>();
 
-         return applicationBuilder;
+         return app;
       }
    }
 }

@@ -1,13 +1,13 @@
 ﻿namespace Stubbl.Api.Core.Data
 {
-   public static class CollectionNames
-   {
-      public static string DefaultRoles = "defaultroles";
-      public static string Invitations = "invitations";
-      public static string Logs = "logs";
-      public static string Members = "members";
-      public static string Migrations = "migrations";
-      public static string Stubs = "stubs";
-      public static string Teams = "teams";
-   }
+    public class CollectionNames
+    {
+        public string DefaultRoles = "defaultroles";
+        public string Invitations = "invitations";
+        public string Logs = "logs";
+        public string Members = "members";
+        public string Migrations = "migrations";
+        public string Stubs = "stubs";
+        public string Teams = "teams";
+    }
 }

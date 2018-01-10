@@ -8,12 +8,12 @@
    using MongoDB.Bson;
    using MongoDB.Driver;
 
-   public class MongoDbMigrationsRunner
+   public class MongoDBMigrationsRunner
    {
-      private readonly IReadOnlyCollection<IMongoDbMigration> _migrations;
+      private readonly IReadOnlyCollection<IMongoDBMigration> _migrations;
       private readonly IMongoCollection<Migration> _migrationsCollection;
 
-      public MongoDbMigrationsRunner(IReadOnlyCollection<IMongoDbMigration> migrations, IMongoCollection<Migration> migrationsCollection)
+      public MongoDBMigrationsRunner(IReadOnlyCollection<IMongoDBMigration> migrations, IMongoCollection<Migration> migrationsCollection)
       {
          _migrations = migrations;
          _migrationsCollection = migrationsCollection;

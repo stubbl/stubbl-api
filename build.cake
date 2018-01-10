@@ -45,7 +45,7 @@ Task("Version")
       var version = "1.0.0";
       var appVeyorBuildVersion = EnvironmentVariable("APPVEYOR_BUILD_VERSION");
 
-      if (!string.IsNullOrEmpty(appVeyorBuildVersion))
+      if (!string.IsNullOrWhiteSpace(appVeyorBuildVersion))
       {
          version = appVeyorBuildVersion;
 
