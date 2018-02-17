@@ -26,7 +26,7 @@
             @event.MemberId
          ));
 
-         return Task.FromResult(0);
+         return Task.CompletedTask;
       }
    }
 }

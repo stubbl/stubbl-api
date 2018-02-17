@@ -2,7 +2,6 @@
 {
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
-    using Common.Smtp;
     using Core.Data;
     using Core.EventHandlers.Cloudflare;
     using FluentValidation;
@@ -20,7 +19,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.PlatformAbstractions;
-    using Microsoft.WindowsAzure.Storage;
     using Middleware;
     using Newtonsoft.Json;
     using Stubbl.Api.Core.Versioning;
@@ -33,7 +31,7 @@
 
     public class Startup
     {
-        private readonly static Assembly s_assembly;
+        private static readonly Assembly s_assembly;
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _hostingEnvironment;
 
@@ -47,8 +45,6 @@
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
 
-            MongoDBConfigurator.Configure();
-
             ValidatorOptions.DisplayNameResolver = ValidatorOptions.PropertyNameResolver;
         }
 
@@ -56,14 +52,14 @@
         {
             get
             {
-                string basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                string fileName = s_assembly.GetName().Name + ".xml";
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var fileName = s_assembly.GetName().Name + ".xml";
 
                 return Path.Combine(basePath, fileName);
             }
         }
 
-        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescription)
+        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
         {
             if (_hostingEnvironment.IsDevelopment())
             {
@@ -96,14 +92,14 @@
                 o.ConfigureOAuth2
              (
                 "stubbl-api-swagger",
-                _configuration.GetValue<string>("StubblApiSwagger:ClientSecret"),
+                _configuration.GetValue<string>("Swagger:ClientSecret"),
                 "stubbl-api",
                 "stubbl-api-swagger"
              );
 
-                foreach (var description in apiVersionDescription.ApiVersionDescriptions)
+                foreach (var apiVersionDescription in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
-                    o.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                    o.SwaggerEndpoint($"/swagger/{apiVersionDescription.GroupName}/swagger.json", apiVersionDescription.GroupName.ToUpperInvariant());
                 }
             });
         }
@@ -128,8 +124,6 @@
             services.AddOptions()
                .Configure<CloudflareOptions>(o => _configuration.GetSection("Cloudflare").Bind(o))
                 .Configure<MongoDBOptions>(o => _configuration.GetSection("MongoDB").Bind(o))
-                .Configure<SmtpOptions>(o => _configuration.GetSection("Smtp").Bind(o))
-                .Configure<StorageOptions>(o => _configuration.GetSection("Storage").Bind(o))
                 .Configure<StubblApiOptions>(o => _configuration.GetSection("StubblApi").Bind(o));
 
             services.AddMvc(o =>
@@ -173,9 +167,9 @@
                     Flow = "implicit",
                     TokenUrl = $"{_configuration.GetValue<string>("IdentityServer:Authority")}/connect/token",
                     Scopes = new Dictionary<string, string>
-                  {
-                  { "stubbl-api", "Stubbl API" }
-                  }
+                    {
+                        { "stubbl-api", "Stubbl API" }
+                    }
                 });
                 o.CustomSchemaIds(x => x.FullName);
                 o.DescribeAllEnumsAsStrings();
@@ -194,12 +188,12 @@
                     o.IncludeXmlComments(XmlCommentsFilePath);
                 }
 
-                var provider = services.BuildServiceProvider()
-                .GetRequiredService<IApiVersionDescriptionProvider>();
+                var buildServiceProvider = services.BuildServiceProvider()
+                    .GetRequiredService<IApiVersionDescriptionProvider>();
 
-                foreach (var description in provider.ApiVersionDescriptions)
+                foreach (var apiVersionDescription in buildServiceProvider.ApiVersionDescriptions)
                 {
-                    o.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+                    o.SwaggerDoc(apiVersionDescription.GroupName, CreateInfoForApiVersion(apiVersionDescription));
                 }
             });
 
@@ -215,7 +209,7 @@
             if (!_hostingEnvironment.IsIntegrationTesting())
             {
                 var mongoDbMigrationsRunner = container.Resolve<MongoDBMigrationsRunner>();
-                mongoDbMigrationsRunner.Run()
+                mongoDbMigrationsRunner.RunAsync()
                    .Wait();
             }
 

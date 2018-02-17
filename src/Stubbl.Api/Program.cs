@@ -41,7 +41,7 @@
                 .Enrich.With(new PropertyEnricher("Component", "stubbl-api"))
                 .Enrich.With(new PropertyEnricher("Environment", hostingContext.HostingEnvironment.EnvironmentName))
                 .Enrich.WithExceptionDetails()
-                .WriteTo.Console(restrictedToMinimumLevel: hostingContext.Configuration.GetValue<LogEventLevel>("Serilog:LogEventLevel"))
+                .WriteTo.Console(hostingContext.Configuration.GetValue<LogEventLevel>("Serilog:LogEventLevel"))
                 .WriteTo.Seq
                 (
                     hostingContext.Configuration.GetValue<string>("Seq:Url"),

@@ -1,6 +1,6 @@
 namespace Microsoft.Extensions.Logging
 {
-   public interface IEventIdAccessor
+    public interface IEventIdAccessor
     {
         EventId EventId { get; }
     }

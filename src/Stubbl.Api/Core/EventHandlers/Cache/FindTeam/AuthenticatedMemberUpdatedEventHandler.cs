@@ -33,7 +33,7 @@
                _authenticatedMemberAccessor.AuthenticatedMember.Id
             ));
          }
-         return Task.FromResult(0);
+         return Task.CompletedTask;
       }
    }
 }

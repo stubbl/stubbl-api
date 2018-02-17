@@ -25,7 +25,7 @@ namespace Stubbl.Api.Core.EventHandlers.Cache.CountTeamInvitations
             @event.TeamId
          ));
 
-         return Task.FromResult(0);
+         return Task.CompletedTask;
       }
    }
 }

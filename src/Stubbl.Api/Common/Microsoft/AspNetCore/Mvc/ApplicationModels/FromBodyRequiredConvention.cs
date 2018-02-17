@@ -30,7 +30,7 @@
 
          public void OnActionExecuting(ActionExecutingContext context)
          {
-            context.ActionArguments.TryGetValue(_parameterName, out object value);
+            context.ActionArguments.TryGetValue(_parameterName, out var value);
 
             if (value != null)
             {

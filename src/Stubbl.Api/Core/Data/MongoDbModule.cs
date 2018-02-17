@@ -18,6 +18,8 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
+            MongoDBConfigurator.Configure();
+
             builder.Register(cc =>
             {
                 var mongoDbOptions = cc.Resolve<IOptions<MongoDBOptions>>();
@@ -45,7 +47,7 @@
                .AsSelf()
                .SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assembly.Load(new AssemblyName("Stubbl.Api")))
+            builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly())
                .Where(t => typeof(IMongoDBMigration).IsAssignableFrom(t))
                .SingleInstance()
                .AsImplementedInterfaces();
