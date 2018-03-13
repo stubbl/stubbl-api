@@ -12,14 +12,14 @@
 
    public class TeamUpdatedEventHandler : IEventHandler<TeamUpdatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Member> _membersCollection;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public TeamUpdatedEventHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public TeamUpdatedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Member> membersCollection, IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _membersCollection = membersCollection;
          _teamsCollection = teamsCollection;
       }
@@ -30,7 +30,7 @@
            .Project(t => t.Members.Select(m => m.Id).ToList())
            .SingleOrDefaultAsync(cancellationToken);
 
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams
             .Single(t => t.Id == @event.TeamId);
 
          team.Name = @event.Name;

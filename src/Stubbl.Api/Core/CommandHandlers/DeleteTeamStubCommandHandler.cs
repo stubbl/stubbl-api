@@ -16,25 +16,25 @@
 
    public class DeleteTeamStubCommandHandler : ICommandHandler<DeleteTeamStubCommand, TeamStubDeletedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Stub> _stubsCollection;
 
-      public DeleteTeamStubCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public DeleteTeamStubCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Stub> stubsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _stubsCollection = stubsCollection;
       }
 
       public async Task<TeamStubDeletedEvent> HandleAsync(DeleteTeamStubCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
@@ -43,7 +43,7 @@
          {
             throw new MemberCannotManageStubsException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }

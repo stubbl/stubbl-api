@@ -14,15 +14,15 @@
 
    public class CountTeamStubsQueryHandler : IQueryHandler<CountTeamStubsQuery, CountTeamStubsProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly ICache _cache;
       private readonly ICacheKey _cacheKey;
       private readonly IMongoCollection<Stub> _stubsCollection;
 
-      public CountTeamStubsQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CountTeamStubsQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          ICache cache, ICacheKey cacheKey, IMongoCollection<Stub> stubsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _cache = cache;
          _cacheKey = cacheKey;
          _stubsCollection = stubsCollection;
@@ -30,11 +30,11 @@
 
       public async Task<CountTeamStubsProjection> HandleAsync(CountTeamStubsQuery query, CancellationToken cancellationToken)
       {
-         if (_authenticatedMemberAccessor.AuthenticatedMember.Teams.All(t => t.Id != query.TeamId))
+         if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                query.TeamId
             );
          }

@@ -21,16 +21,16 @@
 
    public class CreateTeamInvitationCommandHandler : ICommandHandler<CreateTeamInvitationCommand, TeamInvitationCreatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Invitation> _invitationsCollection;
       private readonly IMongoCollection<Member> _membersCollection;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public CreateTeamInvitationCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CreateTeamInvitationCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Invitation> invitationsCollection, IMongoCollection<Member> membersCollection,
          IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _invitationsCollection = invitationsCollection;
          _membersCollection = membersCollection;
          _teamsCollection = teamsCollection;
@@ -38,22 +38,22 @@
 
       public async Task<TeamInvitationCreatedEvent> HandleAsync(CreateTeamInvitationCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
 
-         if (string.Equals(_authenticatedMemberAccessor.AuthenticatedMember.EmailAddress, command.EmailAddress, StringComparison.OrdinalIgnoreCase))
+         if (string.Equals(_authenticatedUserAccessor.AuthenticatedUser.EmailAddress, command.EmailAddress, StringComparison.OrdinalIgnoreCase))
          {
             throw new MemberAlreadyAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }
@@ -62,7 +62,7 @@
          {
             throw new MemberCannotManageInvitationsException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }

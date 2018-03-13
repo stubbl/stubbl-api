@@ -18,25 +18,25 @@ namespace Stubbl.Api.Core.CommandHandlers
 
    public class UpdateTeamRoleCommandHandler : ICommandHandler<UpdateTeamRoleCommand, TeamRoleUpdatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public UpdateTeamRoleCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public UpdateTeamRoleCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _teamsCollection = teamsCollection;
       }
 
       public async Task<TeamRoleUpdatedEvent> HandleAsync(UpdateTeamRoleCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
@@ -45,7 +45,7 @@ namespace Stubbl.Api.Core.CommandHandlers
          {
             throw new MemberCannotManageTeamsException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }

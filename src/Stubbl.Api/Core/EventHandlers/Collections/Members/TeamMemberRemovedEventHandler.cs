@@ -10,13 +10,13 @@
 
    public class TeamMemberRemovedEventHandler : IEventHandler<TeamMemberRemovedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Member> _membersCollection;
 
-      public TeamMemberRemovedEventHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public TeamMemberRemovedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Member> membersCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _membersCollection = membersCollection;
       }
 

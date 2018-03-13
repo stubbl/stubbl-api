@@ -17,25 +17,25 @@
 
    public class CloneTeamStubCommandHandler : ICommandHandler<CloneTeamStubCommand, TeamStubClonedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Stub> _stubsCollection;
 
-      public CloneTeamStubCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CloneTeamStubCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Stub> stubsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _stubsCollection = stubsCollection;
       }
 
       public async Task<TeamStubClonedEvent> HandleAsync(CloneTeamStubCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
@@ -44,7 +44,7 @@
          {
             throw new MemberCannotManageStubsException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }

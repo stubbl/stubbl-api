@@ -13,23 +13,23 @@
 
    public class ListTeamStubsQueryHandler : IQueryHandler<ListTeamStubsQuery, ListTeamStubsProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Stub> _stubsCollection;
 
-      public ListTeamStubsQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public ListTeamStubsQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Stub> stubsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _stubsCollection = stubsCollection;
       }
 
       public async Task<ListTeamStubsProjection> HandleAsync(ListTeamStubsQuery query, CancellationToken cancellationToken)
       {
-         if (_authenticatedMemberAccessor.AuthenticatedMember.Teams.All(t => t.Id != query.TeamId))
+         if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                query.TeamId
             );
          }

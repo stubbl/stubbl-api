@@ -24,7 +24,7 @@ namespace Stubbl.Api.Controllers
          var query = new ListTeamsQuery();
          var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);
 
-         return StatusCode(200, projection);
+         return StatusCode(200, projection.Teams);
       }
    }
 }

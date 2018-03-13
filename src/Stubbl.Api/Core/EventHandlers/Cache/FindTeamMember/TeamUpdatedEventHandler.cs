@@ -13,15 +13,15 @@
 
    public class TeamUpdatedEventHandler : IEventHandler<TeamUpdatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly ICache _cache;
       private readonly ICacheKey _cacheKey;
       private readonly IMongoCollection<Member> _membersCollection;
 
-      public TeamUpdatedEventHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public TeamUpdatedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          ICache cache, ICacheKey cacheKey, IMongoCollection<Member> membersCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _cache = cache;
          _cacheKey = cacheKey;
          _membersCollection = membersCollection;

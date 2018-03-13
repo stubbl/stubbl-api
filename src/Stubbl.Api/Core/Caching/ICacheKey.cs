@@ -7,8 +7,8 @@
       string CountTeamLogs(ObjectId teamId);
       string CountTeamInvitations(ObjectId teamId);
       string CountTeamStubs(ObjectId teamId);
-      string FindAuthenticatedMember(string identityId);
-      string FindAuthenticatedMemberInvitation(string emailAddress, ObjectId invitationId);
+      string FindAuthenticatedUser(string identityId);
+      string FindAuthenticatedUserInvitation(string emailAddress, ObjectId invitationId);
       string FindTeam(ObjectId teamId);
       string FindTeamInvitation(ObjectId teamId, ObjectId invitationId);
       string FindTeamLog(ObjectId teamId, ObjectId logId);

@@ -10,13 +10,13 @@
 
    public class CountTeamsQueryHandler : IQueryHandler<CountTeamsQuery, CountTeamsProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public CountTeamsQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CountTeamsQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _teamsCollection = teamsCollection;
       }
 
@@ -24,7 +24,7 @@
       {
          var projection = new CountTeamsProjection
          (
-            _authenticatedMemberAccessor.AuthenticatedMember.Teams.Count
+            _authenticatedUserAccessor.AuthenticatedUser.Teams.Count
          );
 
          return Task.FromResult(projection);

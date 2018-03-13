@@ -14,19 +14,19 @@
 
    public class TeamCreatedEventHandler : IEventHandler<TeamCreatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Member> _membersCollection;
 
-      public TeamCreatedEventHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public TeamCreatedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Member> membersCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _membersCollection = membersCollection;
       }
 
       public async Task HandleAsync(TeamCreatedEvent @event, CancellationToken cancellationToken)
       {
-         var member = @event.Members.Single(m => m.Id == _authenticatedMemberAccessor.AuthenticatedMember.Id);
+         var member = @event.Members.Single(m => m.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
 
          var team = new Team
          {
@@ -40,7 +40,7 @@
             }
          };
 
-         var filter = Builders<Member>.Filter.Where(m => m.Id == _authenticatedMemberAccessor.AuthenticatedMember.Id);
+         var filter = Builders<Member>.Filter.Where(m => m.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
          var update = Builders<Member>.Update.Push(m => m.Teams, team);
 
          await _membersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);

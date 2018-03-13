@@ -6,7 +6,7 @@
    public class MemberCannotManageRolesException : Exception
    {
       public MemberCannotManageRolesException(ObjectId memberId, ObjectId teamId)
-         : base($"AuthenticatedMember cannot manage roles. MemberID='{memberId}' TeamID='{teamId}'")
+         : base($"AuthenticatedUser cannot manage roles. MemberID='{memberId}' TeamID='{teamId}'")
       {
          MemberId = memberId;
          TeamId = teamId;

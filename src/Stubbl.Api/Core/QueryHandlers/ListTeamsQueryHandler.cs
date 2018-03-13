@@ -9,18 +9,18 @@ namespace Stubbl.Api.Core.QueryHandlers
 
    public class ListTeamsQueryHandler : IQueryHandler<ListTeamsQuery, ListTeamsProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
 
-      public ListTeamsQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor)
+      public ListTeamsQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
       }
 
       public Task<ListTeamsProjection> HandleAsync(ListTeamsQuery query, CancellationToken cancellationToken)
       {
          return Task.FromResult(new ListTeamsProjection
          (
-            _authenticatedMemberAccessor.AuthenticatedMember.Teams.Select(t => new Team
+            _authenticatedUserAccessor.AuthenticatedUser.Teams.Select(t => new Team
                (
                   t.Id.ToString(),
                   t.Name

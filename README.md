@@ -7,13 +7,13 @@
 | **Misc** |
 | Ping | `GET` | `/ping` |
 | Canary | `GET` | `/canary` |
-| **Authenticated Member** |
-| Find Member | `GET`  | `/member/find` |
-| Update Member | `POST` | `/member/update` |
-| Count Member Invitations | `GET` | `/member/invitations/count` |
-| List Member Invitations | `GET` | `/member/invitations/list` |
-| Accept Member Invitation | `POST` | `/member/invitations/:invitationId/accept` |
-| Decline Member Invitation | `POST` | `/member/invitations/:invitationId/decline` |
+| **Authenticated User** |
+| Find Authenticated User | `GET`  | `/user/find` |
+| Update Authenticated User | `POST` | `/user/update` |
+| Count Authenticated User Invitations | `GET` | `/user/invitations/count` |
+| List Authenticated User Invitations | `GET` | `/user/invitations/list` |
+| Accept Authenticated User Invitation | `POST` | `/user/invitations/:invitationId/accept` |
+| Decline Authenticated User Invitation | `POST` | `/user/invitations/:invitationId/decline` |
 | **Teams** |
 | Count Teams | `GET` | `/teams/count` |
 | List Teams | `GET` | `/teams/list` |

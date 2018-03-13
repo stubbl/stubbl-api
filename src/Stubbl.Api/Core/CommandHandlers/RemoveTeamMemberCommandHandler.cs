@@ -18,27 +18,27 @@
 
    public class RemoveTeamMemberCommandHandler : ICommandHandler<RemoveTeamMemberCommand, TeamMemberRemovedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Member> _membersCollection;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public RemoveTeamMemberCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public RemoveTeamMemberCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Member> membersCollection, IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _membersCollection = membersCollection;
          _teamsCollection = teamsCollection;
       }
 
       public async Task<TeamMemberRemovedEvent> HandleAsync(RemoveTeamMemberCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
@@ -47,12 +47,12 @@
          {
             throw new MemberCannotManageMembersException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }
 
-         if (command.MemberId == _authenticatedMemberAccessor.AuthenticatedMember.Id)
+         if (command.MemberId == _authenticatedUserAccessor.AuthenticatedUser.Id)
          {
             throw new MemberCannotBeRemovedFromTeamException
             (

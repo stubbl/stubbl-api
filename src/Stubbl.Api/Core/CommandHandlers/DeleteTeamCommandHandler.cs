@@ -18,17 +18,17 @@
 
    public class DeleteTeamCommandHandler : ICommandHandler<DeleteTeamCommand, TeamDeletedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Log> _logsCollection;
       private readonly IMongoCollection<Member> _membersCollection;
       private readonly IMongoCollection<Stub> _stubsCollection;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public DeleteTeamCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public DeleteTeamCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Log> logsCollection, IMongoCollection<Member> membersCollection, 
          IMongoCollection<Stub> stubsCollection, IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _logsCollection = logsCollection;
          _membersCollection = membersCollection;
          _stubsCollection = stubsCollection;
@@ -37,13 +37,13 @@
 
       public async Task<TeamDeletedEvent> HandleAsync(DeleteTeamCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
@@ -52,7 +52,7 @@
          {
             throw new MemberCannotManageTeamsException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }

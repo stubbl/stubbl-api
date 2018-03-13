@@ -17,25 +17,25 @@
 
    public class ResendTeamInvitationCommandHandler : ICommandHandler<ResendTeamInvitationCommand, TeamInvitationResentEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Invitation> _invitationsCollection;
 
-      public ResendTeamInvitationCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public ResendTeamInvitationCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Invitation> invitationsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _invitationsCollection = invitationsCollection;
       }
 
       public async Task<TeamInvitationResentEvent> HandleAsync(ResendTeamInvitationCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
@@ -44,7 +44,7 @@
          {
             throw new MemberCannotManageInvitationsException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }

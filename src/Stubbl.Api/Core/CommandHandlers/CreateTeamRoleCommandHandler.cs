@@ -19,25 +19,25 @@
 
    public class CreateTeamRoleCommandHandler : ICommandHandler<CreateTeamRoleCommand, TeamRoleCreatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public CreateTeamRoleCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CreateTeamRoleCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _teamsCollection = teamsCollection;
       }
 
       public async Task<TeamRoleCreatedEvent> HandleAsync(CreateTeamRoleCommand command, CancellationToken cancellationToken)
       {
-         var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+         var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
          if (team == null)
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                command.TeamId
             );
          }
@@ -46,7 +46,7 @@
          {
             throw new MemberCannotManageRolesException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                team.Id
             );
          }

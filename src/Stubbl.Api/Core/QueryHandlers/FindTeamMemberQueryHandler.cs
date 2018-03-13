@@ -17,15 +17,15 @@ namespace Stubbl.Api.Core.QueryHandlers
 
    public class FindTeamMemberQueryHandler : IQueryHandler<FindTeamMemberQuery, FindTeamMemberProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly ICache _cache;
       private readonly ICacheKey _cacheKey;
       private readonly IMongoCollection<Member> _membersCollection;
 
-      public FindTeamMemberQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public FindTeamMemberQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          ICache cache, ICacheKey cacheKey, IMongoCollection<Member> membersCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _cache = cache;
          _cacheKey = cacheKey;
          _membersCollection = membersCollection;
@@ -33,11 +33,11 @@ namespace Stubbl.Api.Core.QueryHandlers
 
       public async Task<FindTeamMemberProjection> HandleAsync(FindTeamMemberQuery query, CancellationToken cancellationToken)
       {
-         if (_authenticatedMemberAccessor.AuthenticatedMember.Teams.All(t => t.Id != query.TeamId))
+         if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                query.TeamId
             );
          }

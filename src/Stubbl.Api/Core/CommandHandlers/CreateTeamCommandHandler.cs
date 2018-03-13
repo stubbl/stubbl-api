@@ -20,14 +20,14 @@
 
    public class CreateTeamCommandHandler : ICommandHandler<CreateTeamCommand, TeamCreatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<DefaultRole> _defaultRolesCollection;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public CreateTeamCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CreateTeamCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<DefaultRole> defaultRolesCollection, IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _defaultRolesCollection = defaultRolesCollection;
          _teamsCollection = teamsCollection;
       }
@@ -60,9 +60,9 @@
             {
                new Member
                {
-                  Id = _authenticatedMemberAccessor.AuthenticatedMember.Id,
-                  Name = _authenticatedMemberAccessor.AuthenticatedMember.Name,
-                  EmailAddress = _authenticatedMemberAccessor.AuthenticatedMember.EmailAddress,
+                  Id = _authenticatedUserAccessor.AuthenticatedUser.Id,
+                  Name = _authenticatedUserAccessor.AuthenticatedUser.Name,
+                  EmailAddress = _authenticatedUserAccessor.AuthenticatedUser.EmailAddress,
                   Role = new Data.Collections.Teams.Role
                   {
                      Id = administratorRoleId,

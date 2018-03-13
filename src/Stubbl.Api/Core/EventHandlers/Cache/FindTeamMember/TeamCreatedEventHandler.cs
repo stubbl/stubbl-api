@@ -10,14 +10,14 @@
 
    public class TeamCreatedEventHandler : IEventHandler<TeamCreatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly ICache _cache;
       private readonly ICacheKey _cacheKey;
 
-      public TeamCreatedEventHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public TeamCreatedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          ICache cache, ICacheKey cacheKey)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _cache = cache;
          _cacheKey = cacheKey;
       }
@@ -27,7 +27,7 @@
          _cache.Remove(_cacheKey.FindTeamMember
          (
             @event.TeamId,
-            _authenticatedMemberAccessor.AuthenticatedMember.Id
+            _authenticatedUserAccessor.AuthenticatedUser.Id
          ));
 
          return Task.CompletedTask;

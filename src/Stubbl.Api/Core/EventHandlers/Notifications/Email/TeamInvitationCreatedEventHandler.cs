@@ -13,14 +13,14 @@
 
    public class TeamInvitationCreatedEventHandler : IEventHandler<TeamInvitationCreatedEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly ICommandDispatcher _commandDispatcher;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public TeamInvitationCreatedEventHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public TeamInvitationCreatedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          ICommandDispatcher commandDispatcher, IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _commandDispatcher = commandDispatcher;
          _teamsCollection = teamsCollection;
       }
@@ -34,7 +34,7 @@
          (
             @event.EmailAddress,
             team.Name,
-            _authenticatedMemberAccessor.AuthenticatedMember.Name,
+            _authenticatedUserAccessor.AuthenticatedUser.Name,
             @event.InvitationId
          );
 

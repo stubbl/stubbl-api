@@ -16,27 +16,27 @@
 
     public class UpdateTeamCommandHandler : ICommandHandler<UpdateTeamCommand, TeamUpdatedEvent>
     {
-        private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+        private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
         private readonly IMongoCollection<Member> _membersCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
 
-        public UpdateTeamCommandHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+        public UpdateTeamCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
            IMongoCollection<Member> membersCollection, IMongoCollection<Team> teamsCollection)
         {
-            _authenticatedMemberAccessor = authenticatedMemberAccessor;
+            _authenticatedUserAccessor = authenticatedUserAccessor;
             _membersCollection = membersCollection;
             _teamsCollection = teamsCollection;
         }
 
         public async Task<TeamUpdatedEvent> HandleAsync(UpdateTeamCommand command, CancellationToken cancellationToken)
         {
-            var team = _authenticatedMemberAccessor.AuthenticatedMember.Teams.SingleOrDefault(t => t.Id == command.TeamId);
+            var team = _authenticatedUserAccessor.AuthenticatedUser.Teams.SingleOrDefault(t => t.Id == command.TeamId);
 
             if (team == null)
             {
                 throw new MemberNotAddedToTeamException
                 (
-                   _authenticatedMemberAccessor.AuthenticatedMember.Id,
+                   _authenticatedUserAccessor.AuthenticatedUser.Id,
                    command.TeamId
                 );
             }
@@ -45,7 +45,7 @@
             {
                 throw new MemberCannotManageTeamsException
                 (
-                   _authenticatedMemberAccessor.AuthenticatedMember.Id,
+                   _authenticatedUserAccessor.AuthenticatedUser.Id,
                    team.Id
                 );
             }

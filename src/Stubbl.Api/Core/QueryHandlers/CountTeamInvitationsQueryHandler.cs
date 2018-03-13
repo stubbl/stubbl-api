@@ -14,15 +14,15 @@
 
    public class CountTeamInvitationsQueryHandler : IQueryHandler<CountTeamInvitationsQuery, CountTeamInvitationsProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly ICache _cache;
       private readonly ICacheKey _cacheKey;
       private readonly IMongoCollection<Invitation> _invitationsCollection;
 
-      public CountTeamInvitationsQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CountTeamInvitationsQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          ICache cache, ICacheKey cacheKey, IMongoCollection<Invitation> invitationsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _cache = cache;
          _cacheKey = cacheKey;
          _invitationsCollection = invitationsCollection;
@@ -30,11 +30,11 @@
 
       public async Task<CountTeamInvitationsProjection> HandleAsync(CountTeamInvitationsQuery query, CancellationToken cancellationToken)
       {
-         if (_authenticatedMemberAccessor.AuthenticatedMember.Teams.All(t => t.Id != query.TeamId))
+         if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                query.TeamId
             );
          }

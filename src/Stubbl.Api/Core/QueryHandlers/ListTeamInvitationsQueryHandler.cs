@@ -13,23 +13,23 @@
 
    public class ListTeamInvitationsQueryHandler : IQueryHandler<ListTeamInvitationsQuery, ListTeamInvitationsProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Invitation> _invitationsCollection;
 
-      public ListTeamInvitationsQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public ListTeamInvitationsQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Invitation> invitationsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _invitationsCollection = invitationsCollection;
       }
 
       public async Task<ListTeamInvitationsProjection> HandleAsync(ListTeamInvitationsQuery query, CancellationToken cancellationToken)
       {
-         if (_authenticatedMemberAccessor.AuthenticatedMember.Teams.All(t => t.Id != query.TeamId))
+         if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                query.TeamId
             );
          }

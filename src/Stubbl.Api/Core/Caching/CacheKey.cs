@@ -29,12 +29,12 @@
          return BuildCacheKey(new object[] { teamId });
       }
 
-      public string FindAuthenticatedMember(string identityId)
+      public string FindAuthenticatedUser(string identityId)
       {
          return BuildCacheKey(new object[] { identityId });
       }
 
-      public string FindAuthenticatedMemberInvitation(string emailAddress, ObjectId invitationId)
+      public string FindAuthenticatedUserInvitation(string emailAddress, ObjectId invitationId)
       {
          return BuildCacheKey(new object[] { emailAddress, invitationId });
       }

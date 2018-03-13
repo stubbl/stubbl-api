@@ -6,7 +6,7 @@ namespace Stubbl.Api.Core.Exceptions.MemberCannotManageMembers.Version1
    public class MemberCannotManageMembersException : Exception
    {
       public MemberCannotManageMembersException(ObjectId memberId, ObjectId teamId)
-         : base($"AuthenticatedMember cannot manage team members. MemberID='{memberId}' TeamID='{teamId}'")
+         : base($"AuthenticatedUser cannot manage team members. MemberID='{memberId}' TeamID='{teamId}'")
       {
          MemberId = memberId;
          TeamId = teamId;

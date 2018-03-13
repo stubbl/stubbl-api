@@ -12,23 +12,23 @@
 
    public class CountTeamRolesQueryHandler : IQueryHandler<CountTeamRolesQuery, CountTeamRolesProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public CountTeamRolesQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public CountTeamRolesQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _teamsCollection = teamsCollection;
       }
 
       public async Task<CountTeamRolesProjection> HandleAsync(CountTeamRolesQuery query, CancellationToken cancellationToken)
       {
-         if (_authenticatedMemberAccessor.AuthenticatedMember.Teams.All(t => t.Id != query.TeamId))
+         if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                query.TeamId
             );
          }

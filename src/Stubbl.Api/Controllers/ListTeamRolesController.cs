@@ -29,7 +29,7 @@ namespace Stubbl.Api.Controllers
 
          var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);
 
-         return StatusCode(200, projection);
+         return StatusCode(200, projection.Roles);
       }
    }
 }

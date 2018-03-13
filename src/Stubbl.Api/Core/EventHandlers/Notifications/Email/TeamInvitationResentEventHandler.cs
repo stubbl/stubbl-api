@@ -14,16 +14,16 @@
 
    public class TeamInvitationResentEventHandler : IEventHandler<TeamInvitationResentEvent>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly ICommandDispatcher _commandDispatcher;
       private readonly IMongoCollection<Invitation> _invitationsCollection;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public TeamInvitationResentEventHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public TeamInvitationResentEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          ICommandDispatcher commandDispatcher, IMongoCollection<Invitation> invitationsCollection,
          IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _commandDispatcher = commandDispatcher;
          _invitationsCollection = invitationsCollection;
          _teamsCollection = teamsCollection;
@@ -42,7 +42,7 @@
          (
             emailAddress,
             teamName,
-            _authenticatedMemberAccessor.AuthenticatedMember.Name,
+            _authenticatedUserAccessor.AuthenticatedUser.Name,
             @event.InvitationId
          );
 

@@ -14,25 +14,25 @@
 
    public class ListTeamLogsQueryHandler : IQueryHandler<ListTeamLogsQuery, ListTeamLogsProjection>
    {
-      private readonly IAuthenticatedMemberAccessor _authenticatedMemberAccessor;
+      private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
       private readonly IMongoCollection<Log> _logsCollection;
       private readonly IMongoCollection<Team> _teamsCollection;
 
-      public ListTeamLogsQueryHandler(IAuthenticatedMemberAccessor authenticatedMemberAccessor,
+      public ListTeamLogsQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
          IMongoCollection<Log> logsCollection, IMongoCollection<Team> teamsCollection)
       {
-         _authenticatedMemberAccessor = authenticatedMemberAccessor;
+         _authenticatedUserAccessor = authenticatedUserAccessor;
          _logsCollection = logsCollection;
          _teamsCollection = teamsCollection;
       }
 
       public async Task<ListTeamLogsProjection> HandleAsync(ListTeamLogsQuery query, CancellationToken cancellationToken)
       {
-         if (_authenticatedMemberAccessor.AuthenticatedMember.Teams.All(t => t.Id != query.TeamId))
+         if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
          {
             throw new MemberNotAddedToTeamException
             (
-               _authenticatedMemberAccessor.AuthenticatedMember.Id,
+               _authenticatedUserAccessor.AuthenticatedUser.Id,
                query.TeamId
             );
          }
