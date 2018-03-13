@@ -1,5 +1,7 @@
 # Stubbl API
 
+[![Build status](https://ci.appveyor.com/api/projects/status/dbn6brnkbi04g6hd/branch/master?svg=true)](https://ci.appveyor.com/project/stubbl/stubbl-api/branch/master)
+
 ## Endpoints
 
 | Name | Method | URL |
