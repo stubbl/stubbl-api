@@ -3,8 +3,8 @@ namespace Stubbl.Api.Core.EventHandlers.Cache.CountTeamStubs
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using Common.Caching;
-   using Common.EventHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.EventHandlers;
    using Events.TeamStubCreated.Version1;
 
    public class TeamStubCreatedEventHandler : IEventHandler<TeamStubCreatedEvent>

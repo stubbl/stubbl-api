@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.AcceptAuthenticatedUserInvitation.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Data.Collections.Invitations;
    using Events.AuthenticatedUserInvitationAccepted.Version1;
    using Exceptions.InvitationAlreadyUsed.Version1;

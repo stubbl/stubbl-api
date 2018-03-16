@@ -2,8 +2,8 @@
 {
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
+    using CodeContrib.CloudflareApi;
     using Core.Data;
-    using Core.EventHandlers.Cloudflare;
     using FluentValidation;
     using FluentValidation.AspNetCore;
     using IdentityServer4.AccessTokenValidation;
@@ -18,16 +18,19 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.PlatformAbstractions;
     using Middleware;
     using Newtonsoft.Json;
-    using Stubbl.Api.Core.Versioning;
+    using Options;
     using Swashbuckle.AspNetCore.Swagger;
     using Swashbuckle.AspNetCore.SwaggerGen;
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Net.Http;
     using System.Reflection;
+    using Versioning;
 
     public class Startup
     {
@@ -82,20 +85,17 @@
 
             app.UseAuthentication();
 
-            app.UseStubTester();
+            app.UseStub();
 
             app.UseMvc();
 
             app.UseSwagger();
             app.UseSwaggerUI(o =>
             {
-                o.ConfigureOAuth2
-             (
-                "stubbl-api-swagger",
-                _configuration.GetValue<string>("Swagger:ClientSecret"),
-                "stubbl-api",
-                "stubbl-api-swagger"
-             );
+                o.OAuthClientId("stubbl-api-swagger");
+                o.OAuthClientSecret(_configuration.GetValue<string>("Swagger: ClientSecret"));
+                o.OAuthRealm("stubbl-api");
+                o.OAuthAppName("stubbl-api-swagger");
 
                 foreach (var apiVersionDescription in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
@@ -116,14 +116,13 @@
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.ApiName = _configuration.GetValue<string>("IdentityServer:ApiName");
+                    options.ApiName = "stubbl-api";
                     options.Authority = _configuration.GetValue<string>("IdentityServer:Authority");
                     options.RequireHttpsMetadata = _hostingEnvironment.IsProduction();
                 });
 
             services.AddOptions()
                .Configure<CloudflareOptions>(o => _configuration.GetSection("Cloudflare").Bind(o))
-                .Configure<MongoDBOptions>(o => _configuration.GetSection("MongoDB").Bind(o))
                 .Configure<StubblApiOptions>(o => _configuration.GetSection("StubblApi").Bind(o));
 
             services.AddMvc(o =>
@@ -156,6 +155,18 @@
                 o.LowercaseUrls = true;
             });
 
+            services.AddCloudflareApi(new CloudflareApiSettings
+            (
+                _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
+                _configuration.GetValue<string>("CloudflareApi:AuthenticationKey"),
+                _configuration.GetValue<string>("CloudflareApi:AuthenticationEmailAddress")
+            ));
+            services.AddMongoDB(new MongoDBSettings
+            (
+                _configuration.GetValue<string>("MongoDB:ConnectionString")
+            ));
+
+            services.AddSingleton(sp => new HttpClient(new LoggingHandler(new HttpClientHandler(), sp.GetRequiredService<ILogger<LoggingHandler>>())));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSwaggerGen(o =>
@@ -178,7 +189,7 @@
 
                 if (_hostingEnvironment.IsDevelopment())
                 {
-                    o.OperationFilter<FakeUserOperationFilter>();
+                    o.OperationFilter<SubHeaderOperationFilter>();
                 }
 
                 o.OperationFilter<SwaggerDefaultValuesOperationFilter>();

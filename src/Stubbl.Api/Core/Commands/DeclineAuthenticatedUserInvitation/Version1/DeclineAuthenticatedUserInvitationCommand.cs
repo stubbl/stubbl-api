@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.DeclineAuthenticatedUserInvitation.Version1
 {
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.AuthenticatedUserInvitationDeclined.Version1;
    using MongoDB.Bson;
 

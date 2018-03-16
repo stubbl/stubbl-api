@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.RemoveTeamMember.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Events.TeamMemberRemoved.Version1;
    using Data.Collections.Teams;
    using Data.Collections.Shared;

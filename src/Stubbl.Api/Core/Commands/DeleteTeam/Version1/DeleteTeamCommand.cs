@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.DeleteTeam.Version1
 {
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.TeamDeleted.Version1;
    using MongoDB.Bson;
 

@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Core.Authentication;
    using Data.Collections.Teams;
    using MongoDB.Driver;

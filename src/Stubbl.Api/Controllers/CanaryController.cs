@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.Queries;
+   using CodeContrib.Queries;
    using Core.Queries.Canary.Version1;
    using Microsoft.AspNetCore.Authorization;
    using Microsoft.AspNetCore.Mvc;

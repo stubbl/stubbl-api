@@ -1,16 +1,17 @@
 ﻿namespace Stubbl.Api.Core.EventHandlers.Cloudflare
 {
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Common.CloudflareApi;
-    using Common.CloudflareApi.DnsRecords.DeleteDnsRecord;
-    using Common.CloudflareApi.DnsRecords.ListDnsRecords;
-    using Common.EventHandlers;
+    using CodeContrib.CloudflareApi;
+    using CodeContrib.CloudflareApi.DnsRecords.DeleteDnsRecord;
+    using CodeContrib.CloudflareApi.DnsRecords.ListDnsRecords;
+    using CodeContrib.EventHandlers;
     using Events.TeamDeleted.Version1;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using Options;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public class TeamDeletedEventHandler : IEventHandler<TeamDeletedEvent>
     {

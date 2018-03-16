@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.FindTeamInvitation.Version1
 {
-   using Common.Queries;
+   using CodeContrib.Queries;
    using MongoDB.Bson;
 
    public class FindTeamInvitationQuery : IQuery<FindTeamInvitationProjection>

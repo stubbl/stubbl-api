@@ -1,6 +1,6 @@
 namespace Stubbl.Api.Core.Queries.ListTeamMembers.Version1
 {
-   using Common.Queries;
+   using CodeContrib.Queries;
    using MongoDB.Bson;
 
    public class ListTeamMembersQuery : IQuery<ListTeamMembersProjection>

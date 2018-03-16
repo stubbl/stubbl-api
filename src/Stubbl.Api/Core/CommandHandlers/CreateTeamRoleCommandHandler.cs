@@ -6,7 +6,7 @@
    using Authentication;
    using Commands.CreateTeamRole.Version1;
    using Commands.Shared.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Data.Collections.Teams;
    using Events.Shared.Version1;
    using Events.TeamRoleCreated.Version1;

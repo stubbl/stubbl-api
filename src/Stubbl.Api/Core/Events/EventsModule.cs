@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Events
 {
-   using Common.Events;
+   using CodeContrib.Events;
    using Autofac;
 
    public class EventsModule : Module

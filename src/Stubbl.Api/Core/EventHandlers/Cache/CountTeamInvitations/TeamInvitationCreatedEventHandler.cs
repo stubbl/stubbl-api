@@ -3,8 +3,8 @@ namespace Stubbl.Api.Core.EventHandlers.Cache.CountTeamInvitations
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using Common.Caching;
-   using Common.EventHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.EventHandlers;
    using Events.TeamInvitationCreated.Version1;
 
    public class TeamInvitationCreatedEventHandler : IEventHandler<TeamInvitationCreatedEvent>

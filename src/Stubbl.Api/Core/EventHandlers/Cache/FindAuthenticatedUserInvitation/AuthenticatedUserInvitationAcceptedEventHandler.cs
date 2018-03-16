@@ -4,8 +4,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using Common.EventHandlers;
-   using Common.Caching;
+   using CodeContrib.EventHandlers;
+   using CodeContrib.Caching;
    using Events.AuthenticatedUserInvitationAccepted.Version1;
 
    public class AuthenticatedUserInvitationAcceptedEventHandler : IEventHandler<AuthenticatedUserInvitationAcceptedEvent>

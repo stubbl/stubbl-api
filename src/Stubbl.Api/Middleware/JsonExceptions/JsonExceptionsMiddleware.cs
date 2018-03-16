@@ -6,20 +6,19 @@
    using System.Reflection;
    using System.Threading.Tasks;
    using Autofac;
-   using Common.ExceptionHandlers;
+   using CodeContrib.ExceptionHandlers;
    using Newtonsoft.Json;
-   using Core.Versioning;
    using Microsoft.AspNetCore.Hosting;
    using Microsoft.AspNetCore.Http;
    using Microsoft.AspNetCore.Mvc;
    using Microsoft.Extensions.Logging;
+   using Versioning;
    using Type = System.Type;
 
    // TODO Circuit Breaker
    public class JsonExceptionsMiddleware
    {
       private readonly IComponentContext _componentContext;
-      private readonly IEventIdAccessor _eventIdAccessor;
       private readonly IHostingEnvironment _hostingEnvironment;
       private readonly ILogger<JsonExceptionsMiddleware> _logger;
       private readonly RequestDelegate _next;
@@ -31,12 +30,10 @@
       }
 
       public JsonExceptionsMiddleware(RequestDelegate next, IComponentContext componentContext,
-         IEventIdAccessor eventIdAccessor, IHostingEnvironment hostingEnvironment,
-         ILogger<JsonExceptionsMiddleware> logger)
+         IHostingEnvironment hostingEnvironment, ILogger<JsonExceptionsMiddleware> logger)
       {
          _next = next;
          _componentContext = componentContext;
-         _eventIdAccessor = eventIdAccessor;
          _hostingEnvironment = hostingEnvironment;
          _logger = logger;
       }
@@ -59,7 +56,6 @@
 
                _logger.LogWarning
                (
-                  _eventIdAccessor.EventId,
                   exception,
                   "Exception {ExceptionName} thrown with message {ExceptionMessage}",
                   innerExceptionName,
@@ -83,7 +79,6 @@
 
             _logger.LogError
             (
-               _eventIdAccessor.EventId,
                originalException,
                "The response has already started so exception {ExceptionName} with message {ExceptionMessage} cannot be handled",
                exceptionName, 
@@ -109,7 +104,6 @@
 
             _logger.LogWarning
             (
-               _eventIdAccessor.EventId,
                exception,
                "Exception {ExceptionName} thrown with message {ExceptionMessage} when resolving exception handler for exception {OriginalExceptionName} with message {OriginalExceptionMessage}",
                exceptionName,
@@ -136,7 +130,6 @@
 
             _logger.LogError
             (
-               _eventIdAccessor.EventId,
                exception,
                "Exception {ExceptionName} thrown with message {ExceptionMessage} when handling exception {OriginalExceptionName} with message {OriginalExceptionMessage}",
                exceptionName,
@@ -171,7 +164,6 @@
          {
             _logger.LogCritical
             (
-               _eventIdAccessor.EventId,
                originalExceptionName,
                "Unhandled exception {ExceptionName} thrown with message {ExceptionMessage}",
                originalExceptionName,
@@ -182,7 +174,6 @@
          {
             _logger.LogError
             (
-               _eventIdAccessor.EventId,
                originalException,
                "Unhandled exception {ExceptionName} thrown with message {ExceptionMessage}",
                originalExceptionName,
@@ -204,7 +195,6 @@
 
             _logger.LogError
             (
-               _eventIdAccessor.EventId,
                exception,
                "Exception {ExceptionName} thrown with message {ExceptionMessage} when resolving default exception handler for exception {OriginalExceptionName} with message {OriginalExceptionMessage} for version {Version}",
                exceptionName,
@@ -243,7 +233,6 @@
 
             _logger.LogError
             (
-               _eventIdAccessor.EventId,
                exception,
                "Exception {ExceptionName} thrown with message {ExceptionMessage} when handling exception {OriginalExceptionName} with message {OriginalExceptionMessage}",
                exceptionName,

@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Events.TeamUpdated.Version1
 {
-   using Common.Events;
+   using CodeContrib.Events;
    using MongoDB.Bson;
 
    public class TeamUpdatedEvent : IEvent

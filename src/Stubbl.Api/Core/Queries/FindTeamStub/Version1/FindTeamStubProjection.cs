@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Queries.FindTeamStub.Version1
 {
    using System.Collections.Generic;
-   using Common.Queries;
+   using CodeContrib.Queries;
    using Shared.Version1;
 
    public class FindTeamStubProjection : IProjection

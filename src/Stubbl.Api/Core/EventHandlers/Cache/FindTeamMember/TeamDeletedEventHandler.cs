@@ -4,8 +4,8 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using Common.Caching;
-   using Common.EventHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.EventHandlers;
    using Data.Collections.Members;
    using Events.TeamDeleted.Version1;
    using MongoDB.Driver;

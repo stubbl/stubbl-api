@@ -5,7 +5,7 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Authentication;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Queries.FindAuthenticatedUser.Version1;
    using Queries.Shared.Version1;
 

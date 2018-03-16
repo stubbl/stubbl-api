@@ -4,7 +4,7 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Authentication;
-   using Common.EventHandlers;
+   using CodeContrib.EventHandlers;
    using Events.Shared.Version1;
    using Events.TeamCreated.Version1;
    using MongoDB.Driver;

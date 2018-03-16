@@ -4,7 +4,7 @@
    using System.Linq;
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Core.Commands.Shared.Version1;
    using Queries.CountPermissions.Version1;
 

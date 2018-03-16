@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Events.TeamStubDeleted.Version1
 {
-   using Common.Events;
+   using CodeContrib.Events;
    using MongoDB.Bson;
 
    public class TeamStubDeletedEvent : IEvent

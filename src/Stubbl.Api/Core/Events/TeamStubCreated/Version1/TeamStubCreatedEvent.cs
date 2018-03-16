@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Events.TeamStubCreated.Version1
 {
    using System.Collections.Generic;
-   using Common.Events;
+   using CodeContrib.Events;
    using MongoDB.Bson;
    using Shared.Version1;
 

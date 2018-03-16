@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.FindAuthenticatedUserInvitation.Version1
 {
-   using Common.Queries;
+   using CodeContrib.Queries;
    using MongoDB.Bson;
 
    public class FindAuthenticatedUserInvitationQuery : IQuery<FindAuthenticatedUserInvitationProjection>

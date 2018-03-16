@@ -1,10 +1,9 @@
 ﻿namespace Stubbl.Api.Core.EventHandlers
 {
    using System.Linq;
-   using System.Reflection;
    using Autofac;
    using Autofac.Core;
-   using Common.EventHandlers;
+   using CodeContrib.EventHandlers;
    using Module = Autofac.Module;
 
    public class EventHandlersModule : Module

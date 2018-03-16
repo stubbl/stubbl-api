@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.DeleteTeamInvitation.Version1
 {
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.TeamInvitationDeleted.Version1;
    using MongoDB.Bson;
 

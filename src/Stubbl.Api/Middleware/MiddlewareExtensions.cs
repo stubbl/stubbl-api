@@ -1,39 +1,39 @@
 namespace Stubbl.Api.Middleware
 {
-   using JsonExceptions;
-   using Microsoft.AspNetCore.Builder;
-   using SecureRequests;
-   using Stubbl.Api.Middleware.FakeUser;
-   using StubTester;
+    using JsonExceptions;
+    using Microsoft.AspNetCore.Builder;
+    using SecureRequests;
+    using SubHeader;
+    using Stub;
 
-   public static class MiddlewareExtensions
-   {
-      public static IApplicationBuilder UseJsonExceptions(this IApplicationBuilder app)
-      {
-         app.UseMiddleware<JsonExceptionsMiddleware>();
+    public static class MiddlewareExtensions
+    {
+        public static IApplicationBuilder UseJsonExceptions(this IApplicationBuilder extended)
+        {
+            extended.UseMiddleware<JsonExceptionsMiddleware>();
 
-         return app;
-      }
+            return extended;
+        }
 
-      public static IApplicationBuilder UseFakeUser(this IApplicationBuilder app)
-      {
-         app.UseMiddleware<FakeUserMiddleware>();
+        public static IApplicationBuilder UseFakeUser(this IApplicationBuilder extended)
+        {
+            extended.UseMiddleware<SubHeaderMiddleware>();
 
-         return app;
-      }
+            return extended;
+        }
 
-      public static IApplicationBuilder UseSecureRequests(this IApplicationBuilder app)
-      {
-         app.UseMiddleware<SecureRequestsMiddleware>();
+        public static IApplicationBuilder UseSecureRequests(this IApplicationBuilder extended)
+        {
+            extended.UseMiddleware<SecureRequestsMiddleware>();
 
-         return app;
-      }
+            return extended;
+        }
 
-      public static IApplicationBuilder UseStubTester(this IApplicationBuilder app)
-      {
-         app.UseMiddleware<StubTesterMiddleware>();
+        public static IApplicationBuilder UseStub(this IApplicationBuilder extended)
+        {
+            extended.UseMiddleware<StubMiddleware>();
 
-         return app;
-      }
-   }
+            return extended;
+        }
+    }
 }

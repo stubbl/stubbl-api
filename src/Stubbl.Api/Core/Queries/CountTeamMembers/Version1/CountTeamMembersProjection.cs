@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.CountTeamMembers.Version1
 {
-   using Common.Queries;
+   using CodeContrib.Queries;
 
    public class CountTeamMembersProjection : IProjection
    {

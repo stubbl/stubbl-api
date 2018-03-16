@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Commands.CreateTeamRole.Version1
 {
    using System.Collections.Generic;
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.TeamRoleCreated.Version1;
    using MongoDB.Bson;
    using Shared.Version1;

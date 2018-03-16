@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.DeleteTeamStub.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Events.TeamStubDeleted.Version1;
    using Data.Collections.Shared;
    using Data.Collections.Stubs;

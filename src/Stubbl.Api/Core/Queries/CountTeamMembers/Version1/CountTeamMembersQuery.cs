@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.CountTeamMembers.Version1
 {
-   using Common.Queries;
+   using CodeContrib.Queries;
    using MongoDB.Bson;
 
    public class CountTeamMembersQuery : IQuery<CountTeamMembersProjection>

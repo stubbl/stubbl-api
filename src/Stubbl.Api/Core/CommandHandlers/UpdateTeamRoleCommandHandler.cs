@@ -6,7 +6,7 @@ namespace Stubbl.Api.Core.CommandHandlers
    using Authentication;
    using Commands.Shared.Version1;
    using Commands.UpdateTeamRole.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Data.Collections.Teams;
    using Events.TeamRoleUpdated.Version1;
    using Exceptions.MemberCannotManageTeams.Version1;

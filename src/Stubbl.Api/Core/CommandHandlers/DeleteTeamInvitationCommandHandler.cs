@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.DeleteTeamInvitation.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Events.TeamInvitationDeleted.Version1;
    using Data.Collections.Invitations;
    using Data.Collections.Shared;

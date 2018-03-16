@@ -4,7 +4,7 @@
    using System.Linq;
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Queries.ListPermissions.Version1;
    using Queries.Shared.Version1;
    using Permission = Data.Collections.Shared.Permission;

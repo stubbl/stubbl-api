@@ -1,8 +1,8 @@
 ﻿namespace Stubbl.Api.Core.Caching
 {
    using Autofac;
-   using Common.Caching;
-   using Common.Caching.Memory;
+   using CodeContrib.Caching;
+   using CodeContrib.Caching.Memory;
 
    public class CachingModule : Module
    {

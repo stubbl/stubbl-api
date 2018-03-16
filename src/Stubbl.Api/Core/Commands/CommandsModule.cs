@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands
 {
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Autofac;
 
    public class CommandsModule : Module

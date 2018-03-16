@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.FindLog.Version1
 {
-   using Common.Queries;
+   using CodeContrib.Queries;
    using MongoDB.Bson;
 
    public class FindTeamLogQuery : IQuery<FindTeamLogProjection>

@@ -4,8 +4,8 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using Common.Caching;
-   using Common.QueryHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.QueryHandlers;
    using Core.Authentication;
    using Core.Exceptions.MemberNotAddedToTeam.Version1;
    using Data.Collections.Logs;

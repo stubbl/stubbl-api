@@ -5,7 +5,7 @@ namespace Stubbl.Api.Core.QueryHandlers
    using System.Threading;
    using System.Threading.Tasks;
    using Authentication;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Exceptions.MemberNotAddedToTeam.Version1;
    using MongoDB.Driver;
    using Queries.ListTeamRoles.Version1;

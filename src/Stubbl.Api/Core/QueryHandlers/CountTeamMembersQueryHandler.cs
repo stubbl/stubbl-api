@@ -3,7 +3,7 @@
    using System.Linq;
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Core.Authentication;
    using Core.Exceptions.MemberNotAddedToTeam.Version1;
    using Data.Collections.Teams;

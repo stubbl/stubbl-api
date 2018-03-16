@@ -5,8 +5,8 @@ namespace Stubbl.Api.Core.QueryHandlers
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using Common.Caching;
-   using Common.QueryHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.QueryHandlers;
    using Data.Collections.Members;
    using Exceptions.MemberNotAddedToTeam.Version1;
    using Exceptions.MemberNotFound.Version1;

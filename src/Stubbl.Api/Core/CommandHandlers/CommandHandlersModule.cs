@@ -4,7 +4,7 @@
    using System.Reflection;
    using Autofac;
    using Autofac.Core;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Module = Autofac.Module;
 
    public class CommandHandlersModule : Module

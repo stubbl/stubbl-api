@@ -3,8 +3,8 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using Common.Caching;
-   using Common.EventHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.EventHandlers;
    using Data.Collections.Invitations;
    using Events.TeamUpdated.Version1;
    using MongoDB.Driver;

@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Commands.CreateTeamStub.Version1
 {
    using System.Collections.Generic;
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.TeamStubCreated.Version1;
    using MongoDB.Bson;
    using Shared.Version1;

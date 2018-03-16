@@ -2,7 +2,7 @@ namespace Stubbl.Api.Controllers
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Core.Commands.DeleteTeamRole.Version1;
    using Filters;
    using Microsoft.AspNetCore.Mvc;

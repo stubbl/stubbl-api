@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.UpdateTeam.Version1
 {
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.TeamUpdated.Version1;
    using MongoDB.Bson;
 

@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.EventHandlers;
+   using CodeContrib.EventHandlers;
    using Data.Collections.Invitations;
    using Events.TeamUpdated.Version1;
    using MongoDB.Driver;

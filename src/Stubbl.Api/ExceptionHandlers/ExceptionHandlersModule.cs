@@ -1,10 +1,9 @@
 ﻿namespace Stubbl.Api.ExceptionHandlers
 {
    using System.Linq;
-   using System.Reflection;
    using Autofac;
-   using Common.ExceptionHandlers;
-   using Core.Versioning;
+   using CodeContrib.ExceptionHandlers;
+   using Versioning;
    using Module = Autofac.Module;
 
    public class ExceptionHandlersModule : Module

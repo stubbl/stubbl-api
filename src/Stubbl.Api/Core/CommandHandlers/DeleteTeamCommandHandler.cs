@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.DeleteTeam.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Data.Collections.Shared;
    using Data.Collections.Teams;
    using Events.TeamDeleted.Version1;

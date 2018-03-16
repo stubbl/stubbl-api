@@ -2,7 +2,7 @@
 {
    using System.Net;
    using System.Threading.Tasks;
-   using Common.ExceptionHandlers;
+   using CodeContrib.ExceptionHandlers;
    using Core.Exceptions.MemberCannotManageRoles.Version1;
    using Newtonsoft.Json;
    using Microsoft.AspNetCore.Http;

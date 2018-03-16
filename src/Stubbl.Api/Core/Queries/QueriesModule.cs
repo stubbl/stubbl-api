@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Queries
 {
    using Autofac;
-   using Common.Queries;
+   using CodeContrib.Queries;
 
    public class QueriesModule : Module
    {

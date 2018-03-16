@@ -6,7 +6,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.CreateTeamInvitation.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Data.Collections.Invitations;
    using Data.Collections.Members;
    using Data.Collections.Shared;

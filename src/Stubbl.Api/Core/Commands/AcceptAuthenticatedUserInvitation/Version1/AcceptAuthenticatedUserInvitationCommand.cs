@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.AcceptAuthenticatedUserInvitation.Version1
 {
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.AuthenticatedUserInvitationAccepted.Version1;
    using MongoDB.Bson;
 

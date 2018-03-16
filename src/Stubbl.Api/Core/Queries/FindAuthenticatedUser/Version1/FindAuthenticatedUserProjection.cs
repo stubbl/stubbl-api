@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Queries.FindAuthenticatedUser.Version1
 {
    using System.Collections.Generic;
-   using Common.Queries;
+   using CodeContrib.Queries;
 
    public class FindAuthenticatedUserProjection : IProjection
    {

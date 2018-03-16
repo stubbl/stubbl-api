@@ -3,7 +3,7 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Authentication;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using MongoDB.Driver;
    using Queries.ListAuthenticatedUserInvitations.Version1;
    using Queries.Shared.Version1;

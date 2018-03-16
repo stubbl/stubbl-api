@@ -4,8 +4,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using Common.Caching;
-   using Common.QueryHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.QueryHandlers;
    using Exceptions.MemberNotInvitedToTeam.Version1;
    using MongoDB.Driver;
    using Queries.Shared.Version1;

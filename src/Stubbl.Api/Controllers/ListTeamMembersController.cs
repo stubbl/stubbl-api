@@ -2,7 +2,7 @@ namespace Stubbl.Api.Controllers
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Common.Queries;
+    using CodeContrib.Queries;
     using Core.Queries.ListTeamMembers.Version1;
     using Microsoft.AspNetCore.Mvc;
     using MongoDB.Bson;

@@ -1,15 +1,15 @@
 ﻿namespace Stubbl.Api.Core.EventHandlers.Cloudflare
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Common.CloudflareApi;
-    using Common.CloudflareApi.DnsRecords;
-    using Common.CloudflareApi.DnsRecords.CreateDnsRecord;
-    using Common.EventHandlers;
+    using CodeContrib.CloudflareApi;
+    using CodeContrib.CloudflareApi.DnsRecords;
+    using CodeContrib.CloudflareApi.DnsRecords.CreateDnsRecord;
+    using CodeContrib.EventHandlers;
     using Events.TeamCreated.Version1;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Options;
-    using MongoDB.Driver;
+    using Options;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public class TeamCreatedEventHandler : IEventHandler<TeamCreatedEvent>
     {

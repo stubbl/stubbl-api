@@ -4,7 +4,7 @@
    using System.Reflection;
    using Autofac;
    using Autofac.Core;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Module = Autofac.Module;
 
    public class QueryHandlersModule : Module

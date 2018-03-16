@@ -3,7 +3,7 @@
    using System.Linq;
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.EventHandlers;
+   using CodeContrib.EventHandlers;
    using Data;
    using Data.Collections.Invitations;
    using Events.TeamRoleDeleted.Version1;

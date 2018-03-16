@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Core.Commands.DeleteTeamInvitation.Version1;
    using Microsoft.AspNetCore.Mvc;
    using MongoDB.Bson;

@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Commands.CreateTeamLog.Version1
 {
    using System.Collections.Generic;
-   using Common.Commands;
+   using CodeContrib.Commands;
    using Events.TeamLogCreated.Version1;
    using MongoDB.Bson;
 

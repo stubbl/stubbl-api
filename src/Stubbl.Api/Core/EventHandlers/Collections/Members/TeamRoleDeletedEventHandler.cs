@@ -4,7 +4,7 @@
    using System.Collections.Generic;
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.EventHandlers;
+   using CodeContrib.EventHandlers;
    using Data;
    using Data.Collections.Members;
    using Events.TeamRoleDeleted.Version1;

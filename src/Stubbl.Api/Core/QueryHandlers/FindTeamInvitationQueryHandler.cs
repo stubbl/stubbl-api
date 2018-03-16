@@ -5,8 +5,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using Common.Caching;
-   using Common.QueryHandlers;
+   using CodeContrib.Caching;
+   using CodeContrib.QueryHandlers;
    using Data.Collections.Invitations;
    using Exceptions.InvitationNotFound.Version1;
    using Exceptions.MemberNotAddedToTeam.Version1;

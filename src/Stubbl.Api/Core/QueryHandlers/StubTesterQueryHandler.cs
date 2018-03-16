@@ -3,7 +3,7 @@ namespace Stubbl.Api.Core.QueryHandlers
    using System.Linq;
    using System.Threading;
    using System.Threading.Tasks;
-   using Common.QueryHandlers;
+   using CodeContrib.QueryHandlers;
    using Data.Collections.Teams;
    using MongoDB.Driver;
    using Queries.Shared.Version1;

@@ -2,7 +2,7 @@
 {
    using System;
    using System.Collections.Generic;
-   using Common.Queries;
+   using CodeContrib.Queries;
    using Shared.Version1;
 
    public class FindTeamLogProjection : IProjection

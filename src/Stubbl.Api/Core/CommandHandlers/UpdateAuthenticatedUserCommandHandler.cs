@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.UpdateAuthenticatedUser.Version1;
-   using Common.CommandHandlers;
+   using CodeContrib.CommandHandlers;
    using Data.Collections.Members;
    using Events.AuthenticatedUserUpdated.Version1;
    using MongoDB.Driver;
