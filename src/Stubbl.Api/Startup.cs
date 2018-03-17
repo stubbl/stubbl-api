@@ -236,13 +236,13 @@ namespace Stubbl.Api
                 .AddCommandDispatcher()
                 .AddCommandHandlerDecorators()
                 .AddCommandHandlers(typeof(JsonConstants).Assembly)
-                .AddCommandHandlers(Assembly.GetEntryAssembly())
+                .AddCommandHandlers(Assembly.GetExecutingAssembly())
                 .AddEventDispatcher()
                 .AddEventHandlerDecorators()
                 .AddEventHandlers(typeof(JsonConstants).Assembly)
-                .AddEventHandlers(Assembly.GetEntryAssembly())
+                .AddEventHandlers(Assembly.GetExecutingAssembly())
                 .AddExceptionHandlers(typeof(JsonConstants).Assembly)
-                .AddExceptionHandlers(Assembly.GetEntryAssembly())
+                .AddExceptionHandlers(Assembly.GetExecutingAssembly())
                 .AddIdentityIdAccessor()
                 .AddMongo(new MongoSettings
                 (
@@ -251,7 +251,7 @@ namespace Stubbl.Api
                 .AddQueryDispatcher()
                 .AddQueryHandlerDecorators()
                 .AddQueryHandlers(typeof(JsonConstants).Assembly)
-                .AddQueryHandlers(Assembly.GetEntryAssembly())
+                .AddQueryHandlers(Assembly.GetExecutingAssembly())
                 .AddUserAccessor();
 
             containerBuilder.RegisterAssemblyModules(s_assembly);
