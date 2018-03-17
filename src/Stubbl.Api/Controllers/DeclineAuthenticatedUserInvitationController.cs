@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Core.Commands.DeclineAuthenticatedUserInvitation.Version1;
    using Filters;
    using Microsoft.AspNetCore.Mvc;

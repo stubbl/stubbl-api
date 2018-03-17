@@ -1,4 +1,4 @@
-namespace CodeContrib.Caching.Memory
+namespace Gunnsoft.Common.Caching.Memory
 {
    using System;
    using System.Threading.Tasks;

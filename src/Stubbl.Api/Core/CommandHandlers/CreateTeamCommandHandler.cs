@@ -6,7 +6,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.CreateTeam.Version1;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Data;
    using Data.Collections.DefaultRoles;
    using Events.Shared.Version1;

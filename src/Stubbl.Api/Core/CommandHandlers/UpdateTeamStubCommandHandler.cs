@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.UpdateTeamStub.Version1;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Data.Collections.Shared;
    using Data.Collections.Stubs;
    using Events.TeamStubUpdated.Version1;

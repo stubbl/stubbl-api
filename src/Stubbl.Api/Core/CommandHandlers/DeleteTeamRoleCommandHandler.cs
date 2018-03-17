@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.DeleteTeamRole.Version1;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Data.Collections.Teams;
    using Data.Collections.Shared;
    using Events.TeamRoleDeleted.Version1;

@@ -4,7 +4,7 @@
    using System.Reflection;
    using Autofac;
    using Autofac.Core;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Module = Autofac.Module;
 
    public class CommandHandlersModule : Module

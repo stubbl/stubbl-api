@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Events.EmailSent.Version1
 {
-   using CodeContrib.Events;
+   using Gunnsoft.Cqs.Events;
    using MimeKit;
 
    public class EmailSentEvent : IEvent

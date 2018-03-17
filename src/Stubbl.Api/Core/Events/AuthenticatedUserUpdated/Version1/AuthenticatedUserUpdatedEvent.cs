@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Events.AuthenticatedUserUpdated.Version1
 {
-   using CodeContrib.Events;
+   using Gunnsoft.Cqs.Events;
 
    public class AuthenticatedUserUpdatedEvent : IEvent
    {

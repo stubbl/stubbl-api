@@ -5,8 +5,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.EventHandlers;
    using Events.AuthenticatedUserUpdated.Version1;
 
    public class AuthenticatedUserUpdatedEventHandler : IEventHandler<AuthenticatedUserUpdatedEvent>

@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.CloneTeamStub.Version1
 {
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Events.TeamStubCloned.Version1;
    using MongoDB.Bson;
 

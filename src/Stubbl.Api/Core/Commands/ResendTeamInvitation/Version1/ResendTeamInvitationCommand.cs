@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.ResendTeamInvitation.Version1
 {
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Events.TeamInvitationResent.Version1;
    using MongoDB.Bson;
 

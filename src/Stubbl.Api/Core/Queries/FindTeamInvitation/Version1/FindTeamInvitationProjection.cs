@@ -1,6 +1,6 @@
 namespace Stubbl.Api.Core.Queries.FindTeamInvitation.Version1
 {
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
    using Shared.Version1;
 
    public class FindTeamInvitationProjection : IProjection

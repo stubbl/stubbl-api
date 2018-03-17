@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.ResendTeamInvitation.Version1;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Data.Collections.Invitations;
    using Data.Collections.Shared;
    using Events.TeamInvitationResent.Version1;

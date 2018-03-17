@@ -3,8 +3,8 @@ namespace Stubbl.Api.Core.EventHandlers.Cache.CountTeamInvitations
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.EventHandlers;
    using Events.TeamInvitationDeleted.Version1;
 
    public class TeamInvitationDeletedEventHandler : IEventHandler<TeamInvitationDeletedEvent>

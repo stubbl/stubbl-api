@@ -5,7 +5,7 @@ namespace Stubbl.Api.Core.CommandHandlers
    using System.Threading.Tasks;
    using Authentication;
    using Commands.DeclineAuthenticatedUserInvitation.Version1;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Data.Collections.Invitations;
    using Events.AuthenticatedUserInvitationDeclined.Version1;
    using Exceptions.InvitationAlreadyUsed.Version1;

@@ -1,7 +1,7 @@
 namespace Stubbl.Api.Core.Queries.ListTeams.Version1
 {
    using System.Collections.Generic;
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
 
    public class ListTeamsProjection : IProjection
    {

@@ -1,4 +1,4 @@
-namespace CodeContrib.Commands
+namespace Gunnsoft.Cqs.Commands
 {
    using Events;
 

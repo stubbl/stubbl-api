@@ -4,8 +4,8 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.QueryHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.QueryHandlers;
    using Core.Authentication;
    using Core.Exceptions.MemberNotAddedToTeam.Version1;
    using Data.Collections.Invitations;

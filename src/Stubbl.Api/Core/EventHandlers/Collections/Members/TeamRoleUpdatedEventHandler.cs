@@ -4,7 +4,7 @@
    using System.Collections.Generic;
    using System.Threading;
    using System.Threading.Tasks;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Cqs.EventHandlers;
    using Data.Collections.Members;
    using Events.TeamRoleUpdated.Version1;
    using Events.Shared.Version1;

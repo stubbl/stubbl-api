@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.UpdateAuthenticatedUser.Version1
 {
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Events.AuthenticatedUserUpdated.Version1;
 
    public class UpdateAuthenticatedUserCommand : ICommand<AuthenticatedUserUpdatedEvent>

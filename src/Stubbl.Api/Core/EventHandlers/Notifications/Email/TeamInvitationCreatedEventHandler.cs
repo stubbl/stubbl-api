@@ -4,8 +4,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.SendEmail.Version1;
-   using CodeContrib.Commands;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Cqs.Commands;
+   using Gunnsoft.Cqs.EventHandlers;
    using Core.Notifications.Email.TeamInvitation.Version1;
    using Data.Collections.Teams;
    using Events.TeamInvitationCreated.Version1;

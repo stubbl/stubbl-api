@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Events.TeamDeleted.Version1
 {
-   using CodeContrib.Events;
+   using Gunnsoft.Cqs.Events;
    using MongoDB.Bson;
 
    public class TeamDeletedEvent : IEvent

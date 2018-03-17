@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.FindTeamMember.Version1
 {
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
    using MongoDB.Bson;
 
    public class FindTeamMemberQuery : IQuery<FindTeamMemberProjection>

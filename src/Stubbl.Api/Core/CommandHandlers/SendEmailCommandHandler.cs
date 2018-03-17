@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.CommandHandlers
 {
-    using CodeContrib.CommandHandlers;
+    using Gunnsoft.Cqs.CommandHandlers;
     using Commands.SendEmail.Version1;
     using Events.EmailSent.Version1;
     using MailKit.Net.Smtp;

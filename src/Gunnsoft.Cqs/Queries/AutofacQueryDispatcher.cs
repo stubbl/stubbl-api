@@ -1,4 +1,4 @@
-﻿namespace CodeContrib.Queries
+﻿namespace Gunnsoft.Cqs.Queries
 {
    using System;
    using System.Reflection;

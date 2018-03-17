@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using CodeContrib.QueryHandlers;
+   using Gunnsoft.Cqs.QueryHandlers;
    using Core.Authentication;
    using Data.Collections.Teams;
    using MongoDB.Driver;

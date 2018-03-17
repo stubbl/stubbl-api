@@ -1,4 +1,4 @@
-namespace CodeContrib.Caching
+namespace Gunnsoft.Common.Caching
 {
    using System;
 

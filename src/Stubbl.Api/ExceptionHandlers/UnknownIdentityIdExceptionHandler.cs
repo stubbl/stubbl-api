@@ -2,7 +2,7 @@
 {
    using System.Net;
    using System.Threading.Tasks;
-   using CodeContrib.ExceptionHandlers;
+   using Gunnsoft.Api.ExceptionHandlers;
    using Core.Authentication;
    using Newtonsoft.Json;
    using Microsoft.AspNetCore.Http;

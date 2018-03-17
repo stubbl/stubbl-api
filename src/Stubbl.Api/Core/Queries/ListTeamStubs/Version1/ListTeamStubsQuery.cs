@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.ListTeamStubs.Version1
 {
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
    using MongoDB.Bson;
 
    public class ListTeamStubsQuery : IQuery<ListTeamStubsProjection>

@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Cqs.EventHandlers;
    using Data.Collections.Logs;
    using Events.TeamDeleted.Version1;
    using MongoDB.Driver;

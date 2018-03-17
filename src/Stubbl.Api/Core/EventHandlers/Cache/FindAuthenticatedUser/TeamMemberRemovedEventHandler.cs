@@ -3,8 +3,8 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.EventHandlers;
    using Data.Collections.Members;
    using Events.TeamMemberRemoved.Version1;
    using MongoDB.Driver;

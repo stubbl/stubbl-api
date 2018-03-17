@@ -2,7 +2,7 @@
 {
    using System.Linq;
    using Autofac;
-   using CodeContrib.ExceptionHandlers;
+   using Gunnsoft.Api.ExceptionHandlers;
    using Versioning;
    using Module = Autofac.Module;
 

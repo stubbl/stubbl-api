@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Queries.CountTeamStubs.Version1
 {
    using System.Collections.Generic;
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
 
    public class CountTeamStubsProjection : IProjection
    {

@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.DeleteTeamRole.Version1
 {
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Events.TeamRoleDeleted.Version1;
    using MongoDB.Bson;
 

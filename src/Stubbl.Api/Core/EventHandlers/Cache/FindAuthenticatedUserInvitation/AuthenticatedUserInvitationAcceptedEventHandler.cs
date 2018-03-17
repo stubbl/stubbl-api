@@ -4,8 +4,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using CodeContrib.EventHandlers;
-   using CodeContrib.Caching;
+   using Gunnsoft.Cqs.EventHandlers;
+   using Gunnsoft.Common.Caching;
    using Events.AuthenticatedUserInvitationAccepted.Version1;
 
    public class AuthenticatedUserInvitationAcceptedEventHandler : IEventHandler<AuthenticatedUserInvitationAcceptedEvent>

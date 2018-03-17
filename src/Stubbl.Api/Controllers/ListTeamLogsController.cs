@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using CodeContrib.Queries;
+    using Gunnsoft.Cqs.Queries;
     using Core.Queries.ListTeamLogs.Version1;
     using Microsoft.AspNetCore.Mvc;
     using MongoDB.Bson;

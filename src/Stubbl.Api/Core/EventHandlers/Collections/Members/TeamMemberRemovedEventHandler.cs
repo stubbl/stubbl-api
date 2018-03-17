@@ -3,7 +3,7 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Authentication;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Cqs.EventHandlers;
    using Data.Collections.Members;
    using Events.TeamMemberRemoved.Version1;
    using MongoDB.Driver;

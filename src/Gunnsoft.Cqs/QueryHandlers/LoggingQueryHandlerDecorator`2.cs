@@ -1,4 +1,4 @@
-﻿namespace CodeContrib.QueryHandlers
+﻿namespace Gunnsoft.Cqs.QueryHandlers
 {
    using System;
    using System.Diagnostics;

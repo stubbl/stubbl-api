@@ -2,7 +2,7 @@
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Core.Commands.ResendTeamInvitation.Version1;
    using Microsoft.AspNetCore.Mvc;
    using MongoDB.Bson;

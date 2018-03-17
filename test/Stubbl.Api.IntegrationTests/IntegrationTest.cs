@@ -1,7 +1,7 @@
 namespace Stubbl.Api.IntegrationTests
 {
-    using CodeContrib.Commands;
-    using CodeContrib.Queries;
+    using Gunnsoft.Cqs.Commands;
+    using Gunnsoft.Cqs.Queries;
     using FluentAssertions;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;

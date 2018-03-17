@@ -4,7 +4,7 @@ namespace Stubbl.Api.Core.QueryHandlers
    using System.Threading;
    using System.Threading.Tasks;
    using Authentication;
-   using CodeContrib.QueryHandlers;
+   using Gunnsoft.Cqs.QueryHandlers;
    using Queries.ListTeams.Version1;
 
    public class ListTeamsQueryHandler : IQueryHandler<ListTeamsQuery, ListTeamsProjection>

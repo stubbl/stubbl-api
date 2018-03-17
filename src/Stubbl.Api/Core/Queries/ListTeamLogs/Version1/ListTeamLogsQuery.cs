@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Queries.ListTeamLogs.Version1
 {
    using System.Collections.Generic;
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
    using MongoDB.Bson;
 
    public class ListTeamLogsQuery : IQuery<ListTeamLogsProjection>

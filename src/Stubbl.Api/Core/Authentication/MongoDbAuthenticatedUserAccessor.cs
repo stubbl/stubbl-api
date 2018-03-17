@@ -2,7 +2,7 @@ namespace Stubbl.Api.Core.Authentication
 {
    using System;
    using Caching;
-   using CodeContrib.Caching;
+   using Gunnsoft.Common.Caching;
    using Data.Collections.Members;
    using Exceptions.AuthenticatedUserNotFound.Version1;
    using MongoDB.Driver;

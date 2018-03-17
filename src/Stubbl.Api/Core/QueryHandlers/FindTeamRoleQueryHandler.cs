@@ -6,8 +6,8 @@
    using MongoDB.Driver;
    using Authentication;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.QueryHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.QueryHandlers;
    using Data.Collections.Teams;
    using Exceptions.MemberNotAddedToTeam.Version1;
    using Exceptions.RoleNotFound.Version1;

@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Commands.UpdateTeamRole.Version1
 {
    using System.Collections.Generic;
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Events.TeamRoleUpdated.Version1;
    using MongoDB.Bson;
    using Shared.Version1;

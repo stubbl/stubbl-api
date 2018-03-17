@@ -1,7 +1,7 @@
 ﻿namespace Stubbl.Api.Core.Queries.FindTeamRole.Version1
 {
    using System.Collections.Generic;
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
    using Shared.Version1;
 
    public class FindTeamRoleProjection : IProjection

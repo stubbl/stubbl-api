@@ -1,4 +1,4 @@
-﻿namespace CodeContrib.ExceptionHandlers
+﻿namespace Gunnsoft.Api.ExceptionHandlers
 {
    using System;
    using System.Threading.Tasks;

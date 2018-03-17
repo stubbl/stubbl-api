@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands
 {
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Autofac;
 
    public class CommandsModule : Module

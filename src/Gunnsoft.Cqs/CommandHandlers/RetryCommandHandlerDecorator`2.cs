@@ -1,4 +1,4 @@
-namespace CodeContrib.CommandHandlers
+namespace Gunnsoft.Cqs.CommandHandlers
 {
     using System;
     using System.Collections.Generic;

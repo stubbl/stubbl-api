@@ -2,7 +2,7 @@
 {
    using System;
    using System.Collections.Generic;
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
    using Shared.Version1;
 
    public class FindTeamLogProjection : IProjection

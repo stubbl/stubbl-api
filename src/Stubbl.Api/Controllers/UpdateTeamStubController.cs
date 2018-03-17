@@ -3,7 +3,7 @@ namespace Stubbl.Api.Controllers
    using System.Linq;
    using System.Threading;
    using System.Threading.Tasks;
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Core.Commands.Shared.Version1;
    using Core.Commands.UpdateTeamStub.Version1;
    using Filters;

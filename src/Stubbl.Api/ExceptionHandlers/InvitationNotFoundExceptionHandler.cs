@@ -2,7 +2,7 @@
 {
    using System.Net;
    using System.Threading.Tasks;
-   using CodeContrib.ExceptionHandlers;
+   using Gunnsoft.Api.ExceptionHandlers;
    using Core.Exceptions.InvitationNotFound.Version1;
    using Newtonsoft.Json;
    using Microsoft.AspNetCore.Http;

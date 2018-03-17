@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.StubTester.Version1
 {
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
    using MongoDB.Bson;
 
    public class StubTesterQuery : IQuery<StubTesterProjection>

@@ -3,7 +3,7 @@
    using System.Linq;
    using Autofac;
    using Autofac.Core;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Cqs.EventHandlers;
    using Module = Autofac.Module;
 
    public class EventHandlersModule : Module

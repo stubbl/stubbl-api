@@ -6,7 +6,7 @@
    using System.Reflection;
    using System.Threading.Tasks;
    using Autofac;
-   using CodeContrib.ExceptionHandlers;
+   using Gunnsoft.Api.ExceptionHandlers;
    using Newtonsoft.Json;
    using Microsoft.AspNetCore.Hosting;
    using Microsoft.AspNetCore.Http;

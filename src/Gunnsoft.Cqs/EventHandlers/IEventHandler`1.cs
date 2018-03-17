@@ -1,4 +1,4 @@
-﻿namespace CodeContrib.EventHandlers
+﻿namespace Gunnsoft.Cqs.EventHandlers
 {
    using System.Threading;
    using System.Threading.Tasks;

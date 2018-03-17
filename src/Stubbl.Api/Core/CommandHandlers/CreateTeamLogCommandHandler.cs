@@ -4,7 +4,7 @@
    using System.Threading;
    using System.Threading.Tasks;
    using Commands.CreateTeamLog.Version1;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Events.TeamLogCreated.Version1;
    using Data.Collections.Logs;
    using Data.Collections.Shared;

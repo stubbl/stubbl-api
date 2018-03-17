@@ -4,8 +4,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.QueryHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.QueryHandlers;
    using Exceptions.MemberNotInvitedToTeam.Version1;
    using MongoDB.Driver;
    using Queries.Shared.Version1;

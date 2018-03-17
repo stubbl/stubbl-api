@@ -3,8 +3,8 @@ namespace Stubbl.Api.Core.EventHandlers.Cache.CountTeamStubs
    using System.Threading;
    using System.Threading.Tasks;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.EventHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.EventHandlers;
    using Events.TeamStubDeleted.Version1;
 
    public class TeamStubDeletedEventHandler : IEventHandler<TeamStubDeletedEvent>

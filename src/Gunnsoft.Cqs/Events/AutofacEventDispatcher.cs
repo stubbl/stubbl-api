@@ -1,4 +1,4 @@
-﻿namespace CodeContrib.Events
+﻿namespace Gunnsoft.Cqs.Events
 {
    using System;
    using System.Collections.Generic;

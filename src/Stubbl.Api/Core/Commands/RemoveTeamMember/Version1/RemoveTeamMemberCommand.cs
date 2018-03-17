@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.RemoveTeamMember.Version1
 {
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Events.TeamMemberRemoved.Version1;
    using MongoDB.Bson;
 

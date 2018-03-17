@@ -5,8 +5,8 @@
    using System.Threading.Tasks;
    using Authentication;
    using Caching;
-   using CodeContrib.Caching;
-   using CodeContrib.QueryHandlers;
+   using Gunnsoft.Common.Caching;
+   using Gunnsoft.Cqs.QueryHandlers;
    using Data.Collections.Teams;
    using Exceptions.MemberNotAddedToTeam.Version1;
    using Exceptions.TeamNotFound.Version1;

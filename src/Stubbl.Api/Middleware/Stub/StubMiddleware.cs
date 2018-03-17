@@ -8,8 +8,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Xml.Linq;
-    using CodeContrib.Commands;
-    using CodeContrib.Queries;
+    using Gunnsoft.Cqs.Commands;
+    using Gunnsoft.Cqs.Queries;
     using Core.Commands.CreateTeamLog.Version1;
     using Core.Commands.Shared.Version1;
     using Core.Queries.StubTester.Version1;

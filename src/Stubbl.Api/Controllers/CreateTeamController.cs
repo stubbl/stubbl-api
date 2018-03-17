@@ -2,7 +2,7 @@ namespace Stubbl.Api.Controllers
 {
    using System.Threading;
    using System.Threading.Tasks;
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Core.Commands.CreateTeam.Version1;
    using Filters;
    using Microsoft.AspNetCore.Mvc;

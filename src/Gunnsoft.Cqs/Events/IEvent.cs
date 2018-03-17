@@ -1,4 +1,4 @@
-﻿namespace CodeContrib.Events
+﻿namespace Gunnsoft.Cqs.Events
 {
    public interface IEvent
    {

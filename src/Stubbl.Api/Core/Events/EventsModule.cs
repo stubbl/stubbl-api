@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Events
 {
-   using CodeContrib.Events;
+   using Gunnsoft.Cqs.Events;
    using Autofac;
 
    public class EventsModule : Module

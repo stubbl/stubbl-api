@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Queries.Canary.Version1
 {
-   using CodeContrib.Queries;
+   using Gunnsoft.Cqs.Queries;
 
    public class CanaryQuery : IQuery<CanaryProjection>
    {

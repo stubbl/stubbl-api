@@ -2,7 +2,7 @@
 {
    using System.Collections.Generic;
    using Events.Shared.Version1;
-   using CodeContrib.Events;
+   using Gunnsoft.Cqs.Events;
    using MongoDB.Bson;
 
    public class TeamRoleCreatedEvent : IEvent

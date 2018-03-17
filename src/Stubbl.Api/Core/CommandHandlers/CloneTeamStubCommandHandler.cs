@@ -5,7 +5,7 @@
    using System.Threading.Tasks;
    using Authentication;
    using Commands.CloneTeamStub.Version1;
-   using CodeContrib.CommandHandlers;
+   using Gunnsoft.Cqs.CommandHandlers;
    using Data.Collections.Shared;
    using Events.TeamStubCloned.Version1;
    using Exceptions.MemberCannotManageStubs.Version1;

@@ -1,6 +1,6 @@
 ﻿namespace Stubbl.Api.Core.Commands.DeleteTeamStub.Version1
 {
-   using CodeContrib.Commands;
+   using Gunnsoft.Cqs.Commands;
    using Events.TeamStubDeleted.Version1;
    using MongoDB.Bson;
 
