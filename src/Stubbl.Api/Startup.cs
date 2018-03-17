@@ -8,6 +8,7 @@ using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Gunnsoft.CloudflareApi;
+using Gunnsoft.Cqs;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -157,8 +158,6 @@ namespace Stubbl.Api
                 o.LowercaseUrls = true;
             });
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddSwaggerGen(o =>
             {
                 var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
@@ -200,9 +199,14 @@ namespace Stubbl.Api
                 }
             });
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton(sp =>
                 new HttpClient(new LoggingHandler(new HttpClientHandler(),
                     sp.GetRequiredService<ILogger<LoggingHandler>>())));
+            services.AddSingleton(new CqsSettings
+            (
+                _configuration.GetValue<string>("Storage:ConnectionString")
+            ));
             services.AddCloudflareApi(new CloudflareApiSettings
             (
                 _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
