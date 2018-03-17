@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
 using System.Net;
+using Gunnsoft.Api.Authentication;
+using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
+using Gunnsoft.Api.Exceptions.UnknownIdentityId.Version1;
+using Gunnsoft.Api.Models.AuthenticatedUserNotFound.Version1;
+using Gunnsoft.Api.Models.Error.Version1;
+using Gunnsoft.Api.Models.UnknownIdentityId.Version1;
 using MongoDB.Bson;
-using Stubbl.Api.Authentication;
 using Stubbl.Api.Exceptions.AdministratorRoleNotFound.Version1;
-using Stubbl.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Stubbl.Api.Exceptions.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Exceptions.InvitationNotFound.Version1;
 using Stubbl.Api.Exceptions.LogNotFound.Version1;
@@ -25,8 +29,6 @@ using Stubbl.Api.Exceptions.RoleNotFound.Version1;
 using Stubbl.Api.Exceptions.StubNotFound.Version1;
 using Stubbl.Api.Exceptions.TeamNotFound.Version1;
 using Stubbl.Api.Exceptions.UserRoleNotFound.Version1;
-using Stubbl.Api.Models.AuthenticatedUserNotFound.Version1;
-using Stubbl.Api.Models.Error.Version1;
 using Stubbl.Api.Models.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Models.InvitationNotFound.Version1;
 using Stubbl.Api.Models.LogNotFound.Version1;
@@ -46,7 +48,6 @@ using Stubbl.Api.Models.RoleCannotBeUpdated.Version1;
 using Stubbl.Api.Models.RoleNotFound.Version1;
 using Stubbl.Api.Models.StubNotFound.Version1;
 using Stubbl.Api.Models.TeamNotFound.Version1;
-using Stubbl.Api.Models.UnknownIdentityId.Version1;
 
 namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
 {

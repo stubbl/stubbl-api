@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Gunnsoft.Api.Filters;
 using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Commands.DeclineAuthenticatedUserInvitation.Version1;
-using Stubbl.Api.Filters;
 
 namespace Stubbl.Api.Controllers
 {

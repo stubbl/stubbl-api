@@ -1,4 +1,4 @@
-﻿using Stubbl.Api.Models.Error.Version1;
+﻿using Gunnsoft.Api.Models.Error.Version1;
 
 namespace Stubbl.Api.Models.StubNotFound.Version1
 {

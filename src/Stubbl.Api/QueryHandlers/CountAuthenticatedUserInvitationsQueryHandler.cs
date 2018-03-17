@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Gunnsoft.Api.Authentication;
 using Gunnsoft.Cqs.QueryHandlers;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;

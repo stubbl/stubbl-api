@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Gunnsoft.Api.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
@@ -22,7 +23,7 @@ namespace Stubbl.Api.Authentication
                 .As<IIdentityIdAccessor>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<MongoDbAuthenticatedUserAccessor>()
+            builder.RegisterType<MongoAuthenticatedUserAccessor>()
                 .As<IAuthenticatedUserAccessor>()
                 .InstancePerLifetimeScope();
         }

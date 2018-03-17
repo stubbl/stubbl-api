@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Gunnsoft.Api.Filters;
 using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Commands.CreateTeamRole.Version1;
 using Stubbl.Api.Commands.Shared.Version1;
-using Stubbl.Api.Filters;
 using Stubbl.Api.Models.CreateTeamRole.Version1;
 
 namespace Stubbl.Api.Controllers

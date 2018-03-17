@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Gunnsoft.Api.Authentication;
 using Gunnsoft.Common.Caching;
 using Gunnsoft.Cqs.QueryHandlers;
 using MongoDB.Driver;

@@ -7,6 +7,9 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Gunnsoft.Api;
+using Gunnsoft.Api.Middleware;
+using Gunnsoft.Api.Versioning;
 using Gunnsoft.CloudflareApi;
 using Gunnsoft.Cqs;
 using IdentityServer4.AccessTokenValidation;
@@ -23,11 +26,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
-using Newtonsoft.Json;
 using Stubbl.Api.Data;
 using Stubbl.Api.Middleware;
 using Stubbl.Api.Options;
-using Stubbl.Api.Versioning;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -81,7 +82,7 @@ namespace Stubbl.Api
 
             if (_hostingEnvironment.IsDevelopment() || _hostingEnvironment.IsEnvironment("IntegrationTesting"))
             {
-                app.UseFakeUser();
+                app.UseSubHeader();
             }
 
             app.UseAuthentication();
@@ -94,9 +95,7 @@ namespace Stubbl.Api
             app.UseSwaggerUI(o =>
             {
                 o.OAuthClientId("stubbl-api-swagger");
-                o.OAuthClientSecret(_configuration.GetValue<string>("Swagger:ClientSecret"));
-                o.OAuthRealm("stubbl-api");
-                o.OAuthAppName("stubbl-api-swagger");
+                o.OAuthAppName("Stubbl API Swagger");
 
                 foreach (var apiVersionDescription in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
@@ -112,15 +111,15 @@ namespace Stubbl.Api
             {
                 o.ApiVersionReader = new AcceptHeaderApiVersionReader();
                 o.AssumeDefaultVersionWhenUnspecified = true;
-                o.DefaultApiVersion = new ApiVersion(Versions.Latest, 0);
+                o.DefaultApiVersion = new ApiVersion(1, 0);
             });
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
+                .AddIdentityServerAuthentication(o =>
                 {
-                    options.ApiName = "stubbl-api";
-                    options.Authority = _configuration.GetValue<string>("IdentityServer:Authority");
-                    options.RequireHttpsMetadata = _hostingEnvironment.IsProduction();
+                    o.ApiName = "stubbl-api";
+                    o.Authority = _configuration.GetValue<string>("IdentityServer:Authority");
+                    o.RequireHttpsMetadata = _hostingEnvironment.IsProduction();
                 });
 
             services.AddOptions()
@@ -160,28 +159,33 @@ namespace Stubbl.Api
 
             services.AddSwaggerGen(o =>
             {
-                var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
-
-                o.AddSecurityDefinition("Swagger", new OAuth2Scheme
+                //if (_hostingEnvironment.IsProduction())
                 {
-                    Type = "oauth2",
-                    AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
-                    Flow = "implicit",
-                    TokenUrl = $"{identityServerAuthority}/connect/token",
-                    Scopes = new Dictionary<string, string>
+                    var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
+
+                    o.AddSecurityDefinition("Swagger", new OAuth2Scheme
                     {
-                        {"stubbl-api", "Stubbl API"}
-                    }
-                });
+                        AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
+                        Flow = "implicit",
+                        Scopes = new Dictionary<string, string>
+                        {
+                            { "stubbl-api", "Stubbl API" }
+                        },
+                        TokenUrl = $"{identityServerAuthority}/connect/token",
+                        Type = "oauth2"
+                    });
+                }
+
                 o.CustomSchemaIds(x => x.FullName);
                 o.DescribeAllEnumsAsStrings();
                 o.DocumentFilter<LowercaseDocumentOperationFilter>();
+                o.OperationFilter<AuthorizeCheckOperationFilter>();
                 o.OperationFilter<CancellationTokenOperationFilter>();
 
-                if (_hostingEnvironment.IsDevelopment())
-                {
-                    o.OperationFilter<SubHeaderOperationFilter>();
-                }
+                //if (_hostingEnvironment.IsDevelopment())
+                //{
+                //    o.OperationFilter<SubHeaderOperationFilter>();
+                //}
 
                 o.OperationFilter<SwaggerDefaultValuesOperationFilter>();
 
@@ -253,6 +257,22 @@ namespace Stubbl.Api
             }
 
             return info;
+        }
+    }
+
+    internal class AuthorizeCheckOperationFilter : IOperationFilter
+    {
+        public void Apply(Operation operation, OperationFilterContext context)
+        {
+            operation.Responses.Add("401", new Response {Description = "Unauthorized"});
+
+            operation.Security = new List<IDictionary<string, IEnumerable<string>>>
+            {
+                new Dictionary<string, IEnumerable<string>>
+                {
+                    { "oauth2", new[] { "stubbl-api" }}
+                }
+            };
         }
     }
 }

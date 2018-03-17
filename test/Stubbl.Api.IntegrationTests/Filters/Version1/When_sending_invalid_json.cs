@@ -4,8 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using FluentValidation;
+using Gunnsoft.Api.Models.ValidationFailed.Version1;
 using NUnit.Framework;
-using Stubbl.Api.Models.ValidationFailed.Version1;
 
 namespace Stubbl.Api.IntegrationTests.Filters.Version1
 {

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Gunnsoft.Api;
 using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Http;

@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Gunnsoft.Api.Filters;
 using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Commands.CreateTeam.Version1;
-using Stubbl.Api.Filters;
 using Stubbl.Api.Models.CreateTeam.Version1;
 
 namespace Stubbl.Api.Controllers

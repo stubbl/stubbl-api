@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Autofac;
 using Gunnsoft.Api.ExceptionHandlers;
-using Stubbl.Api.Versioning;
+using Gunnsoft.Api.Versioning;
 
 namespace Stubbl.Api.ExceptionHandlers
 {

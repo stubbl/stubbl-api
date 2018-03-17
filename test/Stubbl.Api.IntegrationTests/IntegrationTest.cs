@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Gunnsoft.Api;
 using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Hosting;
