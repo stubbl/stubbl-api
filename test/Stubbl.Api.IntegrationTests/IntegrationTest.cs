@@ -36,7 +36,7 @@ namespace Stubbl.Api.IntegrationTests
             CommandDispatcher = Substitute.For<ICommandDispatcher>();
             QueryDispatcher = Substitute.For<IQueryDispatcher>();
 
-            var builder = new WebHostBuilder()
+            var builder = Program.GetWebHostBuilder(AppContext.BaseDirectory)
                .ConfigureServices(s =>
                {
                    s.AddTransient(cc => CommandDispatcher);

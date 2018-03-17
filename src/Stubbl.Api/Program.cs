@@ -3,7 +3,6 @@
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
-    using MongoDB.Bson;
     using Serilog;
     using Serilog.Core.Enrichers;
     using Serilog.Events;
@@ -17,22 +16,23 @@
         {
             Console.Title = "stubbl-api";
 
-            BuildWebHost(args).Run();
+            BuildWebHost(Directory.GetCurrentDirectory(), args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) => WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string appRootPath, string[] args) => GetWebHostBuilder(appRootPath, args).Build();
+
+        public static IWebHostBuilder GetWebHostBuilder(string appRootPath, string[] args = null) => WebHost.CreateDefaultBuilder(args)
             .CaptureStartupErrors(true)
             .ConfigureAppConfiguration((hostingContext, configuration) =>
             {
                 var hostingEnvironment = hostingContext.HostingEnvironment;
 
-                configuration.SetBasePath(hostingEnvironment.ContentRootPath)
-                   .AddJsonFile("appsettings.json", true, true)
-                   .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", true, true)
-                   .AddEnvironmentVariables()
-                   .AddUserSecrets<Startup>();
+                configuration.AddJsonFile("appsettings.json", true, true)
+                    .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", true, true)
+                    .AddEnvironmentVariables()
+                    .AddUserSecrets<Startup>();
             })
-            .UseContentRoot(Directory.GetCurrentDirectory())
+            .UseContentRoot(appRootPath)
             .UseKestrel()
             .UseIISIntegration()
             .UseSerilog((hostingContext, loggerConfiguration) => {
@@ -41,7 +41,7 @@
                     .Enrich.With(new PropertyEnricher("Component", "stubbl-identity"))
                     .Enrich.With(new PropertyEnricher("Environment", hostingContext.HostingEnvironment.EnvironmentName))
                     .Enrich.WithExceptionDetails()
-                    .WriteTo.Console(restrictedToMinimumLevel: hostingContext.Configuration.GetValue<LogEventLevel>("Serilog:LogEventLevel"));
+                    .WriteTo.Console(hostingContext.Configuration.GetValue<LogEventLevel>("Serilog:LogEventLevel"));
 
                 var seqUrl = hostingContext.Configuration.GetValue<string>("Seq:Url");
 
@@ -55,7 +55,6 @@
                     );
                 }
             })
-            .UseStartup<Startup>()
-            .Build();
+            .UseStartup<Startup>();
     }
 }

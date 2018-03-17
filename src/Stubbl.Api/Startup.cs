@@ -93,7 +93,7 @@
             app.UseSwaggerUI(o =>
             {
                 o.OAuthClientId("stubbl-api-swagger");
-                o.OAuthClientSecret(_configuration.GetValue<string>("Swagger: ClientSecret"));
+                o.OAuthClientSecret(_configuration.GetValue<string>("Swagger:ClientSecret"));
                 o.OAuthRealm("stubbl-api");
                 o.OAuthAppName("stubbl-api-swagger");
 
@@ -159,12 +159,14 @@
 
             services.AddSwaggerGen(o =>
             {
+                var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
+
                 o.AddSecurityDefinition("Swagger", new OAuth2Scheme
                 {
                     Type = "oauth2",
-                    AuthorizationUrl = $"{_configuration.GetValue<string>("IdentityServer:Authority")}/connect/authorize",
+                    AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
                     Flow = "implicit",
-                    TokenUrl = $"{_configuration.GetValue<string>("IdentityServer:Authority")}/connect/token",
+                    TokenUrl = $"{identityServerAuthority}/connect/token",
                     Scopes = new Dictionary<string, string>
                     {
                         { "stubbl-api", "Stubbl API" }
