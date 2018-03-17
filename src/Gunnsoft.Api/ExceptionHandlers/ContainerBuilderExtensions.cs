@@ -1,23 +1,25 @@
 ﻿using System.Linq;
+using System.Reflection;
 using Autofac;
-using Gunnsoft.Api.ExceptionHandlers;
 using Gunnsoft.Api.Versioning;
 
-namespace Stubbl.Api.ExceptionHandlers
+namespace Gunnsoft.Api.ExceptionHandlers
 {
-    public class ExceptionHandlersModule : Module
+    public static class ContainerBuilderExtensions
     {
-        protected override void Load(ContainerBuilder builder)
+        public static ContainerBuilder AddExceptionHandlers(this ContainerBuilder extended, Assembly assembly)
         {
-            builder.RegisterAssemblyTypes(ThisAssembly)
+            extended.RegisterAssemblyTypes(assembly)
                 .As(t => t.GetInterfaces()
                     .Where(i => i.IsClosedTypeOf(typeof(IExceptionHandler<>))))
                 .SingleInstance();
 
-            builder.RegisterAssemblyTypes(ThisAssembly)
+            extended.RegisterAssemblyTypes(assembly)
                 .Where(t => typeof(IDefaultExceptionHandler).IsAssignableFrom(t) && Versions.IsInVersionedNamespace(t))
                 .Keyed<IDefaultExceptionHandler>(t => Versions.GetVersionFromNamespace(t))
                 .SingleInstance();
+
+            return extended;
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using Autofac;
-using Gunnsoft.Api.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
-namespace Stubbl.Api.Authentication
+namespace Gunnsoft.Api.Authentication
 {
-    public class AuthenticationModule : Module
+    public static class ContainerBuilderExtensions
     {
-        protected override void Load(ContainerBuilder builder)
+        public static ContainerBuilder AddIdentityIdAccessor(this ContainerBuilder extended)
         {
-            builder.Register<IIdentityIdAccessor>(cc =>
+            extended.Register<IIdentityIdAccessor>(cc =>
                 {
                     var hostingEnvironment = cc.Resolve<IHostingEnvironment>();
 
@@ -23,9 +22,7 @@ namespace Stubbl.Api.Authentication
                 .As<IIdentityIdAccessor>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<MongoAuthenticatedUserAccessor>()
-                .As<IAuthenticatedUserAccessor>()
-                .InstancePerLifetimeScope();
+            return extended;
         }
     }
 }

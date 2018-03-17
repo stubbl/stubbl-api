@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Reflection;
@@ -8,10 +7,18 @@ using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Gunnsoft.Api;
+using Gunnsoft.Api.Authentication;
+using Gunnsoft.Api.ExceptionHandlers;
 using Gunnsoft.Api.Middleware;
 using Gunnsoft.Api.Versioning;
 using Gunnsoft.CloudflareApi;
 using Gunnsoft.Cqs;
+using Gunnsoft.Cqs.CommandHandlers;
+using Gunnsoft.Cqs.Commands;
+using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
+using Gunnsoft.Cqs.Queries;
+using Gunnsoft.Cqs.QueryHandlers;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +33,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using Stubbl.Api.Authentication;
+using Stubbl.Api.Caching;
 using Stubbl.Api.Data;
 using Stubbl.Api.Middleware;
 using Stubbl.Api.Options;
@@ -122,10 +131,6 @@ namespace Stubbl.Api
                     o.RequireHttpsMetadata = _hostingEnvironment.IsProduction();
                 });
 
-            services.AddOptions()
-                .Configure<CloudflareOptions>(o => _configuration.GetSection("Cloudflare").Bind(o))
-                .Configure<StubblApiOptions>(o => _configuration.GetSection("StubblApi").Bind(o));
-
             services.AddMvc(o =>
                 {
                     o.Conventions.Add(new FromBodyRequiredConvention());
@@ -150,6 +155,10 @@ namespace Stubbl.Api
 
             services.AddMemoryCache();
 
+            services.AddOptions()
+                .Configure<CloudflareOptions>(o => _configuration.GetSection("Cloudflare").Bind(o))
+                .Configure<StubblApiOptions>(o => _configuration.GetSection("StubblApi").Bind(o));
+
             services.AddRouting(o =>
             {
                 o.AppendTrailingSlash = false;
@@ -160,21 +169,21 @@ namespace Stubbl.Api
             services.AddSwaggerGen(o =>
             {
                 //if (_hostingEnvironment.IsProduction())
-                {
-                    var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
+                //{
+                //    var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
 
-                    o.AddSecurityDefinition("Swagger", new OAuth2Scheme
-                    {
-                        AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
-                        Flow = "implicit",
-                        Scopes = new Dictionary<string, string>
-                        {
-                            { "stubbl-api", "Stubbl API" }
-                        },
-                        TokenUrl = $"{identityServerAuthority}/connect/token",
-                        Type = "oauth2"
-                    });
-                }
+                //    o.AddSecurityDefinition("Swagger", new OAuth2Scheme
+                //    {
+                //        AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
+                //        Flow = "implicit",
+                //        Scopes = new Dictionary<string, string>
+                //        {
+                //            { "stubbl-api", "Stubbl API" }
+                //        },
+                //        TokenUrl = $"{identityServerAuthority}/connect/token",
+                //        Type = "oauth2"
+                //    });
+                //}
 
                 o.CustomSchemaIds(x => x.FullName);
                 o.DescribeAllEnumsAsStrings();
@@ -182,10 +191,10 @@ namespace Stubbl.Api
                 o.OperationFilter<AuthorizeCheckOperationFilter>();
                 o.OperationFilter<CancellationTokenOperationFilter>();
 
-                //if (_hostingEnvironment.IsDevelopment())
-                //{
-                //    o.OperationFilter<SubHeaderOperationFilter>();
-                //}
+                if (_hostingEnvironment.IsDevelopment())
+                {
+                    o.OperationFilter<SubHeaderOperationFilter>();
+                }
 
                 o.OperationFilter<SwaggerDefaultValuesOperationFilter>();
 
@@ -203,29 +212,48 @@ namespace Stubbl.Api
                 }
             });
 
+            services.AddSingleton(_configuration);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton(sp =>
                 new HttpClient(new LoggingHandler(new HttpClientHandler(),
                     sp.GetRequiredService<ILogger<LoggingHandler>>())));
+
+            // TODO Extension method.
             services.AddSingleton(new CqsSettings
             (
                 _configuration.GetValue<string>("Storage:ConnectionString")
             ));
-            services.AddCloudflareApi(new CloudflareApiSettings
-            (
-                _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
-                _configuration.GetValue<string>("CloudflareApi:AuthenticationKey"),
-                _configuration.GetValue<string>("CloudflareApi:AuthenticationEmailAddress")
-            ));
-            services.AddMongoDb(new MongoSettings
-            (
-                _configuration.GetValue<string>("MongoDB:ConnectionString")
-            ));
 
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterInstance(_configuration)
-                .As<IConfiguration>()
-                .SingleInstance();
+
+            containerBuilder.AddCaching()
+                .AddCloudflareApi(new CloudflareApiSettings
+                (
+                    _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
+                    _configuration.GetValue<string>("CloudflareApi:AuthenticationKey"),
+                    _configuration.GetValue<string>("CloudflareApi:AuthenticationEmailAddress")
+                ))
+                .AddCommandDispatcher()
+                .AddCommandHandlerDecorators()
+                .AddCommandHandlers(typeof(JsonConstants).Assembly)
+                .AddCommandHandlers(Assembly.GetEntryAssembly())
+                .AddEventDispatcher()
+                .AddEventHandlerDecorators()
+                .AddEventHandlers(typeof(JsonConstants).Assembly)
+                .AddEventHandlers(Assembly.GetEntryAssembly())
+                .AddExceptionHandlers(typeof(JsonConstants).Assembly)
+                .AddExceptionHandlers(Assembly.GetEntryAssembly())
+                .AddIdentityIdAccessor()
+                .AddMongo(new MongoSettings
+                (
+                    _configuration.GetValue<string>("MongoDB:ConnectionString")
+                ))
+                .AddQueryDispatcher()
+                .AddQueryHandlerDecorators()
+                .AddQueryHandlers(typeof(JsonConstants).Assembly)
+                .AddQueryHandlers(Assembly.GetEntryAssembly())
+                .AddUserAccessor();
+
             containerBuilder.RegisterAssemblyModules(s_assembly);
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();
@@ -257,22 +285,6 @@ namespace Stubbl.Api
             }
 
             return info;
-        }
-    }
-
-    internal class AuthorizeCheckOperationFilter : IOperationFilter
-    {
-        public void Apply(Operation operation, OperationFilterContext context)
-        {
-            operation.Responses.Add("401", new Response {Description = "Unauthorized"});
-
-            operation.Security = new List<IDictionary<string, IEnumerable<string>>>
-            {
-                new Dictionary<string, IEnumerable<string>>
-                {
-                    { "oauth2", new[] { "stubbl-api" }}
-                }
-            };
         }
     }
 }

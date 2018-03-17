@@ -4,17 +4,19 @@ using Gunnsoft.Common.Caching.Memory;
 
 namespace Stubbl.Api.Caching
 {
-    public class CachingModule : Module
+    public static class ContainerBuilderExtensions
     {
-        protected override void Load(ContainerBuilder builder)
+        public static ContainerBuilder AddCaching(this ContainerBuilder extended)
         {
-            builder.RegisterType<MemoryCache>()
+            extended.RegisterType<MemoryCache>()
                 .As<ICache>()
                 .SingleInstance();
 
-            builder.RegisterType<CacheKey>()
+            extended.RegisterType<CacheKey>()
                 .As<ICacheKey>()
                 .SingleInstance();
+
+            return extended;
         }
     }
 }

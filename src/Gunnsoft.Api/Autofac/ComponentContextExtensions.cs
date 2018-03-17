@@ -9,6 +9,8 @@
             while (version > 0 && service == null)
             {
                 service = extended.ResolveKeyed<TService>(version);
+
+                version--;
             }
 
             return service;
