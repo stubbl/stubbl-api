@@ -1,11 +1,11 @@
-﻿namespace Gunnsoft.Cqs.Queries
-{
-   using System.Threading;
-   using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
-   public interface IQueryDispatcher
-   {
-      Task<TProjection> DispatchAsync<TProjection>(IQuery<TProjection> query, CancellationToken cancellationToken) 
-         where TProjection : IProjection;
-   }
+namespace Gunnsoft.Cqs.Queries
+{
+    public interface IQueryDispatcher
+    {
+        Task<TProjection> DispatchAsync<TProjection>(IQuery<TProjection> query, CancellationToken cancellationToken)
+            where TProjection : IProjection;
+    }
 }

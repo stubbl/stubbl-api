@@ -1,12 +1,12 @@
-﻿namespace Stubbl.Api.Models.InvitationAlreadyUsed.Version1
-{
-   using Error.Version1;
+﻿using Stubbl.Api.Models.Error.Version1;
 
-   public class InvitationAlreadyUsedResponse : ErrorResponse
-   {
-      public InvitationAlreadyUsedResponse()
-         : base("InvitationAlreadyUsed", "The invitation has already been used.")
-      {
-      }
-   }
+namespace Stubbl.Api.Models.InvitationAlreadyUsed.Version1
+{
+    public class InvitationAlreadyUsedResponse : ErrorResponse
+    {
+        public InvitationAlreadyUsedResponse()
+            : base("InvitationAlreadyUsed", "The invitation has already been used.")
+        {
+        }
+    }
 }

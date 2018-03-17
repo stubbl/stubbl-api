@@ -1,9 +1,9 @@
-﻿namespace Microsoft.AspNetCore.Mvc.ApplicationModels
-{
-    using System.Linq;
-    using Filters;
-    using ModelBinding;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
+namespace Microsoft.AspNetCore.Mvc.ApplicationModels
+{
     public class FromBodyRequiredConvention : IActionModelConvention
     {
         public void Apply(ActionModel action)
@@ -13,7 +13,10 @@
                 .Select(p => p.ParameterName)
                 .SingleOrDefault();
 
-            if (parameterName != null) action.Filters.Add(new FromBodyRequiredActionFilter(parameterName));
+            if (parameterName != null)
+            {
+                action.Filters.Add(new FromBodyRequiredActionFilter(parameterName));
+            }
         }
 
         private class FromBodyRequiredActionFilter : IActionFilter
@@ -29,7 +32,10 @@
             {
                 context.ActionArguments.TryGetValue(_parameterName, out var value);
 
-                if (value != null) return;
+                if (value != null)
+                {
+                    return;
+                }
 
                 context.Result = new StatusCodeResult(411);
             }

@@ -1,8 +1,9 @@
-﻿namespace Newtonsoft.Json
-{
-    using Converters;
-    using Serialization;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
+namespace Stubbl.Api
+{
     public static class JsonConstants
     {
         static JsonConstants()

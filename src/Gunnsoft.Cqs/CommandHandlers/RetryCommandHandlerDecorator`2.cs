@@ -1,18 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Gunnsoft.Cqs.Commands;
+using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
+using Microsoft.Extensions.Logging;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
+
 namespace Gunnsoft.Cqs.CommandHandlers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Commands;
-    using EventHandlers;
-    using Events;
-    using Gunnsoft.Cqs;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Queue;
-    using Newtonsoft.Json;
-
     public class RetryCommandHandlerDecorator<TCommand, TEvent> : ICommandHandler<TCommand, TEvent>
         where TCommand : ICommand<TEvent>
         where TEvent : IEvent

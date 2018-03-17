@@ -1,9 +1,9 @@
-﻿namespace Gunnsoft.CloudflareApi
-{
-   using DnsRecords;
+﻿using Gunnsoft.CloudflareApi.DnsRecords;
 
-   public interface ICloudflareApi
-   {
-      IDnsRecords DnsRecords { get; }
-   }
+namespace Gunnsoft.CloudflareApi
+{
+    public interface ICloudflareApi
+    {
+        IDnsRecords DnsRecords { get; }
+    }
 }

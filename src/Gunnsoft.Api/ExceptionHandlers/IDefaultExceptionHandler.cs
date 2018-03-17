@@ -1,11 +1,11 @@
-﻿namespace Gunnsoft.Api.ExceptionHandlers
-{
-   using System;
-   using System.Threading.Tasks;
-   using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-   public interface IDefaultExceptionHandler
-   {
-      Task HandleAsync(HttpContext context, Exception exception);
-   }
+namespace Gunnsoft.Api.ExceptionHandlers
+{
+    public interface IDefaultExceptionHandler
+    {
+        Task HandleAsync(HttpContext context, Exception exception);
+    }
 }

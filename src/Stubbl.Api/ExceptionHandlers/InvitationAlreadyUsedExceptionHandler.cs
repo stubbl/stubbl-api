@@ -1,20 +1,21 @@
-﻿namespace Stubbl.Api.ExceptionHandlers
+﻿using System.Net;
+using System.Threading.Tasks;
+using Gunnsoft.Api.ExceptionHandlers;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Stubbl.Api.Exceptions.InvitationAlreadyUsed.Version1;
+using Stubbl.Api.Models.InvitationAlreadyUsed.Version1;
+
+namespace Stubbl.Api.ExceptionHandlers
 {
-   using System.Net;
-   using System.Threading.Tasks;
-   using Gunnsoft.Api.ExceptionHandlers;
-   using Core.Exceptions.InvitationAlreadyUsed.Version1;
-   using Newtonsoft.Json;
-   using Microsoft.AspNetCore.Http;
-   using Models.InvitationAlreadyUsed.Version1;
+    public class InvitationAlreadyUsedExceptionHandler : IExceptionHandler<InvitationAlreadyUsedException>
+    {
+        public async Task HandleAsync(HttpContext context, InvitationAlreadyUsedException exception)
+        {
+            var response = new InvitationAlreadyUsedResponse();
 
-   public class InvitationAlreadyUsedExceptionHandler : IExceptionHandler<InvitationAlreadyUsedException>
-   {
-      public async Task HandleAsync(HttpContext context, InvitationAlreadyUsedException exception)
-      {
-         var response = new InvitationAlreadyUsedResponse();
-
-         await context.Response.WriteJsonAsync(HttpStatusCode.Conflict, response, JsonConstants.JsonSerializerSettings);
-      }
-   }
+            await context.Response.WriteJsonAsync(HttpStatusCode.Conflict, response,
+                JsonConstants.JsonSerializerSettings);
+        }
+    }
 }

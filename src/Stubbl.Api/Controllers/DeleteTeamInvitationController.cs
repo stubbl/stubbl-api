@@ -1,37 +1,38 @@
-﻿namespace Stubbl.Api.Controllers
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Gunnsoft.Cqs.Commands;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using Stubbl.Api.Commands.DeleteTeamInvitation.Version1;
+
+namespace Stubbl.Api.Controllers
 {
-   using System.Threading;
-   using System.Threading.Tasks;
-   using Gunnsoft.Cqs.Commands;
-   using Core.Commands.DeleteTeamInvitation.Version1;
-   using Microsoft.AspNetCore.Mvc;
-   using MongoDB.Bson;
+    [ApiVersion("1")]
+    [Route("teams/{teamId:ObjectId}/invitations/{invitationId:ObjectId}/delete", Name = "DeleteTeamInvitation")]
+    public class DeleteTeamInvitationController : Controller
+    {
+        private readonly ICommandDispatcher _commandDispatcher;
 
-   [ApiVersion("1")]
-   [Route("teams/{teamId:ObjectId}/invitations/{invitationId:ObjectId}/delete", Name = "DeleteTeamInvitation")]
-   public class DeleteTeamInvitationController : Controller
-   {
-      private readonly ICommandDispatcher _commandDispatcher;
+        public DeleteTeamInvitationController(ICommandDispatcher commandDispatcher)
+        {
+            _commandDispatcher = commandDispatcher;
+        }
 
-      public DeleteTeamInvitationController(ICommandDispatcher commandDispatcher)
-      {
-         _commandDispatcher = commandDispatcher;
-      }
+        [HttpPost]
+        [ProducesResponseType(typeof(object), 204)]
+        public async Task<IActionResult> DeleteTeamInvitation([FromRoute] string teamId,
+            [FromRoute] string invitationId,
+            CancellationToken cancellationToken)
+        {
+            var command = new DeleteTeamInvitationCommand
+            (
+                ObjectId.Parse(teamId),
+                ObjectId.Parse(invitationId)
+            );
 
-      [HttpPost]
-      [ProducesResponseType(typeof(object), 204)]
-      public async Task<IActionResult> DeleteTeamInvitation([FromRoute] string teamId, [FromRoute] string invitationId,
-         CancellationToken cancellationToken)
-      {
-         var command = new DeleteTeamInvitationCommand
-         (
-            ObjectId.Parse(teamId),
-            ObjectId.Parse(invitationId)
-         );
+            await _commandDispatcher.DispatchAsync(command, cancellationToken);
 
-         await _commandDispatcher.DispatchAsync(command, cancellationToken);
-
-         return StatusCode(204);
-      }
-   }
+            return StatusCode(204);
+        }
+    }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Gunnsoft.Cqs.Queries
 {
-   public interface IQuery<TProjection>
-      where TProjection : IProjection
-   {
-   }
+    public interface IQuery<TProjection>
+        where TProjection : IProjection
+    {
+    }
 }

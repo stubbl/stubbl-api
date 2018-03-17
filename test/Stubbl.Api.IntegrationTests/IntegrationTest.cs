@@ -1,24 +1,24 @@
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using FluentAssertions;
+using Gunnsoft.Cqs.Commands;
+using Gunnsoft.Cqs.Queries;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using NSubstitute;
+using NUnit.Framework;
+
 namespace Stubbl.Api.IntegrationTests
 {
-    using Gunnsoft.Cqs.Commands;
-    using Gunnsoft.Cqs.Queries;
-    using FluentAssertions;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.TestHost;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json;
-    using NSubstitute;
-    using NUnit.Framework;
-    using System;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading.Tasks;
-
     public abstract class IntegrationTest
     {
-        private Lazy<HttpResponseMessage> _responseMessage;
+        private readonly Lazy<HttpResponseMessage> _responseMessage;
 
         protected IntegrationTest(int versionNumber, HttpStatusCode expectedStatusCode, object expectedResponse = null,
             IHeaderDictionary expectedHeaders = null)
@@ -28,7 +28,8 @@ namespace Stubbl.Api.IntegrationTests
 
             if (expectedResponse != null)
             {
-                ExpectedResponseJson = JsonConvert.SerializeObject(expectedResponse, JsonConstants.JsonSerializerSettings);
+                ExpectedResponseJson =
+                    JsonConvert.SerializeObject(expectedResponse, JsonConstants.JsonSerializerSettings);
             }
 
             ExpectedHeaders = expectedHeaders;
@@ -37,18 +38,19 @@ namespace Stubbl.Api.IntegrationTests
             QueryDispatcher = Substitute.For<IQueryDispatcher>();
 
             var builder = Program.GetWebHostBuilder(AppContext.BaseDirectory)
-               .ConfigureServices(s =>
-               {
-                   s.AddTransient(cc => CommandDispatcher);
-                   s.AddTransient(cc => QueryDispatcher);
+                .ConfigureServices(s =>
+                {
+                    s.AddTransient(cc => CommandDispatcher);
+                    s.AddTransient(cc => QueryDispatcher);
 
-                   ConfigureServices(s);
-               })
-               .UseEnvironment("IntegrationTesting")
-               .UseStartup<Startup>();
+                    ConfigureServices(s);
+                })
+                .UseEnvironment("IntegrationTesting")
+                .UseStartup<Startup>();
             var server = new TestServer(builder);
             var httpClient = server.CreateClient();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue($"application/vnd.stubbl.v{VersionNumber}+json"));
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue($"application/vnd.stubbl.v{VersionNumber}+json"));
             httpClient.DefaultRequestHeaders.Add("X-Sub", "000000000000-0000-0000-0000-00000001");
 
             _responseMessage = new Lazy<HttpResponseMessage>(() => httpClient.SendAsync(RequestMessage).Result);
@@ -59,7 +61,7 @@ namespace Stubbl.Api.IntegrationTests
         protected string ExpectedResponseJson { get; }
         protected HttpStatusCode ExpectedStatusCode { get; }
         protected abstract HttpRequestMessage RequestMessage { get; }
-        protected HttpResponseMessage ResponseMessage { get { return _responseMessage.Value; } }
+        protected HttpResponseMessage ResponseMessage => _responseMessage.Value;
         protected IQueryDispatcher QueryDispatcher { get; }
         protected int VersionNumber { get; }
 
@@ -102,6 +104,9 @@ namespace Stubbl.Api.IntegrationTests
         }
 
         [Test]
-        public void Then_the_status_code_should_be_as_expected() => ResponseMessage.StatusCode.Should().Be(ExpectedStatusCode);
+        public void Then_the_status_code_should_be_as_expected()
+        {
+            ResponseMessage.StatusCode.Should().Be(ExpectedStatusCode);
+        }
     }
 }

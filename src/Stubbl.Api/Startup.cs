@@ -1,37 +1,37 @@
-﻿namespace Stubbl.Api
-{
-    using Autofac;
-    using Autofac.Extensions.DependencyInjection;
-    using Gunnsoft.CloudflareApi;
-    using Core.Data;
-    using FluentValidation;
-    using FluentValidation.AspNetCore;
-    using IdentityServer4.AccessTokenValidation;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ApiExplorer;
-    using Microsoft.AspNetCore.Mvc.ApplicationModels;
-    using Microsoft.AspNetCore.Mvc.Authorization;
-    using Microsoft.AspNetCore.Routing;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.PlatformAbstractions;
-    using Middleware;
-    using Newtonsoft.Json;
-    using Options;
-    using Swashbuckle.AspNetCore.Swagger;
-    using Swashbuckle.AspNetCore.SwaggerGen;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net.Http;
-    using System.Reflection;
-    using Versioning;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Gunnsoft.CloudflareApi;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using Newtonsoft.Json;
+using Stubbl.Api.Data;
+using Stubbl.Api.Middleware;
+using Stubbl.Api.Options;
+using Stubbl.Api.Versioning;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
+namespace Stubbl.Api
+{
     public class Startup
     {
         private static readonly Assembly s_assembly;
@@ -99,7 +99,8 @@
 
                 foreach (var apiVersionDescription in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
-                    o.SwaggerEndpoint($"/swagger/{apiVersionDescription.GroupName}/swagger.json", apiVersionDescription.GroupName.ToUpperInvariant());
+                    o.SwaggerEndpoint($"/swagger/{apiVersionDescription.GroupName}/swagger.json",
+                        apiVersionDescription.GroupName.ToUpperInvariant());
                 }
             });
         }
@@ -122,29 +123,30 @@
                 });
 
             services.AddOptions()
-               .Configure<CloudflareOptions>(o => _configuration.GetSection("Cloudflare").Bind(o))
+                .Configure<CloudflareOptions>(o => _configuration.GetSection("Cloudflare").Bind(o))
                 .Configure<StubblApiOptions>(o => _configuration.GetSection("StubblApi").Bind(o));
 
             services.AddMvc(o =>
-               {
-                   o.Conventions.Add(new FromBodyRequiredConvention());
-                   o.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
-               })
-               .AddFluentValidation(o =>
-               {
-                   o.ValidatorFactoryType = typeof(ServiceProviderValidatorFactory);
-                   o.RegisterValidatorsFromAssembly(s_assembly);
-               })
-               .AddJsonOptions(o =>
-               {
-                   o.SerializerSettings.Converters = JsonConstants.JsonSerializerSettings.Converters;
-                   o.SerializerSettings.Formatting = JsonConstants.JsonSerializerSettings.Formatting;
-               });
+                {
+                    o.Conventions.Add(new FromBodyRequiredConvention());
+                    o.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser()
+                        .Build()));
+                })
+                .AddFluentValidation(o =>
+                {
+                    o.ValidatorFactoryType = typeof(ServiceProviderValidatorFactory);
+                    o.RegisterValidatorsFromAssembly(s_assembly);
+                })
+                .AddJsonOptions(o =>
+                {
+                    o.SerializerSettings.Converters = JsonConstants.JsonSerializerSettings.Converters;
+                    o.SerializerSettings.Formatting = JsonConstants.JsonSerializerSettings.Formatting;
+                });
 
             services.AddMvcCore()
-               .AddAuthorization()
-               .AddJsonFormatters()
-               .AddVersionedApiExplorer(o => o.GroupNameFormat = "'v'VVV");
+                .AddAuthorization()
+                .AddJsonFormatters()
+                .AddVersionedApiExplorer(o => o.GroupNameFormat = "'v'VVV");
 
             services.AddMemoryCache();
 
@@ -169,7 +171,7 @@
                     TokenUrl = $"{identityServerAuthority}/connect/token",
                     Scopes = new Dictionary<string, string>
                     {
-                        { "stubbl-api", "Stubbl API" }
+                        {"stubbl-api", "Stubbl API"}
                     }
                 });
                 o.CustomSchemaIds(x => x.FullName);
@@ -198,22 +200,24 @@
                 }
             });
 
-            services.AddSingleton(sp => new HttpClient(new LoggingHandler(new HttpClientHandler(), sp.GetRequiredService<ILogger<LoggingHandler>>())));
+            services.AddSingleton(sp =>
+                new HttpClient(new LoggingHandler(new HttpClientHandler(),
+                    sp.GetRequiredService<ILogger<LoggingHandler>>())));
             services.AddCloudflareApi(new CloudflareApiSettings
             (
                 _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
                 _configuration.GetValue<string>("CloudflareApi:AuthenticationKey"),
                 _configuration.GetValue<string>("CloudflareApi:AuthenticationEmailAddress")
             ));
-            services.AddMongoDB(new MongoSettings
+            services.AddMongoDb(new MongoSettings
             (
                 _configuration.GetValue<string>("MongoDB:ConnectionString")
             ));
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterInstance(_configuration)
-               .As<IConfiguration>()
-               .SingleInstance();
+                .As<IConfiguration>()
+                .SingleInstance();
             containerBuilder.RegisterAssemblyModules(s_assembly);
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();

@@ -1,8 +1,8 @@
-﻿namespace Stubbl.Api.Middleware.SecureRequests
-{
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
+namespace Stubbl.Api.Middleware.SecureRequests
+{
     // TODO Move to Common
     public class SecureRequestsMiddleware
     {

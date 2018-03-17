@@ -1,10 +1,10 @@
+using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Versioning;
+
 namespace Stubbl.Api.Versioning
 {
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Versioning;
-
     public class AcceptHeaderApiVersionReader : IApiVersionReader
     {
         private static readonly Regex s_versionRegex = new Regex(@"^application\/vnd\.stubbl.v(\d+)\+json$");
@@ -23,7 +23,7 @@ namespace Stubbl.Api.Versioning
                 return null;
             }
 
-            return !int.TryParse(match.Groups[1].Value, out int version) ? null : version.ToString();
+            return !int.TryParse(match.Groups[1].Value, out var version) ? null : version.ToString();
         }
     }
 }

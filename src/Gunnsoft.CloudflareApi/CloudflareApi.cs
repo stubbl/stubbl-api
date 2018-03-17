@@ -1,14 +1,14 @@
-﻿namespace Gunnsoft.CloudflareApi
+﻿using Gunnsoft.CloudflareApi.DnsRecords;
+
+namespace Gunnsoft.CloudflareApi
 {
-   using DnsRecords;
+    public class CloudflareApi : ICloudflareApi
+    {
+        public CloudflareApi(IDnsRecords dnsRecords)
+        {
+            DnsRecords = dnsRecords;
+        }
 
-   public class CloudflareApi : ICloudflareApi
-   {
-      public CloudflareApi(IDnsRecords dnsRecords)
-      {
-         DnsRecords = dnsRecords;
-      }
-
-      public IDnsRecords DnsRecords { get; }
-   }
+        public IDnsRecords DnsRecords { get; }
+    }
 }

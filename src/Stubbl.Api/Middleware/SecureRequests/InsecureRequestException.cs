@@ -1,8 +1,8 @@
-﻿namespace Stubbl.Api.Middleware.SecureRequests
-{
-   using System;
+﻿using System;
 
-   public class InsecureRequestException : Exception
-   {
-   }
+namespace Stubbl.Api.Middleware.SecureRequests
+{
+    public class InsecureRequestException : Exception
+    {
+    }
 }

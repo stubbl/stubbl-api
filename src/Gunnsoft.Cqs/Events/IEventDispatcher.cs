@@ -1,10 +1,10 @@
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Gunnsoft.Cqs.Events
 {
-   using System.Threading;
-   using System.Threading.Tasks;
-
-   public interface IEventDispatcher
-   {
-      Task DispatchAsync(IEvent @event, CancellationToken cancellationToken);
-   }
+    public interface IEventDispatcher
+    {
+        Task DispatchAsync(IEvent @event, CancellationToken cancellationToken);
+    }
 }

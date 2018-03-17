@@ -1,6 +1,6 @@
 namespace Gunnsoft.Cqs.Queries
 {
-   public interface IProjection
-   {
-   }
+    public interface IProjection
+    {
+    }
 }

@@ -1,9 +1,9 @@
+using Gunnsoft.Cqs.Events;
+
 namespace Gunnsoft.Cqs.Commands
 {
-   using Events;
-
-   public interface ICommand<TEvent>
-      where TEvent : IEvent
-   {
-   }
+    public interface ICommand<TEvent>
+        where TEvent : IEvent
+    {
+    }
 }

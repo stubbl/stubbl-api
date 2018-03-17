@@ -1,20 +1,21 @@
-﻿namespace Stubbl.Api.ExceptionHandlers
+﻿using System.Net;
+using System.Threading.Tasks;
+using Gunnsoft.Api.ExceptionHandlers;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Stubbl.Api.Exceptions.MemberNotFound.Version1;
+using Stubbl.Api.Models.MemberNotFound.Version1;
+
+namespace Stubbl.Api.ExceptionHandlers
 {
-   using System.Net;
-   using System.Threading.Tasks;
-   using Gunnsoft.Api.ExceptionHandlers;
-   using Core.Exceptions.MemberNotFound.Version1;
-   using Newtonsoft.Json;
-   using Microsoft.AspNetCore.Http;
-   using Models.MemberNotFound.Version1;
+    public class MemberNotFoundExceptionHandler : IExceptionHandler<MemberNotFoundException>
+    {
+        public async Task HandleAsync(HttpContext context, MemberNotFoundException exception)
+        {
+            var response = new MemberNotFoundResponse();
 
-   public class MemberNotFoundExceptionHandler : IExceptionHandler<MemberNotFoundException>
-   {
-      public async Task HandleAsync(HttpContext context, MemberNotFoundException exception)
-      {
-         var response = new MemberNotFoundResponse();
-
-         await context.Response.WriteJsonAsync(HttpStatusCode.Conflict, response, JsonConstants.JsonSerializerSettings);
-      }
-   }
+            await context.Response.WriteJsonAsync(HttpStatusCode.Conflict, response,
+                JsonConstants.JsonSerializerSettings);
+        }
+    }
 }

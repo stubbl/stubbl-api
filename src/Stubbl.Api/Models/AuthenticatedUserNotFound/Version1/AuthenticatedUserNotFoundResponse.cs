@@ -1,12 +1,12 @@
-﻿namespace Stubbl.Api.Models.AuthenticatedUserNotFound.Version1
-{
-   using Error.Version1;
+﻿using Stubbl.Api.Models.Error.Version1;
 
-   public class AuthenticatedUserNotFoundResponse : ErrorResponse
-   {
-      public AuthenticatedUserNotFoundResponse()
-         : base("AuthenticatedUserNotFound", "The authenticted member cannot be found.")
-      {
-      }
-   }
+namespace Stubbl.Api.Models.AuthenticatedUserNotFound.Version1
+{
+    public class AuthenticatedUserNotFoundResponse : ErrorResponse
+    {
+        public AuthenticatedUserNotFoundResponse()
+            : base("AuthenticatedUserNotFound", "The authenticted member cannot be found.")
+        {
+        }
+    }
 }

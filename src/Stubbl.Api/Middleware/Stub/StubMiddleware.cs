@@ -1,27 +1,27 @@
-﻿namespace Stubbl.Api.Middleware.Stub
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Xml.Linq;
-    using Gunnsoft.Cqs.Commands;
-    using Gunnsoft.Cqs.Queries;
-    using Core.Commands.CreateTeamLog.Version1;
-    using Core.Commands.Shared.Version1;
-    using Core.Queries.StubTester.Version1;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Options;
-    using MongoDB.Bson;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Options;
-    using Request = Core.Queries.StubTester.Version1.Request;
-    using Response = Core.Commands.CreateTeamLog.Version1.Response;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using Gunnsoft.Cqs.Commands;
+using Gunnsoft.Cqs.Queries;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Stubbl.Api.Commands.CreateTeamLog.Version1;
+using Stubbl.Api.Commands.Shared.Version1;
+using Stubbl.Api.Options;
+using Stubbl.Api.Queries.StubTester.Version1;
+using Request = Stubbl.Api.Queries.StubTester.Version1.Request;
+using Response = Stubbl.Api.Commands.CreateTeamLog.Version1.Response;
 
+namespace Stubbl.Api.Middleware.Stub
+{
     public class StubMiddleware
     {
         private readonly ICommandDispatcher _commandDispatcher;
@@ -286,7 +286,7 @@
             (
                 teamId,
                 stubIds,
-                new Core.Commands.CreateTeamLog.Version1.Request
+                new Commands.CreateTeamLog.Version1.Request
                 (
                     context.Request.Method,
                     context.Request.Path,

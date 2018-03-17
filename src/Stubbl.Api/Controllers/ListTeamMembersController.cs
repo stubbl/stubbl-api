@@ -1,12 +1,12 @@
+using System.Threading;
+using System.Threading.Tasks;
+using Gunnsoft.Cqs.Queries;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using Stubbl.Api.Queries.ListTeamMembers.Version1;
+
 namespace Stubbl.Api.Controllers
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Gunnsoft.Cqs.Queries;
-    using Core.Queries.ListTeamMembers.Version1;
-    using Microsoft.AspNetCore.Mvc;
-    using MongoDB.Bson;
-
     [ApiVersion("1")]
     [Route("teams/{teamId:ObjectId}/members/list", Name = "ListTeamMembers")]
     public class ListTeamMembersController : Controller
@@ -21,13 +21,13 @@ namespace Stubbl.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(ListTeamMembersProjection), 200)]
         public async Task<IActionResult> ListTeamMembers([FromRoute] string teamId, [FromQuery] int? pageNumber,
-           [FromQuery] int? pageSize, CancellationToken cancellationToken)
+            [FromQuery] int? pageSize, CancellationToken cancellationToken)
         {
             var query = new ListTeamMembersQuery
             (
-               ObjectId.Parse(teamId),
-               pageNumber.GetValueOrDefault(1),
-               pageSize.GetValueOrDefault(10)
+                ObjectId.Parse(teamId),
+                pageNumber.GetValueOrDefault(1),
+                pageSize.GetValueOrDefault(10)
             );
 
             var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);

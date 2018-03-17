@@ -1,35 +1,35 @@
+using System.Threading;
+using System.Threading.Tasks;
+using Gunnsoft.Cqs.Queries;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using Stubbl.Api.Queries.ListTeamRoles.Version1;
+
 namespace Stubbl.Api.Controllers
 {
-   using System.Threading;
-   using System.Threading.Tasks;
-   using Gunnsoft.Cqs.Queries;
-   using Core.Queries.ListTeamRoles.Version1;
-   using Microsoft.AspNetCore.Mvc;
-   using MongoDB.Bson;
+    [ApiVersion("1")]
+    [Route("teams/{teamId:ObjectId}/roles/list", Name = "ListTeamRoles")]
+    public class ListTeamRolesController : Controller
+    {
+        private readonly IQueryDispatcher _queryDispatcher;
 
-   [ApiVersion("1")]
-   [Route("teams/{teamId:ObjectId}/roles/list", Name = "ListTeamRoles")]
-   public class ListTeamRolesController : Controller
-   {
-      private readonly IQueryDispatcher _queryDispatcher;
+        public ListTeamRolesController(IQueryDispatcher queryDispatcher)
+        {
+            _queryDispatcher = queryDispatcher;
+        }
 
-      public ListTeamRolesController(IQueryDispatcher queryDispatcher)
-      {
-         _queryDispatcher = queryDispatcher;
-      }
+        [HttpGet]
+        [ProducesResponseType(typeof(ListTeamRolesProjection), 200)]
+        public async Task<IActionResult> ListTeamRoles([FromRoute] string teamId, CancellationToken cancellationToken)
+        {
+            var query = new ListTeamRolesQuery
+            (
+                ObjectId.Parse(teamId)
+            );
 
-      [HttpGet]
-      [ProducesResponseType(typeof(ListTeamRolesProjection), 200)]
-      public async Task<IActionResult> ListTeamRoles([FromRoute] string teamId, CancellationToken cancellationToken)
-      {
-         var query = new ListTeamRolesQuery
-         (
-            ObjectId.Parse(teamId)
-         );
+            var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);
 
-         var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);
-
-         return StatusCode(200, projection.Roles);
-      }
-   }
+            return StatusCode(200, projection.Roles);
+        }
+    }
 }

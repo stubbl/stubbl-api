@@ -6,7 +6,10 @@
         {
             var service = default(TService);
 
-            while (version > 0 && service == null) service = extended.ResolveKeyed<TService>(version);
+            while (version > 0 && service == null)
+            {
+                service = extended.ResolveKeyed<TService>(version);
+            }
 
             return service;
         }

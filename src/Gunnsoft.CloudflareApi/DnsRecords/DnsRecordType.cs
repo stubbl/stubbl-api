@@ -1,15 +1,15 @@
 ﻿namespace Gunnsoft.CloudflareApi.DnsRecords
 {
-   public enum DnsRecordType
-   {
-      A,
-      AAAA,
-      CNAME,
-      LOC,
-      MX,
-      NS,
-      SPF,
-      SRV,
-      TXT
-   }
+    public enum DnsRecordType
+    {
+        A,
+        Aaaa,
+        Cname,
+        Loc,
+        Mx,
+        Ns,
+        Spf,
+        Srv,
+        Txt
+    }
 }

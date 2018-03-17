@@ -1,31 +1,31 @@
-﻿namespace Stubbl.Api.Controllers
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Gunnsoft.Cqs.Queries;
+using Microsoft.AspNetCore.Mvc;
+using Stubbl.Api.Queries.CountAuthenticatedUserInvitations.Version1;
+
+namespace Stubbl.Api.Controllers
 {
-   using System.Threading;
-   using System.Threading.Tasks;
-   using Gunnsoft.Cqs.Queries;
-   using Core.Queries.CountAuthenticatedUserInvitations.Version1;
-   using Microsoft.AspNetCore.Mvc;
+    [ApiVersion("1")]
+    [Route("user/invitations/count", Name = "CountAuthenticatedUserInvitations")]
+    public class CountAuthenticatedUserInvitationsController : Controller
+    {
+        private readonly IQueryDispatcher _queryDispatcher;
 
-   [ApiVersion("1")]
-   [Route("user/invitations/count", Name = "CountAuthenticatedUserInvitations")]
-   public class CountAuthenticatedUserInvitationsController : Controller
-   {
-      private readonly IQueryDispatcher _queryDispatcher;
+        public CountAuthenticatedUserInvitationsController(IQueryDispatcher queryDispatcher)
+        {
+            _queryDispatcher = queryDispatcher;
+        }
 
-      public CountAuthenticatedUserInvitationsController(IQueryDispatcher queryDispatcher)
-      {
-         _queryDispatcher = queryDispatcher;
-      }
+        [HttpGet]
+        [ProducesResponseType(typeof(CountAuthenticatedUserInvitationsProjection), 200)]
+        public async Task<IActionResult> CountAuthenticatedUserInvitiations(CancellationToken cancellationToken)
+        {
+            var query = new CountAuthenticatedUserInvitationsQuery();
 
-      [HttpGet]
-      [ProducesResponseType(typeof(CountAuthenticatedUserInvitationsProjection), 200)]
-      public async Task<IActionResult> CountAuthenticatedUserInvitiations(CancellationToken cancellationToken)
-      {
-         var query = new CountAuthenticatedUserInvitationsQuery();
+            var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);
 
-         var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);
-
-         return StatusCode(200, projection);
-      }
-   }
+            return StatusCode(200, projection);
+        }
+    }
 }

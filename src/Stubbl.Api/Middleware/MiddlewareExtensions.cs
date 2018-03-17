@@ -1,11 +1,11 @@
+using Microsoft.AspNetCore.Builder;
+using Stubbl.Api.Middleware.JsonExceptions;
+using Stubbl.Api.Middleware.SecureRequests;
+using Stubbl.Api.Middleware.Stub;
+using Stubbl.Api.Middleware.SubHeader;
+
 namespace Stubbl.Api.Middleware
 {
-    using JsonExceptions;
-    using Microsoft.AspNetCore.Builder;
-    using SecureRequests;
-    using SubHeader;
-    using Stub;
-
     public static class MiddlewareExtensions
     {
         public static IApplicationBuilder UseJsonExceptions(this IApplicationBuilder extended)

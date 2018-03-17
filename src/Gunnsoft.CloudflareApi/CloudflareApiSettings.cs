@@ -1,7 +1,7 @@
-﻿namespace Gunnsoft.CloudflareApi
-{
-    using System;
+﻿using System;
 
+namespace Gunnsoft.CloudflareApi
+{
     public class CloudflareApiSettings
     {
         public CloudflareApiSettings(string baseUrl, string authenticationKey, string authenticationEmailAddress)

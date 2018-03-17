@@ -1,56 +1,56 @@
-﻿namespace Stubbl.Api.IntegrationTests.Controllers.Version1
+﻿using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using MongoDB.Bson;
+using NSubstitute;
+using Stubbl.Api.Queries.FindTeamStub.Version1;
+using Stubbl.Api.Queries.Shared.Version1;
+
+namespace Stubbl.Api.IntegrationTests.Controllers.Version1
 {
-   using System;
-   using System.Net;
-   using System.Net.Http;
-   using System.Threading;
-   using Core.Queries.FindTeamStub.Version1;
-   using Core.Queries.Shared.Version1;
-   using MongoDB.Bson;
-   using NSubstitute;
+    public class WhenFindingATeamStub : IntegrationTest<FindTeamStubProjection>
+    {
+        public WhenFindingATeamStub()
+            : base(1, HttpStatusCode.OK, GenerateExpectedResponse())
+        {
+        }
 
-   public class When_finding_a_team_stub : IntegrationTest<FindTeamStubProjection>
-   {
-      public When_finding_a_team_stub()
-         : base(1, HttpStatusCode.OK, GenerateExpectedResponse())
-      {
-      }
+        protected override HttpRequestMessage RequestMessage
+        {
+            get
+            {
+                QueryDispatcher.DispatchAsync(Arg.Any<FindTeamStubQuery>(), Arg.Any<CancellationToken>())
+                    .Returns(ExpectedResponse);
 
-      protected override HttpRequestMessage RequestMessage
-      {
-         get
-         {
-            QueryDispatcher.DispatchAsync(Arg.Any<FindTeamStubQuery>(), Arg.Any<CancellationToken>())
-               .Returns(ExpectedResponse);
+                return new HttpRequestMessage(HttpMethod.Get,
+                    $"/teams/{ObjectId.GenerateNewId()}/stubs/{ObjectId.GenerateNewId()}/find");
+            }
+        }
 
-            return new HttpRequestMessage(HttpMethod.Get,
-               $"/teams/{ObjectId.GenerateNewId()}/stubs/{ObjectId.GenerateNewId()}/find");
-         }
-      }
-
-      private static FindTeamStubProjection GenerateExpectedResponse()
-      {
-         return new FindTeamStubProjection
-         (
-            ObjectId.GenerateNewId().ToString() /* stubId */,
-            ObjectId.GenerateNewId().ToString() /* teamId */,
-            Guid.NewGuid().ToString(),
-            new Request
+        private static FindTeamStubProjection GenerateExpectedResponse()
+        {
+            return new FindTeamStubProjection
             (
-               "/foo",
-               "GET",
-               null /* queryStringParameters */,
-               null /* bodyTokens */,
-               null /* headers */
-            ),
-            new Response
-            (
-               200,
-               null /* body */,
-               null /* headers */
-            ),
-            null /* tags */
-         );
-      }
-   }
+                ObjectId.GenerateNewId().ToString() /* stubId */,
+                ObjectId.GenerateNewId().ToString() /* teamId */,
+                Guid.NewGuid().ToString(),
+                new Request
+                (
+                    "/foo",
+                    "GET",
+                    null /* queryStringParameters */,
+                    null /* bodyTokens */,
+                    null /* headers */
+                ),
+                new Response
+                (
+                    200,
+                    null /* body */,
+                    null /* headers */
+                ),
+                null /* tags */
+            );
+        }
+    }
 }

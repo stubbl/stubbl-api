@@ -1,16 +1,15 @@
-﻿namespace Stubbl.Api.IntegrationTests
-{
-   using System.Text.RegularExpressions;
-   using FluentValidation;
-   using NUnit.Framework;
+﻿using FluentValidation;
+using NUnit.Framework;
 
-   [SetUpFixture]
-   public class SetupFixtureWithoutNamespace
-   {
-      [OneTimeSetUp]
-      public void SetUp()
-      {
-         ValidatorOptions.DisplayNameResolver = ValidatorOptions.PropertyNameResolver;
-      }
-   }
+namespace Stubbl.Api.IntegrationTests
+{
+    [SetUpFixture]
+    public class SetupFixtureWithoutNamespace
+    {
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            ValidatorOptions.DisplayNameResolver = ValidatorOptions.PropertyNameResolver;
+        }
+    }
 }

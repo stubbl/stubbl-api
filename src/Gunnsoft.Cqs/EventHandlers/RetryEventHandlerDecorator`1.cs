@@ -1,22 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Gunnsoft.Cqs.Events;
+using Microsoft.Extensions.Logging;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
+
 namespace Gunnsoft.Cqs.EventHandlers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Events;
-    using Gunnsoft.Cqs;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Queue;
-    using Newtonsoft.Json;
-
     public class RetryEventHandlerDecorator<TEvent> : IEventHandler<TEvent>
         where TEvent : IEvent
     {
+        private readonly CqsSettings _cqsSettings;
         private readonly IEventHandler<TEvent> _decorated;
         private readonly ILogger<RetryEventHandlerDecorator<TEvent>> _logger;
-        private readonly CqsSettings _cqsSettings;
 
         public RetryEventHandlerDecorator(CqsSettings cqsSettings, IEventHandler<TEvent> decorated,
             ILogger<RetryEventHandlerDecorator<TEvent>> logger)

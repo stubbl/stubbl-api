@@ -1,12 +1,12 @@
-﻿namespace Stubbl.Api.Models.MemberNotFound.Version1
-{
-   using Error.Version1;
+﻿using Stubbl.Api.Models.Error.Version1;
 
-   public class MemberNotFoundResponse : ErrorResponse
-   {
-      public MemberNotFoundResponse()
-         : base("MemberNotFound", "The member cannot be found.")
-      {
-      }
-   }
+namespace Stubbl.Api.Models.MemberNotFound.Version1
+{
+    public class MemberNotFoundResponse : ErrorResponse
+    {
+        public MemberNotFoundResponse()
+            : base("MemberNotFound", "The member cannot be found.")
+        {
+        }
+    }
 }

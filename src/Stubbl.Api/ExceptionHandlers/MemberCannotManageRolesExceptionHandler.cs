@@ -1,20 +1,21 @@
-﻿namespace Stubbl.Api.ExceptionHandlers
+﻿using System.Net;
+using System.Threading.Tasks;
+using Gunnsoft.Api.ExceptionHandlers;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Stubbl.Api.Exceptions.MemberCannotManageRoles.Version1;
+using Stubbl.Api.Models.MemberCannotManageRoles.Version1;
+
+namespace Stubbl.Api.ExceptionHandlers
 {
-   using System.Net;
-   using System.Threading.Tasks;
-   using Gunnsoft.Api.ExceptionHandlers;
-   using Core.Exceptions.MemberCannotManageRoles.Version1;
-   using Newtonsoft.Json;
-   using Microsoft.AspNetCore.Http;
-   using Models.MemberCannotManageRoles.Version1;
+    public class MemberCannotManageRolesExceptionHandler : IExceptionHandler<MemberCannotManageRolesException>
+    {
+        public async Task HandleAsync(HttpContext context, MemberCannotManageRolesException exception)
+        {
+            var response = new MemberCannotManageRolesResponse();
 
-   public class MemberCannotManageRolesExceptionHandler : IExceptionHandler<MemberCannotManageRolesException>
-   {
-      public async Task HandleAsync(HttpContext context, MemberCannotManageRolesException exception)
-      {
-         var response = new MemberCannotManageRolesResponse();
-
-         await context.Response.WriteJsonAsync(HttpStatusCode.Forbidden, response, JsonConstants.JsonSerializerSettings);
-      }
-   }
+            await context.Response.WriteJsonAsync(HttpStatusCode.Forbidden, response,
+                JsonConstants.JsonSerializerSettings);
+        }
+    }
 }

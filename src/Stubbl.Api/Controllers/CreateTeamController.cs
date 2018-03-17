@@ -1,43 +1,44 @@
+using System.Threading;
+using System.Threading.Tasks;
+using Gunnsoft.Cqs.Commands;
+using Microsoft.AspNetCore.Mvc;
+using Stubbl.Api.Commands.CreateTeam.Version1;
+using Stubbl.Api.Filters;
+using Stubbl.Api.Models.CreateTeam.Version1;
+
 namespace Stubbl.Api.Controllers
 {
-   using System.Threading;
-   using System.Threading.Tasks;
-   using Gunnsoft.Cqs.Commands;
-   using Core.Commands.CreateTeam.Version1;
-   using Filters;
-   using Microsoft.AspNetCore.Mvc;
-   using Models.CreateTeam.Version1;
+    [ApiVersion("1")]
+    [Route("teams/create", Name = "CreateTeam")]
+    public class CreateTeamController : Controller
+    {
+        private readonly ICommandDispatcher _commandDispatcher;
 
-   [ApiVersion("1")]
-   [Route("teams/create", Name = "CreateTeam")]
-   public class CreateTeamController : Controller
-   {
-      private readonly ICommandDispatcher _commandDispatcher;
+        public CreateTeamController(ICommandDispatcher commandDispatcher)
+        {
+            _commandDispatcher = commandDispatcher;
+        }
 
-      public CreateTeamController(ICommandDispatcher commandDispatcher)
-      {
-         _commandDispatcher = commandDispatcher;
-      }
+        [HttpPost]
+        [ProducesResponseType(typeof(CreateTeamResponse), 201)]
+        [ValidateModelState]
+        public async Task<IActionResult> CreateTeam([FromBody] CreateTeamRequest request,
+            CancellationToken cancellationToken)
+        {
+            var command = new CreateTeamCommand
+            (
+                request.Name
+            );
 
-      [HttpPost]
-      [ProducesResponseType(typeof(CreateTeamResponse), 201)]
-      [ValidateModelState]
-      public async Task<IActionResult> CreateTeam([FromBody] CreateTeamRequest request, CancellationToken cancellationToken)
-      {
-         var command = new CreateTeamCommand
-         (
-            request.Name
-         );
+            var @event = await _commandDispatcher.DispatchAsync(command, cancellationToken);
 
-         var @event = await _commandDispatcher.DispatchAsync(command, cancellationToken);
+            var location = Url.RouteUrl("FindTeam", new {teamId = @event.TeamId}, null, Request.Host.Value);
 
-         var location = Url.RouteUrl("FindTeam", new { teamId = @event.TeamId }, null, Request.Host.Value);
+            Response.Headers["Location"] = location;
 
-         Response.Headers["Location"] = location;
+            var response = new CreateTeamResponse(@event.TeamId.ToString());
 
-         var response = new CreateTeamResponse(@event.TeamId.ToString());
-
-         return StatusCode(201, response);
-      }
-   }
+            return StatusCode(201, response);
+        }
+    }
 }

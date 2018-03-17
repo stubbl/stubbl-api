@@ -1,20 +1,21 @@
-﻿namespace Stubbl.Api.ExceptionHandlers
+﻿using System.Net;
+using System.Threading.Tasks;
+using Gunnsoft.Api.ExceptionHandlers;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Stubbl.Api.Exceptions.RoleAlreadyExists.Version1;
+using Stubbl.Api.Models.RoleAlreadyExists.Version1;
+
+namespace Stubbl.Api.ExceptionHandlers
 {
-   using System.Net;
-   using System.Threading.Tasks;
-   using Gunnsoft.Api.ExceptionHandlers;
-   using Core.Exceptions.RoleAlreadyExists.Version1;
-   using Newtonsoft.Json;
-   using Microsoft.AspNetCore.Http;
-   using Models.RoleAlreadyExists.Version1;
+    public class RoleAlreadyExistsExceptionHandler : IExceptionHandler<RoleAlreadyExistsException>
+    {
+        public async Task HandleAsync(HttpContext context, RoleAlreadyExistsException exception)
+        {
+            var response = new RoleAlreadyExistsResponse();
 
-   public class RoleAlreadyExistsExceptionHandler : IExceptionHandler<RoleAlreadyExistsException>
-   {
-      public async Task HandleAsync(HttpContext context, RoleAlreadyExistsException exception)
-      {
-         var response = new RoleAlreadyExistsResponse();
-
-         await context.Response.WriteJsonAsync(HttpStatusCode.Conflict, response, JsonConstants.JsonSerializerSettings);
-      }
-   }
+            await context.Response.WriteJsonAsync(HttpStatusCode.Conflict, response,
+                JsonConstants.JsonSerializerSettings);
+        }
+    }
 }

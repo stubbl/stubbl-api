@@ -1,18 +1,18 @@
-﻿namespace Stubbl.Api.IntegrationTests.Controllers.Version1
+﻿using System.Net;
+using System.Net.Http;
+using MongoDB.Bson;
+
+namespace Stubbl.Api.IntegrationTests.Controllers.Version1
 {
-   using System.Net;
-   using System.Net.Http;
-   using MongoDB.Bson;
+    public class WhenDeletingATeamStub : IntegrationTest
+    {
+        public WhenDeletingATeamStub()
+            : base(1, HttpStatusCode.NoContent)
+        {
+        }
 
-   public class When_deleting_a_team_stub : IntegrationTest
-   {
-      public When_deleting_a_team_stub()
-         : base(1, HttpStatusCode.NoContent)
-      {
-      }
-
-      protected override HttpRequestMessage RequestMessage
-         => new HttpRequestMessage(HttpMethod.Post,
-            $"/teams/{ObjectId.GenerateNewId()}/stubs/{ObjectId.GenerateNewId()}/delete");
-   }
+        protected override HttpRequestMessage RequestMessage
+            => new HttpRequestMessage(HttpMethod.Post,
+                $"/teams/{ObjectId.GenerateNewId()}/stubs/{ObjectId.GenerateNewId()}/delete");
+    }
 }

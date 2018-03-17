@@ -1,8 +1,8 @@
 ﻿namespace Gunnsoft.CloudflareApi
 {
-   public enum SortDirection
-   {
-      Asc,
-      Desc
-   }
+    public enum SortDirection
+    {
+        Asc,
+        Desc
+    }
 }

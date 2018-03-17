@@ -1,8 +1,8 @@
 ﻿namespace Gunnsoft.CloudflareApi
 {
-   public enum Match
-   {
-      All,
-      Any
-   }
+    public enum Match
+    {
+        All,
+        Any
+    }
 }

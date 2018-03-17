@@ -1,26 +1,26 @@
-﻿namespace Stubbl.Api.IntegrationTests.Controllers.Version1
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
+using MongoDB.Bson;
+using NSubstitute;
+using Stubbl.Api.Queries.ListTeamStubs.Version1;
+using Stubbl.Api.Queries.Shared.Version1;
+
+namespace Stubbl.Api.IntegrationTests.Controllers.Version1
 {
-    using Core.Queries.ListTeamStubs.Version1;
-    using Core.Queries.Shared.Version1;
-    using Microsoft.AspNetCore.Http;
-    using MongoDB.Bson;
-    using NSubstitute;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
-
-    public class When_listing_team_stubs : IntegrationTest<IReadOnlyCollection<Stub>>
+    public class WhenListingTeamStubs : IntegrationTest<IReadOnlyCollection<Stub>>
     {
-        private static readonly Paging _paging;
+        private static readonly Paging s_paging;
 
-        static When_listing_team_stubs()
+        static WhenListingTeamStubs()
         {
-            _paging = new Paging(1, 10, 1);
+            s_paging = new Paging(1, 10, 1);
         }
 
-        public When_listing_team_stubs()
-           : base(1, HttpStatusCode.OK, GenerateExpectedResponse(), GenerateExpectedHeaders())
+        public WhenListingTeamStubs()
+            : base(1, HttpStatusCode.OK, GenerateExpectedResponse(), GenerateExpectedHeaders())
         {
         }
 
@@ -29,7 +29,7 @@
             get
             {
                 QueryDispatcher.DispatchAsync(Arg.Any<ListTeamStubsQuery>(), Arg.Any<CancellationToken>())
-                   .Returns(new ListTeamStubsProjection(ExpectedResponse, _paging));
+                    .Returns(new ListTeamStubsProjection(ExpectedResponse, s_paging));
 
                 return new HttpRequestMessage(HttpMethod.Get, $"/teams/{ObjectId.GenerateNewId()}/stubs/list");
             }
@@ -39,10 +39,10 @@
         {
             return new HeaderDictionary
             {
-                { "X-Paging-PageCount", _paging.PageCount.ToString() },
-                { "X-Paging-PageNumber", _paging.PageNumber.ToString() },
-                { "X-Paging-PageSize", _paging.PageSize.ToString() },
-                { "X-Paging-TotalCount", _paging.TotalCount.ToString() }
+                {"X-Paging-PageCount", s_paging.PageCount.ToString()},
+                {"X-Paging-PageNumber", s_paging.PageNumber.ToString()},
+                {"X-Paging-PageSize", s_paging.PageSize.ToString()},
+                {"X-Paging-TotalCount", s_paging.TotalCount.ToString()}
             };
         }
 
@@ -50,31 +50,31 @@
         {
             return new[]
             {
-               new Stub
-               (
-                  ObjectId.GenerateNewId().ToString() /* stubId */,
-                  ObjectId.GenerateNewId().ToString() /* teamId */,
-                  "foo",
-                  new Request
-                  (
-                     "/foo",
-                     "GET",
-                     null /* queryStringParameters */,
-                     null /* bodyTokens */,
-                     null /* headers */
-                  ),
-                  new Response
-                  (
-                     200,
-                     null /* body */,
-                     null /* headers */
-                  ),
-                  new[]
-                  {
-                     "a",
-                     "b",
-                     "c"
-                  })
+                new Stub
+                (
+                    ObjectId.GenerateNewId().ToString() /* stubId */,
+                    ObjectId.GenerateNewId().ToString() /* teamId */,
+                    "foo",
+                    new Request
+                    (
+                        "/foo",
+                        "GET",
+                        null /* queryStringParameters */,
+                        null /* bodyTokens */,
+                        null /* headers */
+                    ),
+                    new Response
+                    (
+                        200,
+                        null /* body */,
+                        null /* headers */
+                    ),
+                    new[]
+                    {
+                        "a",
+                        "b",
+                        "c"
+                    })
             };
         }
     }
