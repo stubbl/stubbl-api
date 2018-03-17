@@ -1,8 +1,8 @@
 ﻿namespace Stubbl.Api.Core.EventHandlers.Cloudflare
 {
-    using CodeContrib.CloudflareApi;
-    using CodeContrib.CloudflareApi.DnsRecords;
-    using CodeContrib.CloudflareApi.DnsRecords.CreateDnsRecord;
+    using Gunnsoft.CloudflareApi;
+    using Gunnsoft.CloudflareApi.DnsRecords;
+    using Gunnsoft.CloudflareApi.DnsRecords.CreateDnsRecord;
     using CodeContrib.EventHandlers;
     using Events.TeamCreated.Version1;
     using Microsoft.AspNetCore.Hosting;

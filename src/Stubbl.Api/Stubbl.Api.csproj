@@ -42,7 +42,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeContrib\CodeContrib.csproj" />
+    <ProjectReference Include="..\Gunnsoft.Api\Gunnsoft.Api.csproj" />
+    <ProjectReference Include="..\Gunnsoft.CloudflareApi\Gunnsoft.CloudflareApi.csproj" />
+    <ProjectReference Include="..\Gunnsoft.Common\Gunnsoft.Common.csproj" />
+    <ProjectReference Include="..\Gunnsoft.Cqs\Gunnsoft.Cqs.csproj" />
   </ItemGroup>
 
   <ItemGroup>

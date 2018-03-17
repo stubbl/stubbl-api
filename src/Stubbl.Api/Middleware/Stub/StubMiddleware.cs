@@ -10,6 +10,8 @@
     using System.Xml.Linq;
     using CodeContrib.Commands;
     using CodeContrib.Queries;
+    using Core.Commands.CreateTeamLog.Version1;
+    using Core.Commands.Shared.Version1;
     using Core.Queries.StubTester.Version1;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
@@ -17,9 +19,8 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Options;
-    using CreateTeamLogCommand = Core.Commands.CreateTeamLog.Version1.CreateTeamLogCommand;
-    using Header = Core.Commands.Shared.Version1.Header;
-    using QueryStringParameter = Core.Commands.Shared.Version1.QueryStringParameter;
+    using Request = Core.Queries.StubTester.Version1.Request;
+    using Response = Core.Commands.CreateTeamLog.Version1.Response;
 
     public class StubMiddleware
     {
@@ -51,14 +52,14 @@
 
             var query = new StubTesterQuery
             (
-               teamId.Value,
-               new Request
-               (
-                  context.Request.Method,
-                  context.Request.Path,
-                  context.Request.Query.Count,
-                  context.Request.Headers.Count
-               )
+                teamId.Value,
+                new Request
+                (
+                    context.Request.Method,
+                    context.Request.Path,
+                    context.Request.Query.Count,
+                    context.Request.Headers.Count
+                )
             );
 
             var projection = await _queryDispatcher.DispatchAsync(query, cancellationToken);
@@ -79,80 +80,86 @@
             }
 
             var stubs = projection.Stubs.Where(s =>
-               {
-                   if (s.Request.Headers != null)
-                   {
-                       if (s.Request.Headers.Any(requestHeader => !context.Request.Headers.ContainsKey(requestHeader.Key) || !string.Equals(context.Request.Headers[requestHeader.Key], requestHeader.Value, StringComparison.OrdinalIgnoreCase)))
-                       {
-                           return false;
-                       }
-                   }
+                {
+                    if (s.Request.Headers != null)
+                    {
+                        if (s.Request.Headers.Any(requestHeader =>
+                            !context.Request.Headers.ContainsKey(requestHeader.Key) || !string.Equals(
+                                context.Request.Headers[requestHeader.Key], requestHeader.Value,
+                                StringComparison.OrdinalIgnoreCase)))
+                        {
+                            return false;
+                        }
+                    }
 
-                   if (string.Equals(context.Request.Method, "GET", StringComparison.OrdinalIgnoreCase) || s.Request.BodyTokens == null)
-                   {
-                       return true;
-                   }
+                    if (string.Equals(context.Request.Method, "GET", StringComparison.OrdinalIgnoreCase) ||
+                        s.Request.BodyTokens == null)
+                    {
+                        return true;
+                    }
 
-                   if (string.IsNullOrWhiteSpace(requestBody))
-                   {
-                       return false;
-                   }
+                    if (string.IsNullOrWhiteSpace(requestBody))
+                    {
+                        return false;
+                    }
 
-                   JObject request = null;
-                   var isXml = false;
+                    JObject request = null;
+                    var isXml = false;
 
-                   try
-                   {
-                       var xElement = XElement.Load(requestBody);
-                       var json = JsonConvert.SerializeXNode(xElement);
-                       request = JObject.Parse(json);
+                    try
+                    {
+                        var xElement = XElement.Load(requestBody);
+                        var json = JsonConvert.SerializeXNode(xElement);
+                        request = JObject.Parse(json);
 
-                       isXml = true;
-                   }
-                   catch
-                   {
-                    // Do nothing
-                }
-
-                   if (request == null)
-                   {
-                       try
-                       {
-                           request = JObject.Parse(requestBody);
-                       }
-                       catch (Exception)
-                       {
+                        isXml = true;
+                    }
+                    catch
+                    {
                         // Do nothing
                     }
-                   }
 
-                   if (request == null)
-                   {
-                       return false;
-                   }
+                    if (request == null)
+                    {
+                        try
+                        {
+                            request = JObject.Parse(requestBody);
+                        }
+                        catch (Exception)
+                        {
+                            // Do nothing
+                        }
+                    }
 
-                   foreach (var bodyToken in s.Request.BodyTokens)
-                   {
-                       JToken token;
+                    if (request == null)
+                    {
+                        return false;
+                    }
 
-                       try
-                       {
-                           token = request.SelectToken(bodyToken.Path);
-                       }
-                       catch
-                       {
-                           return false;
-                       }
+                    foreach (var bodyToken in s.Request.BodyTokens)
+                    {
+                        JToken token;
 
-                       if (token == null || !isXml && token.Type != bodyToken.Type || !string.Equals(token.Value<string>(), bodyToken.ToString(), StringComparison.OrdinalIgnoreCase))
-                       {
-                           return false;
-                       }
-                   }
+                        try
+                        {
+                            token = request.SelectToken(bodyToken.Path);
+                        }
+                        catch
+                        {
+                            return false;
+                        }
 
-                   return true;
-               })
-               .ToList();
+                        if (token == null || !isXml && token.Type != bodyToken.Type ||
+                            !string.Equals(token.Value<string>(), bodyToken.ToString(),
+                                StringComparison.OrdinalIgnoreCase))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
+                .ToList();
 
             if (stubs.Count > 1)
             {
@@ -166,13 +173,14 @@
                     })
                 };
 
-                var responseJson = JsonConvert.SerializeObject(response, Formatting.Indented, JsonConstants.JsonSerializerSettings);
+                var responseJson = JsonConvert.SerializeObject(response, Formatting.Indented,
+                    JsonConstants.JsonSerializerSettings);
 
-                var response500 = new Core.Commands.CreateTeamLog.Version1.Response
+                var response500 = new Response
                 (
-                   500,
-                   responseJson,
-                   null
+                    500,
+                    responseJson,
+                    null
                 );
 
                 context.Response.ContentType = "application/json";
@@ -208,14 +216,15 @@
                 await context.Response.WriteAsync(stub.Response.Body, cancellationToken);
             }
 
-            var stubResponse = new Core.Commands.CreateTeamLog.Version1.Response
+            var stubResponse = new Response
             (
-               stub.Response.HttpStatusCode,
-               stub.Response.Body,
-               stub.Response.Headers?.Select(h => new Header(h.Key, h.Value)).ToList()
+                stub.Response.HttpStatusCode,
+                stub.Response.Body,
+                stub.Response.Headers?.Select(h => new Header(h.Key, h.Value)).ToList()
             );
 
-            await UpdateLogs(context, teamId.Value, new[] { ObjectId.Parse(stub.StubId) }, stubResponse, cancellationToken);
+            await UpdateLogs(context, teamId.Value, new[] {ObjectId.Parse(stub.StubId)}, stubResponse,
+                cancellationToken);
         }
 
         private async Task NotFound(HttpContext context, ObjectId teamId, CancellationToken cancellationToken)
@@ -226,18 +235,19 @@
                 Message = "0 stubs were found for this request."
             };
 
-            var responseJson = JsonConvert.SerializeObject(response, Formatting.Indented, JsonConstants.JsonSerializerSettings);
+            var responseJson =
+                JsonConvert.SerializeObject(response, Formatting.Indented, JsonConstants.JsonSerializerSettings);
 
-            var response404 = new Core.Commands.CreateTeamLog.Version1.Response
+            var response404 = new Response
             (
-               404,
-               responseJson,
-               null
+                404,
+                responseJson,
+                null
             );
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = response404.HttpStatusCode;
-            await context.Response.WriteAsync(responseJson);
+            await context.Response.WriteAsync(responseJson, cancellationToken);
 
             await UpdateLogs(context, teamId, null, response404, cancellationToken);
         }
@@ -261,7 +271,8 @@
             return teamId;
         }
 
-        private async Task UpdateLogs(HttpContext context, ObjectId teamId, IReadOnlyCollection<ObjectId> stubIds, Core.Commands.CreateTeamLog.Version1.Response response, CancellationToken cancellationToken)
+        private async Task UpdateLogs(HttpContext context, ObjectId teamId, IReadOnlyCollection<ObjectId> stubIds,
+            Response response, CancellationToken cancellationToken)
         {
             var requestStream = context.Request.Body;
             string requestBody;
@@ -273,17 +284,17 @@
 
             var command = new CreateTeamLogCommand
             (
-               teamId,
-               stubIds,
-               new Core.Commands.CreateTeamLog.Version1.Request
-               (
-                  context.Request.Method,
-                  context.Request.Path,
-                  context.Request.Query.Select(q => new QueryStringParameter(q.Key, q.Value)).ToList(),
-                  requestBody,
-                  context.Request.Headers.Select(h => new Header(h.Key, h.Value)).ToList()
-               ),
-               response
+                teamId,
+                stubIds,
+                new Core.Commands.CreateTeamLog.Version1.Request
+                (
+                    context.Request.Method,
+                    context.Request.Path,
+                    context.Request.Query.Select(q => new QueryStringParameter(q.Key, q.Value)).ToList(),
+                    requestBody,
+                    context.Request.Headers.Select(h => new Header(h.Key, h.Value)).ToList()
+                ),
+                response
             );
 
             await _commandDispatcher.DispatchAsync(command, cancellationToken);

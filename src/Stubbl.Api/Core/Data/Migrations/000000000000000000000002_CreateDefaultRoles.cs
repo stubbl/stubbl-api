@@ -9,7 +9,7 @@ namespace Stubbl.Api.Core.Data.Migrations
    using MongoDB.Bson;
    using MongoDB.Driver;
 
-   public class _000000000000000000000002_CreateDefaultRoles : IMongoDBMigration
+   public class _000000000000000000000002_CreateDefaultRoles : IMongoMigration
    {
       private readonly IMongoCollection<DefaultRole> _defaultRolesCollection;
 

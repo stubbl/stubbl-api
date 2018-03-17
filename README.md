@@ -36,7 +36,7 @@
 | List Team Logs | `GET` | `/teams/:teamId/logs/list` |
 | Find Team Log | `GET` | `/teams/:teamId/logs/:logId/find` |
 | **Team Members** |
-| Count Team Members | `GET` | `/teams/:teamId/members/cunt` |
+| Count Team Members | `GET` | `/teams/:teamId/members/count` |
 | List Team Members | `GET` | `/teams/:teamId/members/list` |
 | Find Team Member | `GET` | `/teams/:teamId/members/:memberId/find` |
 | Remove Team Member | `POST` | `/teams/:teamId/members/:memberId/remove` |

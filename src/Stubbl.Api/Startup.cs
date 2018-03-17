@@ -2,7 +2,7 @@
 {
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
-    using CodeContrib.CloudflareApi;
+    using Gunnsoft.CloudflareApi;
     using Core.Data;
     using FluentValidation;
     using FluentValidation.AspNetCore;
@@ -78,7 +78,7 @@
                 app.UseSecureRequests();
             }
 
-            if (_hostingEnvironment.IsDevelopment() || _hostingEnvironment.IsIntegrationTesting())
+            if (_hostingEnvironment.IsDevelopment() || _hostingEnvironment.IsEnvironment("IntegrationTesting"))
             {
                 app.UseFakeUser();
             }
@@ -155,18 +155,6 @@
                 o.LowercaseUrls = true;
             });
 
-            services.AddCloudflareApi(new CloudflareApiSettings
-            (
-                _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
-                _configuration.GetValue<string>("CloudflareApi:AuthenticationKey"),
-                _configuration.GetValue<string>("CloudflareApi:AuthenticationEmailAddress")
-            ));
-            services.AddMongoDB(new MongoDBSettings
-            (
-                _configuration.GetValue<string>("MongoDB:ConnectionString")
-            ));
-
-            services.AddSingleton(sp => new HttpClient(new LoggingHandler(new HttpClientHandler(), sp.GetRequiredService<ILogger<LoggingHandler>>())));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSwaggerGen(o =>
@@ -208,6 +196,18 @@
                 }
             });
 
+            services.AddSingleton(sp => new HttpClient(new LoggingHandler(new HttpClientHandler(), sp.GetRequiredService<ILogger<LoggingHandler>>())));
+            services.AddCloudflareApi(new CloudflareApiSettings
+            (
+                _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
+                _configuration.GetValue<string>("CloudflareApi:AuthenticationKey"),
+                _configuration.GetValue<string>("CloudflareApi:AuthenticationEmailAddress")
+            ));
+            services.AddMongoDB(new MongoSettings
+            (
+                _configuration.GetValue<string>("MongoDB:ConnectionString")
+            ));
+
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterInstance(_configuration)
                .As<IConfiguration>()
@@ -217,12 +217,14 @@
             var container = containerBuilder.Build();
             var serviceProvider = new AutofacServiceProvider(container);
 
-            if (!_hostingEnvironment.IsIntegrationTesting())
+            if (_hostingEnvironment.IsEnvironment("IntegrationTesting"))
             {
-                var mongoDbMigrationsRunner = container.Resolve<MongoDBMigrationsRunner>();
-                mongoDbMigrationsRunner.RunAsync()
-                   .Wait();
+                return serviceProvider;
             }
+
+            var mongoDbMigrationsRunner = container.Resolve<MongoMigrationsRunner>();
+            mongoDbMigrationsRunner.RunAsync()
+                .Wait();
 
             return serviceProvider;
         }
