@@ -2,12 +2,12 @@
 {
     public static class CollectionNames
     {
-        public static string DefaultRoles = "defaultroles";
-        public static string Invitations = "invitations";
-        public static string Logs = "logs";
-        public static string Members = "members";
-        public static string Migrations = "migrations";
-        public static string Stubs = "stubs";
-        public static string Teams = "teams";
+        public const string DefaultRoles = "defaultroles";
+        public const string Invitations = "invitations";
+        public const string Logs = "logs";
+        public const string Members = "members";
+        public const string Migrations = "migrations";
+        public const string Stubs = "stubs";
+        public const string Teams = "teams";
     }
 }

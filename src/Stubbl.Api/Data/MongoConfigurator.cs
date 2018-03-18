@@ -15,13 +15,15 @@ namespace Stubbl.Api.Data
     {
         public static void Configure()
         {
+            const string conventionName = "stubbl-api";
             var conventionPack = new ConventionPack
             {
                 new CamelCaseElementNameConvention(),
                 new EnumRepresentationConvention(BsonType.String)
             };
 
-            ConventionRegistry.Register("stubbl-api", conventionPack, t => true);
+            ConventionRegistry.Remove(conventionName);
+            ConventionRegistry.Register(conventionName, conventionPack, t => true);
 
             if (!BsonClassMap.IsClassMapRegistered(typeof(DefaultRole)))
             {
