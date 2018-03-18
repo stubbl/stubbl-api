@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
@@ -29,13 +30,21 @@ namespace Gunnsoft.Cqs.CommandHandlers
             return extended;
         }
 
-        public static ContainerBuilder AddCommandHandlers(this ContainerBuilder extended, Assembly assembly)
+        public static ContainerBuilder AddCommandHandlers(this ContainerBuilder extended)
         {
-            extended.RegisterAssemblyTypes(assembly)
-                .As(t => t.GetInterfaces()
-                    .Where(i => i.IsClosedTypeOf(typeof(ICommandHandler<,>)))
-                    .Select(i => new KeyedService("CommandHandler", i)))
-                .InstancePerDependency();
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                AddCommandHandlers(assembly);
+            }
+
+            void AddCommandHandlers(Assembly assembly)
+            {
+                extended.RegisterAssemblyTypes(assembly)
+                    .As(t => t.GetInterfaces()
+                        .Where(i => i.IsClosedTypeOf(typeof(ICommandHandler<,>)))
+                        .Select(i => new KeyedService("CommandHandler", i)))
+                    .InstancePerDependency();
+            }
 
             return extended;
         }

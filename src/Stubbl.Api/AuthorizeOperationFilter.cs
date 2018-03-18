@@ -6,7 +6,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api
 {
-    public class AuthorizeCheckOperationFilter : IOperationFilter
+    public class AuthorizeOperationFilter : IOperationFilter
     {
         public void Apply(Operation operation, OperationFilterContext context)
         {
@@ -14,8 +14,6 @@ namespace Stubbl.Api
             {
                 return;
             }
-
-            operation.Responses.Add("401", new Response {Description = "Unauthorized"});
 
             operation.Security = new List<IDictionary<string, IEnumerable<string>>>
             {

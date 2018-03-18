@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Reflection;
@@ -169,32 +170,32 @@ namespace Stubbl.Api
             services.AddSwaggerGen(o =>
             {
                 //if (_hostingEnvironment.IsProduction())
-                //{
-                //    var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
+                {
+                    var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
 
-                //    o.AddSecurityDefinition("Swagger", new OAuth2Scheme
-                //    {
-                //        AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
-                //        Flow = "implicit",
-                //        Scopes = new Dictionary<string, string>
-                //        {
-                //            { "stubbl-api", "Stubbl API" }
-                //        },
-                //        TokenUrl = $"{identityServerAuthority}/connect/token",
-                //        Type = "oauth2"
-                //    });
-                //}
+                    o.AddSecurityDefinition("Swagger", new OAuth2Scheme
+                    {
+                        AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
+                        Flow = "implicit",
+                        Scopes = new Dictionary<string, string>
+                        {
+                            { "stubbl-api", "Stubbl API" }
+                        },
+                        TokenUrl = $"{identityServerAuthority}/connect/token",
+                        Type = "oauth2"
+                    });
+                }
 
                 o.CustomSchemaIds(x => x.FullName);
                 o.DescribeAllEnumsAsStrings();
                 o.DocumentFilter<LowercaseDocumentOperationFilter>();
-                o.OperationFilter<AuthorizeCheckOperationFilter>();
+                o.OperationFilter<AuthorizeOperationFilter>();
                 o.OperationFilter<CancellationTokenOperationFilter>();
 
-                if (_hostingEnvironment.IsDevelopment())
-                {
-                    o.OperationFilter<SubHeaderOperationFilter>();
-                }
+                //if (_hostingEnvironment.IsDevelopment())
+                //{
+                //    o.OperationFilter<SubHeaderOperationFilter>();
+                //}
 
                 o.OperationFilter<SwaggerDefaultValuesOperationFilter>();
 
@@ -218,12 +219,6 @@ namespace Stubbl.Api
                 new HttpClient(new LoggingHandler(new HttpClientHandler(),
                     sp.GetRequiredService<ILogger<LoggingHandler>>())));
 
-            // TODO Extension method.
-            services.AddSingleton(new CqsSettings
-            (
-                _configuration.GetValue<string>("Storage:ConnectionString")
-            ));
-
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.AddCaching()
@@ -235,14 +230,15 @@ namespace Stubbl.Api
                 ))
                 .AddCommandDispatcher()
                 .AddCommandHandlerDecorators()
-                .AddCommandHandlers(typeof(JsonConstants).Assembly)
-                .AddCommandHandlers(Assembly.GetExecutingAssembly())
+                .AddCommandHandlers()
+                .AddCqsSettings(new CqsSettings
+                (
+                    _configuration.GetValue<string>("Storage:ConnectionString")
+                ))
                 .AddEventDispatcher()
                 .AddEventHandlerDecorators()
-                .AddEventHandlers(typeof(JsonConstants).Assembly)
-                .AddEventHandlers(Assembly.GetExecutingAssembly())
-                .AddExceptionHandlers(typeof(JsonConstants).Assembly)
-                .AddExceptionHandlers(Assembly.GetExecutingAssembly())
+                .AddEventHandlers()
+                .AddExceptionHandlers()
                 .AddIdentityIdAccessor()
                 .AddMongo(new MongoSettings
                 (
@@ -250,8 +246,7 @@ namespace Stubbl.Api
                 ))
                 .AddQueryDispatcher()
                 .AddQueryHandlerDecorators()
-                .AddQueryHandlers(typeof(JsonConstants).Assembly)
-                .AddQueryHandlers(Assembly.GetExecutingAssembly())
+                .AddQueryHandlers()
                 .AddUserAccessor();
 
             containerBuilder.RegisterAssemblyModules(s_assembly);

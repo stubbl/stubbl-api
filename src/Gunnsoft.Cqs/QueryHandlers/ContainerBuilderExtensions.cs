@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
@@ -29,13 +30,23 @@ namespace Gunnsoft.Cqs.QueryHandlers
             return extended;
         }
 
-        public static ContainerBuilder AddQueryHandlers(this ContainerBuilder extended, Assembly assembly)
+        public static ContainerBuilder AddQueryHandlers(this ContainerBuilder extended)
         {
-            extended.RegisterAssemblyTypes(assembly)
-                .As(t => t.GetInterfaces()
-                    .Where(i => i.IsClosedTypeOf(typeof(IQueryHandler<,>)))
-                    .Select(i => new KeyedService("QueryHandler", i)))
-                .InstancePerDependency();
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                AddQueryHandlers(assembly);
+            }
+
+            void AddQueryHandlers(Assembly assembly)
+            {
+                assembly = assembly ?? typeof(ContainerBuilderExtensions).Assembly;
+
+                extended.RegisterAssemblyTypes(assembly)
+                    .As(t => t.GetInterfaces()
+                        .Where(i => i.IsClosedTypeOf(typeof(IQueryHandler<,>)))
+                        .Select(i => new KeyedService("QueryHandler", i)))
+                    .InstancePerDependency();
+            }
 
             return extended;
         }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
@@ -29,13 +30,22 @@ namespace Gunnsoft.Cqs.EventHandlers
             return extended;
         }
 
-        public static ContainerBuilder AddEventHandlers(this ContainerBuilder extended, Assembly assembly)
+        public static ContainerBuilder AddEventHandlers(this ContainerBuilder extended)
         {
-            extended.RegisterAssemblyTypes(assembly)
-                .As(t => t.GetInterfaces()
-                    .Where(i => i.IsClosedTypeOf(typeof(IEventHandler<>)))
-                    .Select(i => new KeyedService("EventHandler", i)))
-                .InstancePerDependency();
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                AddEventHandlers(assembly);
+            }
+
+            void AddEventHandlers(Assembly assembly)
+            {
+                extended.RegisterAssemblyTypes(assembly)
+                    .As(t => t.GetInterfaces()
+                        .Where(i => i.IsClosedTypeOf(typeof(IEventHandler<>)))
+                        .Select(i => new KeyedService("EventHandler", i)))
+                    .InstancePerDependency();
+            }
+
 
             return extended;
         }
