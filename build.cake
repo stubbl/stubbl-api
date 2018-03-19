@@ -77,7 +77,7 @@ Task("Pack")
 
         var artifactFilePath = $"{artifactsDirectory}/stubbl-api.zip";
         
-        Zip($"src/Stubbl.Api/bin/{configuration}/netstandard2.0/publish", artifactFilePath); 
+        Zip($"./src/Stubbl.Api/bin/{configuration}/netcoreapp2.0/publish/", artifactFilePath); 
         
         if (AppVeyor.IsRunningOnAppVeyor)
         {
