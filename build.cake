@@ -9,10 +9,11 @@ Task("Clean")
     {
         CleanDirectories(artifactsDirectory);
 
-        StartProcess("dotnet", new ProcessSettings
-        {
-            Arguments = "clean"
-        });
+        StartAndReturnProcess("dotnet", new ProcessSettings
+            {
+                Arguments = "clean"
+            })
+            .WaitForExit();
     });
 
 Task("Restore")
@@ -28,10 +29,11 @@ Task("Build")
     {
         var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "0.0.0";
 
-        StartProcess("dotnet", new ProcessSettings
-        {
-            Arguments = $"build --configuration {configuration} --no-restore /p:Version={version}"
-        });
+        StartAndReturnProcess("dotnet", new ProcessSettings
+            {
+                Arguments = $"build --configuration {configuration} --no-restore /p:Version={version}"
+            })
+            .WaitForExit();
     });
 
 Task("Test")
@@ -40,10 +42,11 @@ Task("Test")
     {
         foreach(var filePath in GetFiles(@".\test\**\*.csproj")) 
         { 
-            StartProcess("dotnet", new ProcessSettings
-            {
-                Arguments = $"test {filePath} --configuration {configuration} --logger trx;LogFileName=TestResult.xml --no-build --no-restore"
-            });
+            StartAndReturnProcess("dotnet", new ProcessSettings
+                {
+                    Arguments = $"test {filePath} --configuration {configuration} --logger trx;LogFileName=TestResult.xml --no-build --no-restore"
+                })
+                .WaitForExit();
         }
 
         if (AppVeyor.IsRunningOnAppVeyor)
@@ -59,10 +62,11 @@ Task("Publish")
     .IsDependentOn("Test")
     .Does(() => 
     {
-        StartProcess("dotnet", new ProcessSettings
-        {
-            Arguments = $"publish src/Stubbl.Api --configuration {configuration} --no-build"
-        });
+        StartAndReturnProcess("dotnet", new ProcessSettings
+            {
+                Arguments = $"publish src/Stubbl.Api --configuration {configuration} --no-build"
+            })
+            .WaitForExit();
     });
 
 Task("Pack")

@@ -4,10 +4,19 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 
-namespace Gunnsoft.Cqs.CommandHandlers
+namespace Gunnsoft.Cqs.Commands
 {
     public static class ContainerBuilderExtensions
     {
+        public static ContainerBuilder AddCommandDispatcher(this ContainerBuilder extended)
+        {
+            extended.RegisterType<AutofacCommandDispatcher>()
+                .As<ICommandDispatcher>()
+                .InstancePerDependency();
+
+            return extended;
+        }
+
         public static ContainerBuilder AddCommandHandlerDecorators(this ContainerBuilder extended)
         {
             extended.RegisterGenericDecorator

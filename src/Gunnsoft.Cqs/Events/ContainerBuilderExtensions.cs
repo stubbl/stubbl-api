@@ -4,10 +4,19 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 
-namespace Gunnsoft.Cqs.EventHandlers
+namespace Gunnsoft.Cqs.Events
 {
     public static class ContainerBuilderExtensions
     {
+        public static ContainerBuilder AddEventDispatcher(this ContainerBuilder extended)
+        {
+            extended.RegisterType<AutofacEventDispatcher>()
+                .As<IEventDispatcher>()
+                .InstancePerDependency();
+
+            return extended;
+        }
+
         public static ContainerBuilder AddEventHandlerDecorators(this ContainerBuilder extended)
         {
             extended.RegisterGenericDecorator
