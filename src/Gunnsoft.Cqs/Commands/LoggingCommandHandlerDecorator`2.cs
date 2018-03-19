@@ -2,11 +2,10 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Events;
 using Microsoft.Extensions.Logging;
 
-namespace Gunnsoft.Cqs.CommandHandlers
+namespace Gunnsoft.Cqs.Commands
 {
     public class LoggingCommandHandlerDecorator<TCommand, TEvent> : ICommandHandler<TCommand, TEvent>
         where TCommand : ICommand<TEvent>

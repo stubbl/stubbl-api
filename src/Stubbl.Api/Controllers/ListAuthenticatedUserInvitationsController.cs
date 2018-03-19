@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Queries.ListAuthenticatedUserInvitations.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -18,7 +20,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ListAuthenticatedUserInvitationsProjection), 200)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Invitation>), 200)]
+        [SwaggerOperation(Tags = new[] { "Authenticated User Invitations" })]
         public async Task<IActionResult> ListAuthenticatedUserInvitations(CancellationToken cancellationToken)
         {
             var query = new ListAuthenticatedUserInvitationsQuery();

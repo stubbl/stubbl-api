@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Events;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
-namespace Gunnsoft.Cqs.EventHandlers
+namespace Gunnsoft.Cqs.Events
 {
     public class RetryEventHandlerDecorator<TEvent> : IEventHandler<TEvent>
         where TEvent : IEvent

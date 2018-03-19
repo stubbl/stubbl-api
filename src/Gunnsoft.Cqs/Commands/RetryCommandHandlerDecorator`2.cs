@@ -2,15 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Commands;
-using Gunnsoft.Cqs.EventHandlers;
 using Gunnsoft.Cqs.Events;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
-namespace Gunnsoft.Cqs.CommandHandlers
+namespace Gunnsoft.Cqs.Commands
 {
     public class RetryCommandHandlerDecorator<TCommand, TEvent> : ICommandHandler<TCommand, TEvent>
         where TCommand : ICommand<TEvent>

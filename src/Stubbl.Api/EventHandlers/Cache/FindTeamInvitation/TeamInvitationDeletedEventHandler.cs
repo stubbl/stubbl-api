@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Common.Caching;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using Stubbl.Api.Caching;
 using Stubbl.Api.Events.TeamInvitationDeleted.Version1;
 

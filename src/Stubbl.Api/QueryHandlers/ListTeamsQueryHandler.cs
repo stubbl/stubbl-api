@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Api.Authentication;
-using Gunnsoft.Cqs.QueryHandlers;
+using Gunnsoft.Cqs.Queries;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Queries.ListTeams.Version1;
 

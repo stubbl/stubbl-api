@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.ListTeamInvitations.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -19,7 +21,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ListTeamInvitationsProjection), 200)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Invitation>), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Invitations" })]
         public async Task<IActionResult> ListTeamInvitations([FromRoute] string teamId,
             CancellationToken cancellationToken)
         {

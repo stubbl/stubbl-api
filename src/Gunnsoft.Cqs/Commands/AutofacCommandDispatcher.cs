@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using Gunnsoft.Cqs.CommandHandlers;
 using Gunnsoft.Cqs.Events;
 using Microsoft.Extensions.Logging;
 

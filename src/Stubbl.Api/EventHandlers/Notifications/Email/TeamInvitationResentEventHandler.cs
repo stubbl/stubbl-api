@@ -1,8 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Api.Authentication;
 using Gunnsoft.Cqs.Commands;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.SendEmail.Version1;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.QueryHandlers;
+using Gunnsoft.Cqs.Queries;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Stubbl.Api.Queries.Canary.Version1;

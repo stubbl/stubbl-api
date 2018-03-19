@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <TrimUnusedDependencies>true</TrimUnusedDependencies>
     <UserSecretsId>stubbl-api-c491372c-65c7-4318-aedf-202fb2cd7256</UserSecretsId>
+    <Version>0.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

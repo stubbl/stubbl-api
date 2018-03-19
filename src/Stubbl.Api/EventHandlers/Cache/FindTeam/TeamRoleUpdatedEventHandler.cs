@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Common.Caching;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Caching;
 using Stubbl.Api.Data.Collections.Teams;

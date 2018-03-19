@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Commands.DeleteTeamRole.Version1;
 using Stubbl.Api.Models.CreateTeamRole.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -22,6 +23,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CreateTeamRoleResponse), 201)]
+        [SwaggerOperation(Tags = new[] { "Team Roles" })]
         [ValidateModelState]
         public async Task<IActionResult> DeleteTeamRole([FromRoute] string teamId, [FromRoute] string roleId,
             CancellationToken cancellationToken)

@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.QueryHandlers;
+using Gunnsoft.Cqs.Queries;
 using MongoDB.Driver;
 using Stubbl.Api.Data.Collections.Teams;
 using Stubbl.Api.Queries.Shared.Version1;

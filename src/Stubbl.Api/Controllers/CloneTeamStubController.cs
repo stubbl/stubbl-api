@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Commands.CloneTeamStub.Version1;
 using Stubbl.Api.Models.CloneTeamStub.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -22,6 +23,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CloneTeamStubResponse), 201)]
+        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
         [ValidateModelState]
         public async Task<IActionResult> CloneTeamStub([FromRoute] string teamId, [FromRoute] string stubId,
             [FromBody] CloneTeamStubRequest request,

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Gunnsoft.CloudflareApi;
 using Gunnsoft.CloudflareApi.DnsRecords.DeleteDnsRecord;
 using Gunnsoft.CloudflareApi.DnsRecords.ListDnsRecords;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

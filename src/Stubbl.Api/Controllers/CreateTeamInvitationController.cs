@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Commands.CreateTeamInvitation.Version1;
 using Stubbl.Api.Models.CreateTeamInvitation.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -22,6 +23,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
+        [SwaggerOperation(Tags = new[] { "Team Invitations" })]
         [ValidateModelState]
         public async Task<IActionResult> CreateTeamInvitation([FromRoute] string teamId, [FromRoute] string roleId,
             [FromBody] CreateTeamInvitationRequest request, CancellationToken cancellationToken)

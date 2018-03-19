@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Api.Authentication;
-using Gunnsoft.Cqs.CommandHandlers;
+using Gunnsoft.Cqs.Commands;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.CreateTeamInvitation.Version1;

@@ -4,6 +4,7 @@ using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Commands.RemoveTeamMember.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
+        [SwaggerOperation(Tags = new[] { "Team Members" })]
         public async Task<IActionResult> RemoveTeamMember([FromRoute] string teamId, [FromRoute] string memberId,
             CancellationToken cancellationToken)
         {

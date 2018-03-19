@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Gunnsoft.CloudflareApi;
 using Gunnsoft.CloudflareApi.DnsRecords;
 using Gunnsoft.CloudflareApi.DnsRecords.CreateDnsRecord;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using Stubbl.Api.Events.TeamCreated.Version1;

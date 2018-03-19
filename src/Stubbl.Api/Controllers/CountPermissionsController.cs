@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Queries.CountPermissions.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -19,6 +20,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(CountPermissionsProjection), 200)]
+        [SwaggerOperation(Tags = new[] { "Permissions" })]
         public async Task<IActionResult> CountPermissions(CancellationToken cancellationToken)
         {
             var query = new CountPermissionsQuery();

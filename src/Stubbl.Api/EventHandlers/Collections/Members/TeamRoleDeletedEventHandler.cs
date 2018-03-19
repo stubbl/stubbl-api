@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Data;
 using Stubbl.Api.Data.Collections.Members;

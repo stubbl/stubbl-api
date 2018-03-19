@@ -1,9 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Events;
 
-namespace Gunnsoft.Cqs.CommandHandlers
+namespace Gunnsoft.Cqs.Commands
 {
     public interface ICommandHandler<in TCommand, TEvent>
         where TCommand : ICommand<TEvent>

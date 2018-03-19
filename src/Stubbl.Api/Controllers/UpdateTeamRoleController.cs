@@ -9,6 +9,7 @@ using MongoDB.Bson;
 using Stubbl.Api.Commands.Shared.Version1;
 using Stubbl.Api.Commands.UpdateTeamRole.Version1;
 using Stubbl.Api.Models.UpdateTeamRole.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -25,6 +26,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
+        [SwaggerOperation(Tags = new[] { "Team Roles" })]
         [ValidateModelState]
         public async Task<IActionResult> UpdateTeamRole([FromRoute] string teamId, [FromRoute] string roleId,
             [FromBody] UpdateTeamRoleRequest request, CancellationToken cancellationToken)

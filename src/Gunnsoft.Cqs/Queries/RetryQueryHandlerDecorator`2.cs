@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Queries;
 
-namespace Gunnsoft.Cqs.QueryHandlers
+namespace Gunnsoft.Cqs.Queries
 {
     public class RetryQueryHandlerDecorator<TQuery, TProjection> : IQueryHandler<TQuery, TProjection>
         where TQuery : IQuery<TProjection>

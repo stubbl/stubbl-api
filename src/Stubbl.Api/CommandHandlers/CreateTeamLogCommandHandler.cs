@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.CommandHandlers;
+using Gunnsoft.Cqs.Commands;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Stubbl.Api.Commands.CreateTeamLog.Version1;

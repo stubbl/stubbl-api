@@ -14,12 +14,9 @@ using Gunnsoft.Api.Middleware;
 using Gunnsoft.Api.Versioning;
 using Gunnsoft.CloudflareApi;
 using Gunnsoft.Cqs;
-using Gunnsoft.Cqs.CommandHandlers;
 using Gunnsoft.Cqs.Commands;
-using Gunnsoft.Cqs.EventHandlers;
 using Gunnsoft.Cqs.Events;
 using Gunnsoft.Cqs.Queries;
-using Gunnsoft.Cqs.QueryHandlers;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -169,7 +166,7 @@ namespace Stubbl.Api
 
             services.AddSwaggerGen(o =>
             {
-                //if (_hostingEnvironment.IsProduction())
+                if (_hostingEnvironment.IsProduction())
                 {
                     var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
 
@@ -270,7 +267,7 @@ namespace Stubbl.Api
         {
             var info = new Info
             {
-                Title = $"Stubbl API {description.ApiVersion}",
+                Title = $"Stubbl API v{description.ApiVersion}",
                 Version = description.ApiVersion.ToString()
             };
 

@@ -1,8 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Api.Authentication;
 using Gunnsoft.Common.Caching;
-using Gunnsoft.Cqs.QueryHandlers;
+using Gunnsoft.Cqs.Queries;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Caching;

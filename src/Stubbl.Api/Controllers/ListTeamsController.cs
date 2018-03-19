@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Queries.ListTeams.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -18,7 +20,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ListTeamsProjection), 200)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Team>), 200)]
+        [SwaggerOperation(Tags = new[] { "Teams" })]
         public async Task<IActionResult> ListTeams(CancellationToken cancellationToken)
         {
             var query = new ListTeamsQuery();

@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.ListTeamStubs.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -19,7 +21,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ListTeamStubsProjection), 200)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Stub>), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
         public async Task<IActionResult> ListTeamStubs([FromRoute] string teamId, [FromQuery] string search,
             [FromQuery] int? pageNumber, [FromQuery] int? pageSize, CancellationToken cancellationToken)
         {

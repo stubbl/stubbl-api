@@ -1,8 +1,11 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Queries.ListPermissions.Version1;
+using Stubbl.Api.Queries.Shared.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -18,7 +21,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ListPermissionsProjection), 200)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Permission>), 200)]
+        [SwaggerOperation(Tags = new[] { "Permissions" })]
         public async Task<IActionResult> ListPermissions(CancellationToken cancellationToken)
         {
             var query = new ListPermissionsQuery();

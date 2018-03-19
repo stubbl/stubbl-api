@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Queries.FindAuthenticatedUser.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -19,6 +20,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(FindAuthenticatedUserProjection), 200)]
+        [SwaggerOperation(Tags = new[] { "Authenticated User" })]
         public async Task<IActionResult> FindAuthenticatedUser(CancellationToken cancellationToken)
         {
             var query = new FindAuthenticatedUserQuery();

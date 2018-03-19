@@ -5,6 +5,7 @@ using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Commands.CreateTeam.Version1;
 using Stubbl.Api.Models.CreateTeam.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -21,6 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CreateTeamResponse), 201)]
+        [SwaggerOperation(Tags = new[] { "Teams" })]
         [ValidateModelState]
         public async Task<IActionResult> CreateTeam([FromBody] CreateTeamRequest request,
             CancellationToken cancellationToken)

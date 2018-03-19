@@ -5,6 +5,7 @@ using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Stubbl.Api.Commands.UpdateAuthenticatedUser.Version1;
 using Stubbl.Api.Models.UpdateAuthenticatedUser.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -21,6 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
+        [SwaggerOperation(Tags = new[] { "Authenticated User" })]
         [ValidateModelState]
         public async Task<IActionResult> UpdateAuthenticatedUser([FromBody] UpdateAuthenticatedUserRequest request,
             CancellationToken cancellationToken)

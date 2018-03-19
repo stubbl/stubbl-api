@@ -5,11 +5,12 @@ using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Commands.AcceptAuthenticatedUserInvitation.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("user/invitations/{invitationId:ObjectId}/accept", Name = "AcceptTeamInvitation")]
+    [Route("user/invitations/{invitationId:ObjectId}/accept", Name = "AcceptAuthenticatedUserInvitation")]
     public class AcceptAuthenticatedUserInvitationController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;
@@ -21,6 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
+        [SwaggerOperation(Tags = new[] { "Authenticated User Invitations" })]
         [ValidateModelState]
         public async Task<IActionResult> AcceptAuthenticatedUserInvitation([FromRoute] string invitationId,
             CancellationToken cancellationToken)

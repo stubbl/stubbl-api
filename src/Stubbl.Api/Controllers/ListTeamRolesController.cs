@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.ListTeamRoles.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -19,7 +21,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ListTeamRolesProjection), 200)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Role>), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Roles" })]
         public async Task<IActionResult> ListTeamRoles([FromRoute] string teamId, CancellationToken cancellationToken)
         {
             var query = new ListTeamRolesQuery

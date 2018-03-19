@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Api.Authentication;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Data.Collections.Members;

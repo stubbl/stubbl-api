@@ -5,6 +5,7 @@ using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.ListTeamLogs.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -20,7 +21,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ListTeamLogsProjection), 200)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<Log>), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Logs" })]
         public async Task<IActionResult> ListTeamLogs([FromRoute] string teamId,
             [FromQuery] IReadOnlyCollection<string> stubId,
             [FromQuery] int? pageNumber, [FromQuery] int? pageSize, CancellationToken cancellationToken)
@@ -45,18 +47,20 @@ namespace Stubbl.Api.Controllers
             return StatusCode(200, projection.Logs);
         }
 
-        private IReadOnlyCollection<ObjectId> ParseStubId(IReadOnlyCollection<string> rawStubIds)
+        private static IReadOnlyCollection<ObjectId> ParseStubId(IReadOnlyCollection<string> rawStubIds)
         {
             var stubIds = new List<ObjectId>();
 
-            if (rawStubIds != null)
+            if (rawStubIds == null)
             {
-                foreach (var rawStubId in rawStubIds)
+                return stubIds;
+            }
+
+            foreach (var rawStubId in rawStubIds)
+            {
+                if (ObjectId.TryParse(rawStubId, out var stubId))
                 {
-                    if (ObjectId.TryParse(rawStubId, out var stubId))
-                    {
-                        stubIds.Add(stubId);
-                    }
+                    stubIds.Add(stubId);
                 }
             }
 

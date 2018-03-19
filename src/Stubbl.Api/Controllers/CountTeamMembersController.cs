@@ -4,6 +4,7 @@ using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.CountTeamMembers.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(CountTeamMembersProjection), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Members" })]
         public async Task<IActionResult> CountTeamMembers([FromRoute] string teamId,
             CancellationToken cancellationToken)
         {

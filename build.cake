@@ -1,102 +1,48 @@
 var target = Argument("target", "Default");
 
-var configuration = Argument("configuration", EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "Release");
+var configuration = Argument("configuration", EnvironmentVariable("CONFIGURATION") ?? "Release");
 
 var artifactsDirectory = "./artifacts";
-var publishDirectory = "./publish";
 
 Task("Clean")
     .Does(() =>
     {
-        var deleteDirectorySettings = new DeleteDirectorySettings
+        CleanDirectories(artifactsDirectory);
+
+        StartProcess("dotnet", new ProcessSettings
         {
-             Force = true,
-             Recursive = true
-        };
-
-        if (DirectoryExists(artifactsDirectory))
-        {
-            DeleteDirectory(artifactsDirectory, deleteDirectorySettings);
-        }
-
-        if (DirectoryExists(publishDirectory))
-        {
-            DeleteDirectory(publishDirectory, deleteDirectorySettings);
-        }
-    });
-
-Task("Version")
-    .Does(() =>
-    {
-        var assemblyVersion = "1.0.0.0";
-        var fileVersion = "1.0.0.0";
-        var version = "1.0.0";
-        var appVeyorBuildVersion = EnvironmentVariable("APPVEYOR_BUILD_VERSION");
-
-        if (!string.IsNullOrWhiteSpace(appVeyorBuildVersion))
-        {
-            version = appVeyorBuildVersion;
-
-            var versionMatch = System.Text.RegularExpressions.Regex.Match(version, @"(\d+\.\d+\.\d+(?:\.\d+)?).*");
-
-            if (versionMatch.Success)
-            {
-                assemblyVersion = versionMatch.Groups[1].Value;
-                fileVersion = versionMatch.Groups[1].Value;
-            }
-        }
-
-        Console.WriteLine($"Assembly Version: {assemblyVersion}");
-        Console.WriteLine($"File Version: {fileVersion}");
-        Console.WriteLine($"Version: {version}");
-
-        foreach (var filePath in GetFiles(@".\src\**\*.csproj"))
-        {
-            var text = System.IO.File.ReadAllText(filePath.FullPath);
-            text = System.Text.RegularExpressions.Regex.Replace(text, @"<AssemblyVersion>[^<]+<\/AssemblyVersion>", $"<AssemblyVersion>{assemblyVersion}</AssemblyVersion>");
-            text = System.Text.RegularExpressions.Regex.Replace(text, @"<FileVersion>[^<]+<\/FileVersion>", $"<FileVersion>{fileVersion}</FileVersion>");
-            text = System.Text.RegularExpressions.Regex.Replace(text, @"<Version>[^<]+<\/Version>", $"<Version>{version}</Version>");
-            
-            System.IO.File.WriteAllText(filePath.FullPath, text);
-        }
+            Arguments = "clean"
+        });
     });
 
 Task("Restore")
     .IsDependentOn("Clean")
-    .IsDependentOn("Version")
     .Does(() =>
     {
-        //foreach (var filePath in GetFiles(@".\**\*.csproj"))
-        //{
-        //    DotNetCoreRestore(filePath.FullPath);
-        //}
+        DotNetCoreRestore();
     });
 
 Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
     {
-        foreach (var filePath in GetFiles(@".\**\*.csproj"))
+        var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "0.0.0";
+
+        StartProcess("dotnet", new ProcessSettings
         {
-            DotNetCoreBuild(filePath.FullPath, new DotNetCoreBuildSettings
-            {
-                Configuration = configuration,
-                //NoRestore = true
-            });
-        }
+            Arguments = $"build --configuration {configuration} --no-restore /p:Version={version}"
+        });
     });
 
 Task("Test")
     .IsDependentOn("Build")
-    .Does(() => {
-        foreach(var filePath in GetFiles(@".\test\**\*.csproj"))
-        {
-            DotNetCoreTest(filePath.FullPath, new DotNetCoreTestSettings
+    .Does(() =>
+    {
+        foreach(var filePath in GetFiles(@".\test\**\*.csproj")) 
+        { 
+            StartProcess("dotnet", new ProcessSettings
             {
-                Configuration = configuration,
-                Logger = "trx;LogFileName=TestResult.xml",
-                NoBuild = true,
-                //NoRestore = true
+                Arguments = $"test {filePath} --configuration {configuration} --logger trx;LogFileName=TestResult.xml --no-build --no-restore"
             });
         }
 
@@ -109,40 +55,32 @@ Task("Test")
         }
     });
 
-Task("Pack")
+Task("Publish")
     .IsDependentOn("Test")
     .Does(() => 
     {
-        CreateDirectory(publishDirectory);
-
-        var projectName = "Stubbl.Api";
-        var projectFilename = $"{projectName}.csproj";
-        var projectFilePath = $"./src/{projectName}/{projectFilename }";
-
-        DotNetCorePublish(projectFilePath, new DotNetCorePublishSettings
+        StartProcess("dotnet", new ProcessSettings
         {
-            Configuration = configuration,
-            //NoDependencies = true,
-            //NoRestore = true,
-            OutputDirectory = publishDirectory
+            Arguments = $"publish src/Stubbl.Api --configuration {configuration} --no-build"
         });
-        
+    });
+
+Task("Pack")
+    .IsDependentOn("Publish")
+    .Does(() =>
+    {
         CreateDirectory(artifactsDirectory);
 
-        var artifactFilename = $"stubbl-api.zip";
-        var artifactFilePath = $"{artifactsDirectory}/{artifactFilename}";
+        var artifactFilePath = $"{artifactsDirectory}/stubbl-api.zip";
         
-        Zip(publishDirectory, artifactFilePath);
+        Zip($"src/Stubbl.Api/bin/{configuration}/netstandard2.0/publish", artifactFilePath); 
         
         if (AppVeyor.IsRunningOnAppVeyor)
         {
-            foreach (var filePath in GetFiles(artifactsDirectory + "/**/*"))
+            AppVeyor.UploadArtifact(artifactFilePath, new AppVeyorUploadArtifactsSettings
             {
-                AppVeyor.UploadArtifact(filePath.FullPath, new AppVeyorUploadArtifactsSettings
-                {
-                    DeploymentName = "stubbl-api"
-                });
-            }
+                DeploymentName = "stubbl-api"
+            });
         }
     });
 

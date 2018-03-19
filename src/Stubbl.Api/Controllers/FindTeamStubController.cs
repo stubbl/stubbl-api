@@ -4,6 +4,7 @@ using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.FindTeamStub.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(FindTeamStubProjection), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
         public async Task<IActionResult> FindTeamStub([FromRoute] string teamId, [FromRoute] string stubId,
             CancellationToken cancellationToken)
         {

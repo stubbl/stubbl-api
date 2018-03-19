@@ -8,6 +8,7 @@ using MongoDB.Bson;
 using Stubbl.Api.Commands.Shared.Version1;
 using Stubbl.Api.Commands.UpdateTeamStub.Version1;
 using Stubbl.Api.Models.UpdateTeamStub.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -24,6 +25,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
+        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
         [ValidateModelState]
         public async Task<IActionResult> UpdateTeamStub([FromRoute] string teamId, [FromRoute] string stubId,
             [FromBody] UpdateTeamStubRequest request, CancellationToken cancellationToken)

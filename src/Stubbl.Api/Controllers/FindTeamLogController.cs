@@ -4,6 +4,7 @@ using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.FindTeamLog.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(FindTeamLogProjection), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Logs" })]
         public async Task<IActionResult> FindTeamLog([FromRoute] string teamId, [FromRoute] string logId,
             CancellationToken cancellationToken)
         {

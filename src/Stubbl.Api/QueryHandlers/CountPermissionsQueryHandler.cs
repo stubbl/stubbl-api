@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.QueryHandlers;
+using Gunnsoft.Cqs.Queries;
 using Stubbl.Api.Commands.Shared.Version1;
 using Stubbl.Api.Queries.CountPermissions.Version1;
 

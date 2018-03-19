@@ -1,8 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Api.Authentication;
 using Gunnsoft.Common.Caching;
-using Gunnsoft.Cqs.EventHandlers;
+using Gunnsoft.Cqs.Events;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Caching;
 using Stubbl.Api.Events.AuthenticatedUserUpdated.Version1;

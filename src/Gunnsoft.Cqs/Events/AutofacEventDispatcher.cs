@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using Gunnsoft.Cqs.EventHandlers;
 
 namespace Gunnsoft.Cqs.Events
 {

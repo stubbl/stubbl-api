@@ -2,10 +2,9 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Queries;
 using Microsoft.Extensions.Logging;
 
-namespace Gunnsoft.Cqs.QueryHandlers
+namespace Gunnsoft.Cqs.Queries
 {
     public class LoggingQueryHandlerDecorator<TQuery, TProjection> : IQueryHandler<TQuery, TProjection>
         where TQuery : IQuery<TProjection>

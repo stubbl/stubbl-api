@@ -4,6 +4,7 @@ using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Stubbl.Api.Queries.CountTeamStubs.Version1;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(CountTeamStubsProjection), 200)]
+        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
         public async Task<IActionResult> CountTeamStubs([FromRoute] string teamId, CancellationToken cancellationToken)
         {
             var query = new CountTeamStubsQuery
