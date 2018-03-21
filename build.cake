@@ -27,8 +27,6 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
     {
-        var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "1.2.3";
-
         StartAndReturnProcess("dotnet", new ProcessSettings
             {
                 Arguments = $"build --configuration {configuration} --no-restore"
@@ -62,6 +60,8 @@ Task("Publish")
     .IsDependentOn("Test")
     .Does(() => 
     {
+        var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "1.2.3";
+
         StartAndReturnProcess("dotnet", new ProcessSettings
             {
                 Arguments = $"publish src/Stubbl.Api --configuration {configuration} --no-restore /p:Version={version}"
