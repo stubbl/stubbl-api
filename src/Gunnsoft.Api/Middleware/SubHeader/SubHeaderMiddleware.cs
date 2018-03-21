@@ -29,11 +29,11 @@ namespace Gunnsoft.Api.Middleware.SubHeader
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, "fakeuser@stubbl.it"),
-                new Claim(ClaimTypes.Name, "Fake User"),
+                new Claim(ClaimTypes.Email, "test@stubbl.it"),
+                new Claim(ClaimTypes.Name, "Test"),
                 new Claim("sub", sub)
             };
-            var claimsIdentity = new ClaimsIdentity(claims, "FakeUser");
+            var claimsIdentity = new ClaimsIdentity(claims, "Header");
 
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             context.User = claimsPrincipal;
