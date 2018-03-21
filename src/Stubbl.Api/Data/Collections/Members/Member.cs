@@ -12,8 +12,8 @@ namespace Stubbl.Api.Data.Collections.Members
 
         public string EmailAddress { get; set; }
         public ObjectId Id { get; set; }
-        public string IdentityId { get; set; }
         public string Name { get; set; }
+        public string Sub { get; set; }
         public IReadOnlyCollection<Team> Teams { get; set; }
     }
 }

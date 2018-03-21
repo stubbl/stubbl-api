@@ -29,15 +29,15 @@ namespace Stubbl.Api.EventHandlers.Cache.FindAuthenticatedUser
 
         public async Task HandleAsync(TeamUpdatedEvent @event, CancellationToken cancellationToken)
         {
-            var identityIds = await _membersCollection.Find(m => m.Teams.Any(t => t.Id == @event.TeamId))
-                .Project(m => m.IdentityId)
+            var subs = await _membersCollection.Find(m => m.Teams.Any(t => t.Id == @event.TeamId))
+                .Project(m => m.Sub)
                 .ToListAsync(cancellationToken);
 
-            foreach (var identityId in identityIds)
+            foreach (var sub in subs)
             {
                 _cache.Remove(_cacheKey.FindAuthenticatedUser
                 (
-                    identityId
+                    sub
                 ));
             }
         }

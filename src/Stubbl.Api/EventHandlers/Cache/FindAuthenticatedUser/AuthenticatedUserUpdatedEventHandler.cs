@@ -26,7 +26,7 @@ namespace Stubbl.Api.EventHandlers.Cache.FindAuthenticatedUser
         {
             _cache.Remove(_cacheKey.FindAuthenticatedUser
             (
-                _authenticatedUserAccessor.AuthenticatedUser.IdentityId
+                _authenticatedUserAccessor.AuthenticatedUser.Sub
             ));
 
             return Task.CompletedTask;

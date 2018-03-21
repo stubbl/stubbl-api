@@ -236,7 +236,6 @@ namespace Stubbl.Api
                 .AddEventHandlerDecorators()
                 .AddEventHandlers()
                 .AddExceptionHandlers()
-                .AddIdentityIdAccessor()
                 .AddMongo(new MongoSettings
                 (
                     _configuration.GetValue<string>("MongoDB:ConnectionString")
@@ -244,6 +243,7 @@ namespace Stubbl.Api
                 .AddQueryDispatcher()
                 .AddQueryHandlerDecorators()
                 .AddQueryHandlers()
+                .AddSubAccessor()
                 .AddUserAccessor();
 
             containerBuilder.RegisterAssemblyModules(s_assembly);

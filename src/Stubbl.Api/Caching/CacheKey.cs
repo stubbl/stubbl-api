@@ -22,9 +22,9 @@ namespace Stubbl.Api.Caching
             return BuildCacheKey(new object[] {teamId});
         }
 
-        public string FindAuthenticatedUser(string identityId)
+        public string FindAuthenticatedUser(string sub)
         {
-            return BuildCacheKey(new object[] {identityId});
+            return BuildCacheKey(new object[] {sub});
         }
 
         public string FindAuthenticatedUserInvitation(string emailAddress, ObjectId invitationId)

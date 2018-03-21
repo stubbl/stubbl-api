@@ -69,7 +69,7 @@ namespace Stubbl.Api.Data.Migrations
                 Id = new ObjectId("000000000000000000000001"),
                 Name = "Member A",
                 EmailAddress = "a@a.com",
-                IdentityId = "000000000000-0000-0000-0000-00000001",
+                Sub = "000000000000-0000-0000-0000-00000001",
                 Teams = new[]
                 {
                     new Collections.Members.Team

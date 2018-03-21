@@ -4,12 +4,12 @@ namespace Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1
 {
     public class AuthenticatedUserNotFoundException : Exception
     {
-        public AuthenticatedUserNotFoundException(string identityId)
-            : base($"Authenticated user not found. IdentityID='{identityId}'")
+        public AuthenticatedUserNotFoundException(string sub)
+            : base($"Authenticated user not found. Sub='{sub}'")
         {
-            IdentityId = identityId;
+            Sub = sub;
         }
 
-        public string IdentityId { get; }
+        public string Sub { get; }
     }
 }

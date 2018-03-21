@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Net;
-using Gunnsoft.Api.Authentication;
 using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
-using Gunnsoft.Api.Exceptions.UnknownIdentityId.Version1;
+using Gunnsoft.Api.Exceptions.UnknownSub.Version1;
 using Gunnsoft.Api.Models.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Models.Error.Version1;
-using Gunnsoft.Api.Models.UnknownIdentityId.Version1;
+using Gunnsoft.Api.Models.UnknownSub.Version1;
 using MongoDB.Bson;
 using Stubbl.Api.Exceptions.AdministratorRoleNotFound.Version1;
 using Stubbl.Api.Exceptions.InvitationAlreadyUsed.Version1;
@@ -158,7 +157,7 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
                 new TeamNotFoundException(ObjectId.GenerateNewId()), HttpStatusCode.Conflict, new TeamNotFoundResponse()
             };
             yield return new object[]
-                {new UnknownIdentityIdException(), HttpStatusCode.Unauthorized, new UnknownIdentityIdResponse()};
+                {new UnknownSubException(), HttpStatusCode.Unauthorized, new UnknownSubResponse()};
             yield return new object[]
                 {new UserRoleNotFoundException(), HttpStatusCode.InternalServerError, new ErrorResponse()};
         }
