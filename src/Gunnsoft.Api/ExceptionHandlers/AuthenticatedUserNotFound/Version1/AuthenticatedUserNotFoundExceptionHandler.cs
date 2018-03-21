@@ -4,7 +4,7 @@ using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Models.AuthenticatedUserNotFound.Version1;
 using Microsoft.AspNetCore.Http;
 
-namespace Gunnsoft.Api.ExceptionHandlers
+namespace Gunnsoft.Api.ExceptionHandlers.AuthenticatedUserNotFound.Version1
 {
     public class AuthenticatedUserNotFoundExceptionHandler : IExceptionHandler<AuthenticatedUserNotFoundException>
     {

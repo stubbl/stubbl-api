@@ -4,7 +4,7 @@ using Gunnsoft.Api.Exceptions.UnknownSub.Version1;
 using Gunnsoft.Api.Models.UnknownSub.Version1;
 using Microsoft.AspNetCore.Http;
 
-namespace Gunnsoft.Api.ExceptionHandlers
+namespace Gunnsoft.Api.ExceptionHandlers.UnknownSub.Version1
 {
     public class UnknownSubExceptionHandler : IExceptionHandler<UnknownSubException>
     {

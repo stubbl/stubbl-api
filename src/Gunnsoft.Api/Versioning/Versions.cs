@@ -12,6 +12,8 @@ namespace Gunnsoft.Api.Versioning
         static Versions()
         {
             s_versionRegex = new Regex(@"\.Version([0-9])(?:\.|$)", RegexOptions.Compiled);
+
+            Latest = 1;
         }
 
         public static uint Latest { get; set; }

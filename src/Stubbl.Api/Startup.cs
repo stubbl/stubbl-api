@@ -73,14 +73,7 @@ namespace Stubbl.Api
 
         public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
         {
-            if (_hostingEnvironment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseJsonExceptions();
-            }
+            app.UseJsonExceptions();
 
             if (_hostingEnvironment.IsProduction())
             {

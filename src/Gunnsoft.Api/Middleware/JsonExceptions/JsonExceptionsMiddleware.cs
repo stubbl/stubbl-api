@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Gunnsoft.Api.ExceptionHandlers;
 using Gunnsoft.Api.Models.Exception.Version1;
+using Gunnsoft.Api.Versioning;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -180,7 +181,7 @@ namespace Gunnsoft.Api.Middleware.JsonExceptions
                 );
             }
 
-            var version = context.GetRequestedApiVersion()?.MajorVersion ?? 1;
+            var version = context.GetRequestedApiVersion()?.MajorVersion ?? (int)Versions.Latest;
 
             IDefaultExceptionHandler defaultExceptionHandler;
 

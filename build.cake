@@ -53,7 +53,7 @@ Task("Test")
         {
             foreach(var filePath in GetFiles(@".\test\**\TestResult.xml"))
             {
-                AppVeyor.UploadTestResults(filePath.FullPath, AppVeyorTestResultsType.NUnit);
+                AppVeyor.UploadTestResults(filePath.FullPath, AppVeyorTestResultsType.NUnit3);
             }
         }
     });
