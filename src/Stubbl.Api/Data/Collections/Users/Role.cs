@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Stubbl.Api.Data.Collections.Shared;
 
-namespace Stubbl.Api.Data.Collections.Members
+namespace Stubbl.Api.Data.Collections.Users
 {
     public class Role
     {

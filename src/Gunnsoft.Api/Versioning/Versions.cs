@@ -14,6 +14,8 @@ namespace Gunnsoft.Api.Versioning
             s_versionRegex = new Regex(@"\.Version([0-9])(?:\.|$)", RegexOptions.Compiled);
         }
 
+        public static uint Latest { get; set; }
+
         public static bool IsInVersionedNamespace(Type type)
         {
             return !string.IsNullOrWhiteSpace(type?.Namespace) && s_versionRegex.IsMatch(type.Namespace);

@@ -4,9 +4,9 @@ using MongoDB.Bson.Serialization.Conventions;
 using Stubbl.Api.Data.Collections.DefaultRoles;
 using Stubbl.Api.Data.Collections.Invitations;
 using Stubbl.Api.Data.Collections.Logs;
-using Stubbl.Api.Data.Collections.Members;
 using Stubbl.Api.Data.Collections.Migrations;
 using Stubbl.Api.Data.Collections.Stubs;
+using Stubbl.Api.Data.Collections.Users;
 using Team = Stubbl.Api.Data.Collections.Teams.Team;
 
 namespace Stubbl.Api.Data
@@ -55,9 +55,9 @@ namespace Stubbl.Api.Data
                 });
             }
 
-            if (!BsonClassMap.IsClassMapRegistered(typeof(Member)))
+            if (!BsonClassMap.IsClassMapRegistered(typeof(User)))
             {
-                BsonClassMap.RegisterClassMap<Member>(cm =>
+                BsonClassMap.RegisterClassMap<User>(cm =>
                 {
                     cm.AutoMap();
                     cm.MapIdMember(c => c.Id);

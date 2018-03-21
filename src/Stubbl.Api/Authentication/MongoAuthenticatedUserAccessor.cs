@@ -5,40 +5,40 @@ using Gunnsoft.Api.Exceptions.UnknownSub.Version1;
 using Gunnsoft.Common.Caching;
 using MongoDB.Driver;
 using Stubbl.Api.Caching;
-using Stubbl.Api.Data.Collections.Members;
+using Stubbl.Api.Data.Collections.Users;
 
 namespace Stubbl.Api.Authentication
 {
     public class MongoAuthenticatedUserAccessor : IAuthenticatedUserAccessor
     {
-        private readonly Lazy<Member> _authenticatedUser;
+        private readonly Lazy<User> _authenticatedUser;
 
         public MongoAuthenticatedUserAccessor(ICache cache, ICacheKey cacheKey,
-            ISubAccessor subAccessor, IMongoCollection<Member> membersCollection)
+            ISubAccessor subAccessor, IMongoCollection<User> usersCollection)
         {
-            _authenticatedUser = new Lazy<Member>(() =>
+            _authenticatedUser = new Lazy<User>(() =>
             {
                 if (subAccessor.Sub == null)
                 {
                     throw new UnknownSubException();
                 }
 
-                var member = cache.GetOrSet
+                var user = cache.GetOrSet
                 (
                     cacheKey.FindAuthenticatedUser(subAccessor.Sub),
-                    () => membersCollection.Find(m => m.Sub == subAccessor.Sub)
+                    () => usersCollection.Find(m => m.Sub == subAccessor.Sub)
                         .SingleOrDefault()
                 );
 
-                if (member == null)
+                if (user == null)
                 {
                     throw new AuthenticatedUserNotFoundException(subAccessor.Sub);
                 }
 
-                return member;
+                return user;
             });
         }
 
-        public Member AuthenticatedUser => _authenticatedUser.Value;
+        public User AuthenticatedUser => _authenticatedUser.Value;
     }
 }

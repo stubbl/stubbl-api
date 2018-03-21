@@ -4,7 +4,7 @@ using Gunnsoft.Cqs.Commands;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.UpdateAuthenticatedUser.Version1;
-using Stubbl.Api.Data.Collections.Members;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.AuthenticatedUserUpdated.Version1;
 
 namespace Stubbl.Api.CommandHandlers
@@ -14,23 +14,23 @@ namespace Stubbl.Api.CommandHandlers
             AuthenticatedUserUpdatedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
-        private readonly IMongoCollection<Member> _membersCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public UpdateAuthenticatedUserCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<Member> membersCollection)
+            IMongoCollection<User> usersCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _membersCollection = membersCollection;
+            _usersCollection = usersCollection;
         }
 
         public async Task<AuthenticatedUserUpdatedEvent> HandleAsync(UpdateAuthenticatedUserCommand command,
             CancellationToken cancellationToken)
         {
-            var filter = Builders<Member>.Filter.Where(t => t.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
-            var update = Builders<Member>.Update.Set(t => t.Name, command.Name)
+            var filter = Builders<User>.Filter.Where(t => t.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
+            var update = Builders<User>.Update.Set(t => t.Name, command.Name)
                 .Set(t => t.EmailAddress, command.EmailAddress);
 
-            await _membersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+            await _usersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
 
             return new AuthenticatedUserUpdatedEvent
             (

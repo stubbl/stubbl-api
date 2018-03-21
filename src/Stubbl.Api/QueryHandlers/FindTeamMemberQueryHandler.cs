@@ -6,7 +6,7 @@ using Gunnsoft.Cqs.Queries;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Caching;
-using Stubbl.Api.Data.Collections.Members;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.MemberNotFound.Version1;
 using Stubbl.Api.Queries.FindTeamMember.Version1;
@@ -20,15 +20,15 @@ namespace Stubbl.Api.QueryHandlers
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
         private readonly ICache _cache;
         private readonly ICacheKey _cacheKey;
-        private readonly IMongoCollection<Member> _membersCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public FindTeamMemberQueryHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            ICache cache, ICacheKey cacheKey, IMongoCollection<Member> membersCollection)
+            ICache cache, ICacheKey cacheKey, IMongoCollection<User> usersCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
             _cache = cache;
             _cacheKey = cacheKey;
-            _membersCollection = membersCollection;
+            _usersCollection = usersCollection;
         }
 
         public async Task<FindTeamMemberProjection> HandleAsync(FindTeamMemberQuery query,
@@ -46,7 +46,7 @@ namespace Stubbl.Api.QueryHandlers
             var member = await _cache.GetOrSetAsync
             (
                 _cacheKey.FindTeamMember(query.TeamId, query.MemberId),
-                async () => await _membersCollection
+                async () => await _usersCollection
                     .Find(m => m.Teams.Any(t => t.Id == query.TeamId) && m.Id == query.MemberId)
                     .Project(m => new FindTeamMemberProjection
                     (

@@ -5,8 +5,8 @@ using Gunnsoft.Cqs.Commands;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.RemoveTeamMember.Version1;
-using Stubbl.Api.Data.Collections.Members;
 using Stubbl.Api.Data.Collections.Shared;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.TeamMemberRemoved.Version1;
 using Stubbl.Api.Exceptions.MemberCannotBeRemovedFromTeam.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageMembers.Version1;
@@ -19,15 +19,15 @@ namespace Stubbl.Api.CommandHandlers
     public class RemoveTeamMemberCommandHandler : ICommandHandler<RemoveTeamMemberCommand, TeamMemberRemovedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
-        private readonly IMongoCollection<Member> _membersCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public RemoveTeamMemberCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<Member> membersCollection, IMongoCollection<Team> teamsCollection)
+            IMongoCollection<Team> teamsCollection, IMongoCollection<User> usersCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _membersCollection = membersCollection;
             _teamsCollection = teamsCollection;
+            _usersCollection = usersCollection;
         }
 
         public async Task<TeamMemberRemovedEvent> HandleAsync(RemoveTeamMemberCommand command,
@@ -62,7 +62,7 @@ namespace Stubbl.Api.CommandHandlers
                 );
             }
 
-            if (!await _membersCollection.Find(m => m.Id == command.MemberId && m.Teams.Any(t => t.Id == team.Id))
+            if (!await _usersCollection.Find(m => m.Id == command.MemberId && m.Teams.Any(t => t.Id == team.Id))
                 .AnyAsync(cancellationToken))
             {
                 throw new MemberNotFoundException

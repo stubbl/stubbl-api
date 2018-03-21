@@ -3,26 +3,26 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
-using Stubbl.Api.Data.Collections.Members;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.TeamDeleted.Version1;
 
 namespace Stubbl.Api.EventHandlers.Collections.Members
 {
     public class TeamDeletedEventHandler : IEventHandler<TeamDeletedEvent>
     {
-        private readonly IMongoCollection<Member> _membersCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
-        public TeamDeletedEventHandler(IMongoCollection<Member> membersCollection)
+        public TeamDeletedEventHandler(IMongoCollection<User> usersCollection)
         {
-            _membersCollection = membersCollection;
+            _usersCollection = usersCollection;
         }
 
         public async Task HandleAsync(TeamDeletedEvent @event, CancellationToken cancellationToken)
         {
-            var filter = Builders<Member>.Filter.Where(m => m.Teams.Any(t => t.Id == @event.TeamId));
-            var update = Builders<Member>.Update.PullFilter(m => m.Teams, t => t.Id == @event.TeamId);
+            var filter = Builders<User>.Filter.Where(m => m.Teams.Any(t => t.Id == @event.TeamId));
+            var update = Builders<User>.Update.PullFilter(m => m.Teams, t => t.Id == @event.TeamId);
 
-            await _membersCollection.UpdateManyAsync(filter, update, cancellationToken: cancellationToken);
+            await _usersCollection.UpdateManyAsync(filter, update, cancellationToken: cancellationToken);
         }
     }
 }

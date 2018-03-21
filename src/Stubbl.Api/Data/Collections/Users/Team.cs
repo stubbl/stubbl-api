@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace Stubbl.Api.Data.Collections.Members
+namespace Stubbl.Api.Data.Collections.Users
 {
     public class Team
     {

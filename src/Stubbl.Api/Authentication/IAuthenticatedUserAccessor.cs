@@ -1,9 +1,9 @@
-﻿using Stubbl.Api.Data.Collections.Members;
+﻿using Stubbl.Api.Data.Collections.Users;
 
 namespace Stubbl.Api.Authentication
 {
     public interface IAuthenticatedUserAccessor
     {
-        Member AuthenticatedUser { get; }
+        User AuthenticatedUser { get; }
     }
 }

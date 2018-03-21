@@ -6,9 +6,9 @@ using MongoDB.Driver;
 using Stubbl.Api.Data.Collections.DefaultRoles;
 using Stubbl.Api.Data.Collections.Invitations;
 using Stubbl.Api.Data.Collections.Logs;
-using Stubbl.Api.Data.Collections.Members;
 using Stubbl.Api.Data.Collections.Migrations;
 using Stubbl.Api.Data.Collections.Stubs;
+using Stubbl.Api.Data.Collections.Users;
 using Team = Stubbl.Api.Data.Collections.Teams.Team;
 
 namespace Stubbl.Api.Data
@@ -47,7 +47,7 @@ namespace Stubbl.Api.Data
             extended.AddMongoCollection<DefaultRole>(CollectionNames.DefaultRoles);
             extended.AddMongoCollection<Invitation>(CollectionNames.Invitations);
             extended.AddMongoCollection<Log>(CollectionNames.Logs);
-            extended.AddMongoCollection<Member>(CollectionNames.Members);
+            extended.AddMongoCollection<User>(CollectionNames.Users);
             extended.AddMongoCollection<Migration>(CollectionNames.Migrations);
             extended.AddMongoCollection<Stub>(CollectionNames.Stubs);
             extended.AddMongoCollection<Team>(CollectionNames.Teams);

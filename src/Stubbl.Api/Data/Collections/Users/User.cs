@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Bson;
 
-namespace Stubbl.Api.Data.Collections.Members
+namespace Stubbl.Api.Data.Collections.Users
 {
-    public class Member
+    public class User
     {
-        public Member()
+        public User()
         {
             Teams = new Team[0];
         }

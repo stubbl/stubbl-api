@@ -4,24 +4,24 @@ using System.Threading.Tasks;
 using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
-using Stubbl.Api.Data.Collections.Members;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.Shared.Version1;
 using Stubbl.Api.Events.TeamCreated.Version1;
-using Member = Stubbl.Api.Data.Collections.Members.Member;
-using Role = Stubbl.Api.Data.Collections.Members.Role;
+using User = Stubbl.Api.Data.Collections.Users.User;
+using Role = Stubbl.Api.Data.Collections.Users.Role;
 
 namespace Stubbl.Api.EventHandlers.Collections.Members
 {
     public class TeamCreatedEventHandler : IEventHandler<TeamCreatedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
-        private readonly IMongoCollection<Member> _membersCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public TeamCreatedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<Member> membersCollection)
+            IMongoCollection<User> usersCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _membersCollection = membersCollection;
+            _usersCollection = usersCollection;
         }
 
         public async Task HandleAsync(TeamCreatedEvent @event, CancellationToken cancellationToken)
@@ -40,10 +40,10 @@ namespace Stubbl.Api.EventHandlers.Collections.Members
                 }
             };
 
-            var filter = Builders<Member>.Filter.Where(m => m.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
-            var update = Builders<Member>.Update.Push(m => m.Teams, team);
+            var filter = Builders<User>.Filter.Where(m => m.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
+            var update = Builders<User>.Update.Push(m => m.Teams, team);
 
-            await _membersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+            await _usersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
         }
     }
 }

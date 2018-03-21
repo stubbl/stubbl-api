@@ -4,26 +4,25 @@ using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Data.Collections.Invitations;
-using Stubbl.Api.Data.Collections.Members;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.AuthenticatedUserInvitationAccepted.Version1;
-using Role = Stubbl.Api.Data.Collections.Members.Role;
-using Team = Stubbl.Api.Data.Collections.Members.Team;
+using Role = Stubbl.Api.Data.Collections.Users.Role;
+using Team = Stubbl.Api.Data.Collections.Users.Team;
 
 namespace Stubbl.Api.EventHandlers.Collections.Members
 {
-    public class
-        AuthenticatedUserInvitationAcceptedEventHandler : IEventHandler<AuthenticatedUserInvitationAcceptedEvent>
+    public class AuthenticatedUserInvitationAcceptedEventHandler : IEventHandler<AuthenticatedUserInvitationAcceptedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
         private readonly IMongoCollection<Invitation> _invitationsCollection;
-        private readonly IMongoCollection<Member> _membersCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public AuthenticatedUserInvitationAcceptedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<Invitation> invitationsCollection, IMongoCollection<Member> membersCollection)
+            IMongoCollection<Invitation> invitationsCollection, IMongoCollection<User> usersCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
             _invitationsCollection = invitationsCollection;
-            _membersCollection = membersCollection;
+            _usersCollection = usersCollection;
         }
 
         public async Task HandleAsync(AuthenticatedUserInvitationAcceptedEvent @event,
@@ -43,10 +42,10 @@ namespace Stubbl.Api.EventHandlers.Collections.Members
                 }
             };
 
-            var filter = Builders<Member>.Filter.Where(m => m.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
-            var update = Builders<Member>.Update.Push(m => m.Teams, team);
+            var filter = Builders<User>.Filter.Where(m => m.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
+            var update = Builders<User>.Update.Push(m => m.Teams, team);
 
-            await _membersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+            await _usersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
         }
     }
 }

@@ -7,8 +7,8 @@ using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.CreateTeamInvitation.Version1;
 using Stubbl.Api.Data.Collections.Invitations;
-using Stubbl.Api.Data.Collections.Members;
 using Stubbl.Api.Data.Collections.Shared;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.TeamInvitationCreated.Version1;
 using Stubbl.Api.Exceptions.MemberAlreadyAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.MemberAlreadyInvitedToTeam.Version1;
@@ -25,17 +25,17 @@ namespace Stubbl.Api.CommandHandlers
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
         private readonly IMongoCollection<Invitation> _invitationsCollection;
-        private readonly IMongoCollection<Member> _membersCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public CreateTeamInvitationCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<Invitation> invitationsCollection, IMongoCollection<Member> membersCollection,
-            IMongoCollection<Team> teamsCollection)
+            IMongoCollection<Invitation> invitationsCollection, IMongoCollection<Team> teamsCollection,
+            IMongoCollection<User> usersCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
             _invitationsCollection = invitationsCollection;
-            _membersCollection = membersCollection;
             _teamsCollection = teamsCollection;
+            _usersCollection = usersCollection;
         }
 
         public async Task<TeamInvitationCreatedEvent> HandleAsync(CreateTeamInvitationCommand command,
@@ -71,14 +71,14 @@ namespace Stubbl.Api.CommandHandlers
                 );
             }
 
-            var member = await _membersCollection.Find(m => m.EmailAddress.ToLower() == command.EmailAddress.ToLower())
+            var user = await _usersCollection.Find(m => m.EmailAddress.ToLower() == command.EmailAddress.ToLower())
                 .SingleOrDefaultAsync(cancellationToken);
 
-            if (member != null && member.Teams.Any(t => t.Id == team.Id))
+            if (user != null && user.Teams.Any(t => t.Id == team.Id))
             {
                 throw new MemberAlreadyAddedToTeamException
                 (
-                    member.Id,
+                    user.Id,
                     team.Id
                 );
             }
@@ -89,7 +89,7 @@ namespace Stubbl.Api.CommandHandlers
             {
                 throw new MemberAlreadyInvitedToTeamException
                 (
-                    member.Id,
+                    user.Id,
                     team.Id
                 );
             }

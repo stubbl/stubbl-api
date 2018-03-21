@@ -240,11 +240,11 @@ namespace Stubbl.Api
                 (
                     _configuration.GetValue<string>("MongoDB:ConnectionString")
                 ))
+                .AddMongoUserAccessor()
                 .AddQueryDispatcher()
                 .AddQueryHandlerDecorators()
                 .AddQueryHandlers()
-                .AddSubAccessor()
-                .AddUserAccessor();
+                .AddSubAccessor();
 
             containerBuilder.RegisterAssemblyModules(s_assembly);
             containerBuilder.Populate(services);

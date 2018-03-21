@@ -5,10 +5,7 @@ using Gunnsoft.Cqs.Commands;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.DeleteTeam.Version1;
-using Stubbl.Api.Data.Collections.Logs;
-using Stubbl.Api.Data.Collections.Members;
 using Stubbl.Api.Data.Collections.Shared;
-using Stubbl.Api.Data.Collections.Stubs;
 using Stubbl.Api.Events.TeamDeleted.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageTeams.Version1;
 using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
@@ -19,19 +16,12 @@ namespace Stubbl.Api.CommandHandlers
     public class DeleteTeamCommandHandler : ICommandHandler<DeleteTeamCommand, TeamDeletedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
-        private readonly IMongoCollection<Log> _logsCollection;
-        private readonly IMongoCollection<Member> _membersCollection;
-        private readonly IMongoCollection<Stub> _stubsCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
 
         public DeleteTeamCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<Log> logsCollection, IMongoCollection<Member> membersCollection,
-            IMongoCollection<Stub> stubsCollection, IMongoCollection<Team> teamsCollection)
+            IMongoCollection<Team> teamsCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _logsCollection = logsCollection;
-            _membersCollection = membersCollection;
-            _stubsCollection = stubsCollection;
             _teamsCollection = teamsCollection;
         }
 

@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Stubbl.Api.Data.Collections.DefaultRoles;
-using Stubbl.Api.Data.Collections.Members;
 using Stubbl.Api.Data.Collections.Stubs;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Exceptions.AdministratorRoleNotFound.Version1;
 using Stubbl.Api.Exceptions.UserRoleNotFound.Version1;
 using Team = Stubbl.Api.Data.Collections.Teams.Team;
@@ -18,19 +18,19 @@ namespace Stubbl.Api.Data.Migrations
     {
         private readonly IMongoCollection<DefaultRole> _defaultRolesCollection;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly IMongoCollection<Member> _membersCollection;
         private readonly IMongoCollection<Stub> _stubsCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public _000000000000000000000003_CreateSeedData(IMongoCollection<DefaultRole> defaultRolesCollection,
-            IHostingEnvironment hostingEnvironment, IMongoCollection<Member> membersCollection,
-            IMongoCollection<Stub> stubsCollection, IMongoCollection<Team> teamsCollection)
+            IHostingEnvironment hostingEnvironment, IMongoCollection<Stub> stubsCollection,
+            IMongoCollection<Team> teamsCollection, IMongoCollection<User> usersCollection)
         {
             _defaultRolesCollection = defaultRolesCollection;
             _hostingEnvironment = hostingEnvironment;
-            _membersCollection = membersCollection;
             _stubsCollection = stubsCollection;
             _teamsCollection = teamsCollection;
+            _usersCollection = usersCollection;
         }
 
         public ObjectId Id => ObjectId.Parse("000000000000000000000003");
@@ -64,7 +64,7 @@ namespace Stubbl.Api.Data.Migrations
             var administratorRoleId = ObjectId.GenerateNewId();
             var userRoleId = ObjectId.GenerateNewId();
 
-            var member = new Member
+            var user = new User
             {
                 Id = new ObjectId("000000000000000000000001"),
                 Name = "Member A",
@@ -72,7 +72,7 @@ namespace Stubbl.Api.Data.Migrations
                 Sub = "000000000000-0000-0000-0000-00000001",
                 Teams = new[]
                 {
-                    new Collections.Members.Team
+                    new Collections.Users.Team
                     {
                         Id = new ObjectId("000000000000000000000001"),
                         Name = "TeamA",
@@ -86,20 +86,20 @@ namespace Stubbl.Api.Data.Migrations
                 }
             };
 
-            await _membersCollection.DeleteOneAsync(m => m.Id == member.Id, cancellationToken);
-            await _membersCollection.InsertOneAsync(member, cancellationToken: cancellationToken);
+            await _usersCollection.DeleteOneAsync(m => m.Id == user.Id, cancellationToken);
+            await _usersCollection.InsertOneAsync(user, cancellationToken: cancellationToken);
 
             var team = new Team
             {
-                Id = member.Teams.First().Id,
-                Name = member.Teams.First().Name,
+                Id = user.Teams.First().Id,
+                Name = user.Teams.First().Name,
                 Members = new[]
                 {
                     new Collections.Teams.Member
                     {
-                        Id = member.Id,
-                        Name = member.Name,
-                        EmailAddress = member.EmailAddress,
+                        Id = user.Id,
+                        Name = user.Name,
+                        EmailAddress = user.EmailAddress,
                         Role = new Collections.Teams.Role
                         {
                             Id = administratorRoleId,

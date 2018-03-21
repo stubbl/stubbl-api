@@ -5,8 +5,8 @@ using Gunnsoft.Cqs.Commands;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.UpdateTeam.Version1;
-using Stubbl.Api.Data.Collections.Members;
 using Stubbl.Api.Data.Collections.Shared;
+using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.TeamUpdated.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageTeams.Version1;
 using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
@@ -17,14 +17,12 @@ namespace Stubbl.Api.CommandHandlers
     public class UpdateTeamCommandHandler : ICommandHandler<UpdateTeamCommand, TeamUpdatedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
-        private readonly IMongoCollection<Member> _membersCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
 
         public UpdateTeamCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<Member> membersCollection, IMongoCollection<Team> teamsCollection)
+            IMongoCollection<Team> teamsCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _membersCollection = membersCollection;
             _teamsCollection = teamsCollection;
         }
 

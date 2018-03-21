@@ -4,7 +4,7 @@ using Gunnsoft.Api.Middleware.SecureRequests;
 using Gunnsoft.Api.Models.Error.Version1;
 using Microsoft.AspNetCore.Http;
 
-namespace Gunnsoft.Api.ExceptionHandlers
+namespace Gunnsoft.Api.ExceptionHandlers.InsecureRequest.Version1
 {
     public class InsecureRequestExceptionHandler : IExceptionHandler<InsecureRequestException>
     {
