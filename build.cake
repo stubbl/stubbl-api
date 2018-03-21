@@ -27,11 +27,11 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
     {
-        var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "0.0.0";
+        var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "1.2.3";
 
         StartAndReturnProcess("dotnet", new ProcessSettings
             {
-                Arguments = $"build --configuration {configuration} --no-restore /p:Version={version}"
+                Arguments = $"build --configuration {configuration} --no-restore"
             })
             .WaitForExit();
     });
@@ -40,7 +40,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
     {
-        foreach(var filePath in GetFiles(@".\test\**\*.csproj")) 
+        foreach (var filePath in GetFiles(@".\test\**\*.csproj")) 
         { 
             StartAndReturnProcess("dotnet", new ProcessSettings
                 {
@@ -51,9 +51,9 @@ Task("Test")
 
         if (AppVeyor.IsRunningOnAppVeyor)
         {
-            foreach(var filePath in GetFiles(@".\test\**\TestResult.xml"))
+            foreach (var filePath in GetFiles(@".\test\**\TestResult.xml"))
             {
-                AppVeyor.UploadTestResults(filePath.FullPath, AppVeyorTestResultsType.NUnit3);
+                AppVeyor.UploadTestResults(filePath, AppVeyorTestResultsType.NUnit3);
             }
         }
     });
@@ -64,7 +64,7 @@ Task("Publish")
     {
         StartAndReturnProcess("dotnet", new ProcessSettings
             {
-                Arguments = $"publish src/Stubbl.Api --configuration {configuration} --no-restore"
+                Arguments = $"publish src/Stubbl.Api --configuration {configuration} --no-restore /p:Version={version}"
             })
             .WaitForExit();
     });
