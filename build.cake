@@ -2,7 +2,7 @@ var target = Argument("target", "Default");
 
 var configuration = Argument("configuration", EnvironmentVariable("CONFIGURATION") ?? "Release");
 
-var artifactsDirectory = "./artifacts";
+var artifactsDirectory = @".\artifacts";
 
 Task("Clean")
     .Does(() =>
@@ -40,18 +40,21 @@ Task("Test")
     {
         foreach (var filePath in GetFiles(@".\test\**\*.csproj")) 
         { 
-            StartAndReturnProcess("dotnet", new ProcessSettings
-                {
-                    Arguments = $"test {filePath} --configuration {configuration} --logger trx;LogFileName=TestResult.xml --no-build --no-restore"
-                })
-                .WaitForExit();
-        }
-
-        if (AppVeyor.IsRunningOnAppVeyor)
-        {
-            foreach (var filePath in GetFiles(@".\test\**\TestResult.xml"))
+            if (AppVeyor.IsRunningOnAppVeyor)
             {
-                AppVeyor.UploadTestResults(filePath, AppVeyorTestResultsType.NUnit3);
+                StartAndReturnProcess("dotnet", new ProcessSettings
+                    {
+                        Arguments = $"test {filePath} --configuration {configuration} --logger:AppVeyor --no-build --no-restore"
+                    })
+                    .WaitForExit();
+            }
+            else
+            {
+                StartAndReturnProcess("dotnet", new ProcessSettings
+                    {
+                        Arguments = $"test {filePath} --configuration {configuration} --logger:nunit --no-build --no-restore"
+                    })
+                    .WaitForExit();
             }
         }
     });
@@ -60,11 +63,11 @@ Task("Publish")
     .IsDependentOn("Test")
     .Does(() => 
     {
-        var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "1.2.3";
+        var version = EnvironmentVariable("APPVEYOR_BUILD_VERSION") ?? "0.0.0";
 
         StartAndReturnProcess("dotnet", new ProcessSettings
             {
-                Arguments = $"publish src/Stubbl.Api --configuration {configuration} --no-restore /p:Version={version}"
+                Arguments = $@"publish src\Stubbl.Api --configuration {configuration} --no-restore /p:Version={version}"
             })
             .WaitForExit();
     });
@@ -75,9 +78,9 @@ Task("Pack")
     {
         CreateDirectory(artifactsDirectory);
 
-        var artifactFilePath = $"{artifactsDirectory}/stubbl-api.zip";
+        var artifactFilePath = $@"{artifactsDirectory}\stubbl-api.zip";
         
-        Zip($"./src/Stubbl.Api/bin/{configuration}/netcoreapp2.0/publish/", artifactFilePath); 
+        Zip($@".\src\Stubbl.Api\bin\{configuration}\netcoreapp2.0\publish\", artifactFilePath); 
         
         if (AppVeyor.IsRunningOnAppVeyor)
         {
