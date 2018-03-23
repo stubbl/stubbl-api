@@ -7,8 +7,8 @@ using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Caching;
 using Stubbl.Api.Data.Collections.Users;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.MemberNotFound.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Stubbl.Api.Queries.FindTeamMember.Version1;
 using Stubbl.Api.Queries.Shared.Version1;
 using Role = Stubbl.Api.Queries.FindTeamMember.Version1.Role;
@@ -36,7 +36,7 @@ namespace Stubbl.Api.QueryHandlers
         {
             if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
             {
-                throw new MemberNotAddedToTeamException
+                throw new UserNotAddedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     query.TeamId

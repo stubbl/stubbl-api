@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Cqs.Commands;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
@@ -26,11 +27,25 @@ namespace Stubbl.Api.CommandHandlers
         public async Task<AuthenticatedUserUpdatedEvent> HandleAsync(UpdateAuthenticatedUserCommand command,
             CancellationToken cancellationToken)
         {
-            var filter = Builders<User>.Filter.Where(t => t.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
-            var update = Builders<User>.Update.Set(t => t.Name, command.Name)
-                .Set(t => t.EmailAddress, command.EmailAddress);
+            try
+            {
+                var filter = Builders<User>.Filter.Where(t => t.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
+                var update = Builders<User>.Update.Set(t => t.Name, command.Name)
+                    .Set(t => t.EmailAddress, command.EmailAddress);
 
-            await _usersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+                await _usersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+            }
+            catch (AuthenticatedUserNotFoundException exception)
+            {
+                var user = new User
+                {
+                    Sub = exception.Sub,
+                    Name = command.Name,
+                    EmailAddress = command.EmailAddress
+                };
+
+                await _usersCollection.InsertOneAsync(user, cancellationToken: cancellationToken);
+            }
 
             return new AuthenticatedUserUpdatedEvent
             (

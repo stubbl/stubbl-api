@@ -29,7 +29,7 @@ namespace Gunnsoft.Cqs.Commands
         public async Task<TEvent> HandleAsync(TCommand command, CancellationToken cancellationToken)
         {
             const int retryCount = 3;
-            const int retryIntervalInMilliseconds = 500;
+            const int retryIntervalInMilliseconds = 100;
 
             var commandName = command.GetType().FullName;
             var exceptions = new List<Exception>();

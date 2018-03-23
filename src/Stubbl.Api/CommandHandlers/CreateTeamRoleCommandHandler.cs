@@ -11,8 +11,8 @@ using Stubbl.Api.Data.Collections.Teams;
 using Stubbl.Api.Events.Shared.Version1;
 using Stubbl.Api.Events.TeamRoleCreated.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageRoles.Version1;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.RoleAlreadyExists.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Permission = Stubbl.Api.Data.Collections.Shared.Permission;
 
 namespace Stubbl.Api.CommandHandlers
@@ -36,7 +36,7 @@ namespace Stubbl.Api.CommandHandlers
 
             if (team == null)
             {
-                throw new MemberNotAddedToTeamException
+                throw new UserNotAddedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     command.TeamId

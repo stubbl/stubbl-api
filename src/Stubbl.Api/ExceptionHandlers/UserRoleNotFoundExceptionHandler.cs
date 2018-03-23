@@ -3,16 +3,16 @@ using System.Threading.Tasks;
 using Gunnsoft.Api;
 using Gunnsoft.Api.ExceptionHandlers;
 using Microsoft.AspNetCore.Http;
-using Stubbl.Api.Exceptions.LogNotFound.Version1;
-using Stubbl.Api.Models.LogNotFound.Version1;
+using Stubbl.Api.Exceptions.UserRoleNotFound.Version1;
+using Stubbl.Api.Models.UserRoleNotFound.Version1;
 
 namespace Stubbl.Api.ExceptionHandlers
 {
-    public class LogNotFoundExceptionHandler : IExceptionHandler<LogNotFoundException>
+    public class UserRoleNotFoundExceptionHandler : IExceptionHandler<UserRoleNotFoundException>
     {
-        public async Task HandleAsync(HttpContext context, LogNotFoundException exception)
+        public async Task HandleAsync(HttpContext context, UserRoleNotFoundException exception)
         {
-            var response = new LogNotFoundResponse();
+            var response = new UserRoleNotFoundResponse();
 
             await context.Response.WriteJsonAsync(HttpStatusCode.Conflict, response,
                 JsonConstants.JsonSerializerSettings);

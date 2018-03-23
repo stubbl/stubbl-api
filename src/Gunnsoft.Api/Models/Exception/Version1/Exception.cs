@@ -1,3 +1,5 @@
+using System;
+
 namespace Gunnsoft.Api.Models.Exception.Version1
 {
     public class Exception
@@ -6,6 +8,7 @@ namespace Gunnsoft.Api.Models.Exception.Version1
         {
             Message = exception.Message;
             StackTrace = exception.StackTrace;
+            Type = exception.GetType();
 
             if (exception.InnerException != null)
             {
@@ -13,8 +16,9 @@ namespace Gunnsoft.Api.Models.Exception.Version1
             }
         }
 
+        public Exception InnerException { get; }
         public string Message { get; }
         public string StackTrace { get; }
-        public Exception InnerException { get; }
+        public Type Type { get; }
     }
 }

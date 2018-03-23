@@ -19,14 +19,14 @@ using Stubbl.Api.Exceptions.MemberCannotManageMembers.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageRoles.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageStubs.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageTeams.Version1;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.MemberNotFound.Version1;
-using Stubbl.Api.Exceptions.MemberNotInvitedToTeam.Version1;
 using Stubbl.Api.Exceptions.RoleAlreadyExists.Version1;
 using Stubbl.Api.Exceptions.RoleCannotBeUpdated.Version1;
 using Stubbl.Api.Exceptions.RoleNotFound.Version1;
 using Stubbl.Api.Exceptions.StubNotFound.Version1;
 using Stubbl.Api.Exceptions.TeamNotFound.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
+using Stubbl.Api.Exceptions.UserNotInvitedToTeam.Version1;
 using Stubbl.Api.Exceptions.UserRoleNotFound.Version1;
 using Stubbl.Api.Models.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Models.InvitationNotFound.Version1;
@@ -119,7 +119,7 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
             };
             yield return new object[]
             {
-                new MemberNotAddedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
+                new UserNotAddedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
                 HttpStatusCode.Forbidden, new MemberNotAddedToTeamResponse()
             };
             yield return new object[]
@@ -129,7 +129,7 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
             };
             yield return new object[]
             {
-                new MemberNotInvitedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
+                new UserNotInvitedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
                 HttpStatusCode.Conflict, new MemberNotInvitedToTeamResponse()
             };
             yield return new object[]

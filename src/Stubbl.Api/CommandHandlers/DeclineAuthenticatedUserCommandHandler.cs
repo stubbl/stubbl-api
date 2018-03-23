@@ -9,7 +9,7 @@ using Stubbl.Api.Data.Collections.Invitations;
 using Stubbl.Api.Events.AuthenticatedUserInvitationDeclined.Version1;
 using Stubbl.Api.Exceptions.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Exceptions.MemberAlreadyAddedToTeam.Version1;
-using Stubbl.Api.Exceptions.MemberNotInvitedToTeam.Version1;
+using Stubbl.Api.Exceptions.UserNotInvitedToTeam.Version1;
 
 namespace Stubbl.Api.CommandHandlers
 {
@@ -36,7 +36,7 @@ namespace Stubbl.Api.CommandHandlers
 
             if (invitation == null)
             {
-                throw new MemberNotInvitedToTeamException
+                throw new UserNotInvitedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     command.InvitationId

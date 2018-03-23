@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Stubbl.Api.Queries.ListTeamStubs.Version1;
 using Stubbl.Api.Queries.Shared.Version1;
 using Stub = Stubbl.Api.Data.Collections.Stubs.Stub;
@@ -28,7 +28,7 @@ namespace Stubbl.Api.QueryHandlers
         {
             if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
             {
-                throw new MemberNotAddedToTeamException
+                throw new UserNotAddedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     query.TeamId

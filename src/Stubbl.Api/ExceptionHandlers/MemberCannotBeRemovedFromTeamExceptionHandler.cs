@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Gunnsoft.Api;
 using Gunnsoft.Api.ExceptionHandlers;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Stubbl.Api.Exceptions.MemberCannotBeRemovedFromTeam.Version1;
 using Stubbl.Api.Models.MemberCannotBeRemovedFromTeam.Version1;
 

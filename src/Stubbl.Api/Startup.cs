@@ -182,10 +182,10 @@ namespace Stubbl.Api
                 o.OperationFilter<AuthorizeOperationFilter>();
                 o.OperationFilter<CancellationTokenOperationFilter>();
 
-                //if (_hostingEnvironment.IsDevelopment())
-                //{
-                //    o.OperationFilter<SubHeaderOperationFilter>();
-                //}
+                if (_hostingEnvironment.IsDevelopment())
+                {
+                    o.OperationFilter<SubHeaderOperationFilter>();
+                }
 
                 o.OperationFilter<SwaggerDefaultValuesOperationFilter>();
 

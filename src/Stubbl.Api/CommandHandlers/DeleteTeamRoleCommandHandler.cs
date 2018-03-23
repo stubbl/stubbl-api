@@ -9,9 +9,9 @@ using Stubbl.Api.Data.Collections.Shared;
 using Stubbl.Api.Data.Collections.Teams;
 using Stubbl.Api.Events.TeamRoleDeleted.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageMembers.Version1;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.RoleCannotBeUpdated.Version1;
 using Stubbl.Api.Exceptions.RoleNotFound.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 
 namespace Stubbl.Api.CommandHandlers
 {
@@ -34,7 +34,7 @@ namespace Stubbl.Api.CommandHandlers
 
             if (team == null)
             {
-                throw new MemberNotAddedToTeamException
+                throw new UserNotAddedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     command.TeamId

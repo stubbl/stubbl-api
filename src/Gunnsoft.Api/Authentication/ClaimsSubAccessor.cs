@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 
@@ -6,14 +5,27 @@ namespace Gunnsoft.Api.Authentication
 {
     public class ClaimsSubAccessor : ISubAccessor
     {
-        private readonly Lazy<string> _sub;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private string _sub;
 
         public ClaimsSubAccessor(IHttpContextAccessor httpContextAccessor)
         {
-            _sub = new Lazy<string>(() =>
-                httpContextAccessor.HttpContext.User.Claims.SingleOrDefault(c => c.Type == "sub")?.Value);
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public string Sub => _sub.Value;
+        public string Sub
+        {
+            get
+            {
+                if (_sub != null)
+                {
+                    return _sub;
+                }
+
+                _sub = _httpContextAccessor.HttpContext.User.Claims.SingleOrDefault(c => c.Type == "sub")?.Value;
+
+                return _sub;
+            }
+        }
     }
 }

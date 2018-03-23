@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using Gunnsoft.Api;
 using Gunnsoft.Api.ExceptionHandlers;
 using Microsoft.AspNetCore.Http;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Stubbl.Api.Models.MemberNotAddedToTeam.Version1;
 
 namespace Stubbl.Api.ExceptionHandlers
 {
-    public class MemberNotAddedToTeamExceptionHandler : IExceptionHandler<MemberNotAddedToTeamException>
+    public class UserNotAddedToTeamExceptionHandler : IExceptionHandler<UserNotAddedToTeamException>
     {
-        public async Task HandleAsync(HttpContext context, MemberNotAddedToTeamException exception)
+        public async Task HandleAsync(HttpContext context, UserNotAddedToTeamException exception)
         {
             var response = new MemberNotAddedToTeamResponse();
 

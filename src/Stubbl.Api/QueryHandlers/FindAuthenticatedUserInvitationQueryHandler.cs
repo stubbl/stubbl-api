@@ -6,7 +6,7 @@ using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Caching;
 using Stubbl.Api.Data.Collections.Invitations;
-using Stubbl.Api.Exceptions.MemberNotInvitedToTeam.Version1;
+using Stubbl.Api.Exceptions.UserNotInvitedToTeam.Version1;
 using Stubbl.Api.Queries.FindAuthenticatedUserInvitation.Version1;
 using Role = Stubbl.Api.Queries.FindAuthenticatedUserInvitation.Version1.Role;
 using Team = Stubbl.Api.Queries.FindAuthenticatedUserInvitation.Version1.Team;
@@ -47,7 +47,7 @@ namespace Stubbl.Api.QueryHandlers
 
             if (invitation == null)
             {
-                throw new MemberNotInvitedToTeamException
+                throw new UserNotInvitedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     query.InvitationId

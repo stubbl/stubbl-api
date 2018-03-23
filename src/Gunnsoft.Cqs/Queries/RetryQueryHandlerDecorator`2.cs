@@ -19,7 +19,7 @@ namespace Gunnsoft.Cqs.Queries
         public async Task<TProjection> HandleAsync(TQuery query, CancellationToken cancellationToken)
         {
             const int retryCount = 3;
-            const int retryIntervalInMilliseconds = 500;
+            const int retryIntervalInMilliseconds = 100;
 
             var exceptions = new List<Exception>();
 

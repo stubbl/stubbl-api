@@ -27,7 +27,7 @@ namespace Gunnsoft.Cqs.Events
         public async Task HandleAsync(TEvent @event, CancellationToken cancellationToken)
         {
             const int retryCount = 3;
-            const int retryIntervalInMilliseconds = 500;
+            const int retryIntervalInMilliseconds = 100;
 
             var eventName = @event.GetType().FullName;
             var exceptions = new List<Exception>();

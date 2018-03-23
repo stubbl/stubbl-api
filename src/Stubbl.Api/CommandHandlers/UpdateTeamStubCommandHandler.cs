@@ -9,8 +9,8 @@ using Stubbl.Api.Data.Collections.Shared;
 using Stubbl.Api.Data.Collections.Stubs;
 using Stubbl.Api.Events.TeamStubUpdated.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageStubs.Version1;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.StubNotFound.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Request = Stubbl.Api.Events.Shared.Version1.Request;
 using Response = Stubbl.Api.Events.Shared.Version1.Response;
 
@@ -35,7 +35,7 @@ namespace Stubbl.Api.CommandHandlers
 
             if (team == null)
             {
-                throw new MemberNotAddedToTeamException
+                throw new UserNotAddedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     command.TeamId

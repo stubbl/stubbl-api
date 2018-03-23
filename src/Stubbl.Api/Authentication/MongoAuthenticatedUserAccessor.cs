@@ -1,4 +1,3 @@
-using System;
 using Gunnsoft.Api.Authentication;
 using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Exceptions.UnknownSub.Version1;
@@ -11,34 +10,49 @@ namespace Stubbl.Api.Authentication
 {
     public class MongoAuthenticatedUserAccessor : IAuthenticatedUserAccessor
     {
-        private readonly Lazy<User> _authenticatedUser;
+        private readonly ICache _cache;
+        private readonly ICacheKey _cacheKey;
+        private readonly ISubAccessor _subAccessor;
+        private User _user;
+        private readonly IMongoCollection<User> _usersCollection;
 
         public MongoAuthenticatedUserAccessor(ICache cache, ICacheKey cacheKey,
             ISubAccessor subAccessor, IMongoCollection<User> usersCollection)
         {
-            _authenticatedUser = new Lazy<User>(() =>
+            _cache = cache;
+            _cacheKey = cacheKey;
+            _subAccessor = subAccessor;
+            _usersCollection = usersCollection;
+        }
+
+        public User AuthenticatedUser
+        {
+            get
             {
-                if (subAccessor.Sub == null)
+                if (_user != null)
+                {
+                    return _user;
+                }
+
+                if (_subAccessor.Sub == null)
                 {
                     throw new UnknownSubException();
                 }
 
-                var user = cache.GetOrSet
+                _user = _cache.GetOrSet
                 (
-                    cacheKey.FindAuthenticatedUser(subAccessor.Sub),
-                    () => usersCollection.Find(m => m.Sub == subAccessor.Sub)
+                    _cacheKey.FindAuthenticatedUser(_subAccessor.Sub),
+                    () => _usersCollection.Find(m => m.Sub == _subAccessor.Sub)
                         .SingleOrDefault()
                 );
 
-                if (user == null)
+                if (_user == null)
                 {
-                    throw new AuthenticatedUserNotFoundException(subAccessor.Sub);
+                    throw new AuthenticatedUserNotFoundException(_subAccessor.Sub);
                 }
 
-                return user;
-            });
+                return _user;
+            }
         }
-
-        public User AuthenticatedUser => _authenticatedUser.Value;
     }
 }

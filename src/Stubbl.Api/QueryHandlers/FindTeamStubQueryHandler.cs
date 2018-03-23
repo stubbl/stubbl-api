@@ -8,8 +8,8 @@ using Stubbl.Api.Authentication;
 using Stubbl.Api.Caching;
 using Stubbl.Api.Data.Collections.Stubs;
 using Stubbl.Api.Data.Collections.Teams;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.StubNotFound.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Stubbl.Api.Queries.FindTeamStub.Version1;
 using Stubbl.Api.Queries.Shared.Version1;
 using BodyToken = Stubbl.Api.Queries.Shared.Version1.BodyToken;
@@ -44,7 +44,7 @@ namespace Stubbl.Api.QueryHandlers
         {
             if (_authenticatedUserAccessor.AuthenticatedUser.Teams.All(t => t.Id != query.TeamId))
             {
-                throw new MemberNotAddedToTeamException
+                throw new UserNotAddedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     query.TeamId

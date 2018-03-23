@@ -11,7 +11,7 @@ using Stubbl.Api.Events.TeamInvitationResent.Version1;
 using Stubbl.Api.Exceptions.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Exceptions.InvitationNotFound.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageInvitations.Version1;
-using Stubbl.Api.Exceptions.MemberNotAddedToTeam.Version1;
+using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 
 namespace Stubbl.Api.CommandHandlers
 {
@@ -35,7 +35,7 @@ namespace Stubbl.Api.CommandHandlers
 
             if (team == null)
             {
-                throw new MemberNotAddedToTeamException
+                throw new UserNotAddedToTeamException
                 (
                     _authenticatedUserAccessor.AuthenticatedUser.Id,
                     command.TeamId

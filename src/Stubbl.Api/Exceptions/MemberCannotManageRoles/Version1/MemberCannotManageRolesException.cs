@@ -6,7 +6,7 @@ namespace Stubbl.Api.Exceptions.MemberCannotManageRoles.Version1
     public class MemberCannotManageRolesException : Exception
     {
         public MemberCannotManageRolesException(ObjectId memberId, ObjectId teamId)
-            : base($"AuthenticatedUser cannot manage roles. MemberID='{memberId}' TeamID='{teamId}'")
+            : base($"Member cannot manage roles. MemberID='{memberId}' TeamID='{teamId}'")
         {
             MemberId = memberId;
             TeamId = teamId;
