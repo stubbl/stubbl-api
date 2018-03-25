@@ -4,11 +4,13 @@ namespace Stubbl.Api.Queries.Canary.Version1
 {
     public class CanaryProjection : IProjection
     {
-        public CanaryProjection(string database)
+        public CanaryProjection(ComponentStatus mongo, ComponentStatus storageAccount)
         {
-            Database = database;
+            Mongo = mongo;
+            StorageAccount = storageAccount;
         }
 
-        public string Database { get; }
+        public ComponentStatus Mongo { get; }
+        public ComponentStatus StorageAccount { get; }
     }
 }

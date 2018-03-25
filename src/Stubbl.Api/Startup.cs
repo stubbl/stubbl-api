@@ -13,6 +13,7 @@ using Gunnsoft.Api.ExceptionHandlers;
 using Gunnsoft.Api.Middleware;
 using Gunnsoft.Api.Versioning;
 using Gunnsoft.CloudflareApi;
+using Gunnsoft.Common.Microsoft.WindowsAzure.Storage;
 using Gunnsoft.Cqs;
 using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Events;
@@ -221,10 +222,6 @@ namespace Stubbl.Api
                 .AddCommandDispatcher()
                 .AddCommandHandlerDecorators()
                 .AddCommandHandlers()
-                .AddCqsSettings(new CqsSettings
-                (
-                    _configuration.GetValue<string>("Storage:ConnectionString")
-                ))
                 .AddEventDispatcher()
                 .AddEventHandlerDecorators()
                 .AddEventHandlers()
@@ -237,6 +234,7 @@ namespace Stubbl.Api
                 .AddQueryDispatcher()
                 .AddQueryHandlerDecorators()
                 .AddQueryHandlers()
+                .AddStorageAccount(_configuration.GetValue<string>("StorageAccount:ConnectionString"))
                 .AddSubAccessor();
 
             containerBuilder.RegisterAssemblyModules(s_assembly);

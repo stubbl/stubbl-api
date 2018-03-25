@@ -17,7 +17,7 @@ namespace Stubbl.Api.Models.CreateTeamInvitation.Version1
                 .NotEmpty()
                 .WithMessage("'{PropertyName}' is required.")
                 .ObjectId()
-                .WithMessage("'{PropertyName}' must be a valid ID.");
+                .WithMessage("'{PropertyName}' must be a valid Role ID.");
         }
     }
 }

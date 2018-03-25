@@ -42,7 +42,8 @@ namespace Stubbl.Api.EventHandlers.Collections.Members
                 }
             };
 
-            var filter = Builders<User>.Filter.Where(m => m.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
+            var authenticatedUserId = _authenticatedUserAccessor.AuthenticatedUser.Id;
+            var filter = Builders<User>.Filter.Where(m => m.Id == authenticatedUserId);
             var update = Builders<User>.Update.Push(m => m.Teams, team);
 
             await _usersCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);

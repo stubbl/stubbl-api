@@ -30,19 +30,7 @@ namespace Gunnsoft.Cqs.Queries
             var handleMethod = queryHandlerType.GetTypeInfo().GetMethod("HandleAsync");
             var queryHandler = _componentContext.Resolve(queryHandlerType);
 
-            try
-            {
-                return await (dynamic) handleMethod.Invoke(queryHandler, new object[] {query, cancellationToken});
-            }
-            catch (TargetInvocationException exception)
-            {
-                if (exception.InnerException != null)
-                {
-                    throw exception.InnerException;
-                }
-
-                throw;
-            }
+            return await (dynamic)handleMethod.Invoke(queryHandler, new object[] { query, cancellationToken });
         }
     }
 }

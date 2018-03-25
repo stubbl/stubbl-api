@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Cqs.Commands;
@@ -7,11 +8,12 @@ using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.UpdateAuthenticatedUser.Version1;
 using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.AuthenticatedUserUpdated.Version1;
+using Stubbl.Api.Exceptions.EmailAdressAlreadyUsed.Version1;
 
 namespace Stubbl.Api.CommandHandlers
 {
     public class
-        UpdateAuthenticatedUserCommandHandler : ICommandHandler<UpdateAuthenticatedUserCommand,
+            UpdateAuthenticatedUserCommandHandler : ICommandHandler<UpdateAuthenticatedUserCommand,
             AuthenticatedUserUpdatedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
@@ -29,7 +31,17 @@ namespace Stubbl.Api.CommandHandlers
         {
             try
             {
-                var filter = Builders<User>.Filter.Where(t => t.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
+                var authenticatedUserId = _authenticatedUserAccessor.AuthenticatedUser.Id;
+
+                if (await _usersCollection.CountAsync(u => u.Id != authenticatedUserId && u.EmailAddress == command.EmailAddress, cancellationToken: cancellationToken) > 0)
+                {
+                    throw new EmailAddressAlreadyTakenException
+                    (
+                        command.EmailAddress
+                    );
+                }
+
+                var filter = Builders<User>.Filter.Where(t => t.Id == authenticatedUserId);
                 var update = Builders<User>.Update.Set(t => t.Name, command.Name)
                     .Set(t => t.EmailAddress, command.EmailAddress);
 
@@ -37,6 +49,14 @@ namespace Stubbl.Api.CommandHandlers
             }
             catch (AuthenticatedUserNotFoundException exception)
             {
+                if (await _usersCollection.CountAsync(u => u.EmailAddress == command.EmailAddress, cancellationToken: cancellationToken) > 0)
+                {
+                    throw new EmailAddressAlreadyTakenException
+                    (
+                        command.EmailAddress
+                    );
+                }
+
                 var user = new User
                 {
                     Sub = exception.Sub,
@@ -45,6 +65,8 @@ namespace Stubbl.Api.CommandHandlers
                 };
 
                 await _usersCollection.InsertOneAsync(user, cancellationToken: cancellationToken);
+
+                _authenticatedUserAccessor.Reload();
             }
 
             return new AuthenticatedUserUpdatedEvent

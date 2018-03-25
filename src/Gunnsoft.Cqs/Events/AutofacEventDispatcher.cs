@@ -41,14 +41,7 @@ namespace Gunnsoft.Cqs.Events
 
             foreach (var eventHandler in eventHandlers)
             {
-                try
-                {
-                    await handleMethod.Invoke(eventHandler, new object[] {@event, cancellationToken});
-                }
-                catch (TargetInvocationException exception)
-                {
-                    exceptions.Add(exception.InnerException ?? exception);
-                }
+                await handleMethod.Invoke(eventHandler, new object[] {@event, cancellationToken});
             }
 
             if (exceptions.Any())

@@ -3,7 +3,7 @@
     public class ObjectIdValidator : PropertyValidator
     {
         public ObjectIdValidator()
-            : base("'{PropertyName}' must be a valid ID.")
+            : base("'{PropertyName}' must be a valid ObjectId.")
         {
         }
 

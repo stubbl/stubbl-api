@@ -14,16 +14,16 @@ namespace Gunnsoft.Cqs.Commands
         where TCommand : ICommand<TEvent>
         where TEvent : IEvent
     {
-        private readonly CqsSettings _cqsSettings;
         private readonly ICommandHandler<TCommand, TEvent> _decorated;
         private readonly ILogger<RetryEventHandlerDecorator<TEvent>> _logger;
+        private readonly CloudStorageAccount _storageAccount;
 
-        public RetryCommandHandlerDecorator(CqsSettings cqsSettings, ICommandHandler<TCommand, TEvent> decorated,
-            ILogger<RetryEventHandlerDecorator<TEvent>> logger)
+        public RetryCommandHandlerDecorator(ICommandHandler<TCommand, TEvent> decorated,
+            ILogger<RetryEventHandlerDecorator<TEvent>> logger, CloudStorageAccount storageAccount)
         {
-            _cqsSettings = cqsSettings;
             _decorated = decorated;
             _logger = logger;
+            _storageAccount = storageAccount;
         }
 
         public async Task<TEvent> HandleAsync(TCommand command, CancellationToken cancellationToken)
@@ -64,8 +64,7 @@ namespace Gunnsoft.Cqs.Commands
 
             try
             {
-                var storageAccount = CloudStorageAccount.Parse(_cqsSettings.StorageConnectionString);
-                var queueClient = storageAccount.CreateCloudQueueClient();
+                var queueClient = _storageAccount.CreateCloudQueueClient();
                 var queue = queueClient.GetQueueReference($"{commandName.ToLower()}-poison");
                 await queue.CreateIfNotExistsAsync();
                 var message = new CloudQueueMessage(JsonConvert.SerializeObject(command));

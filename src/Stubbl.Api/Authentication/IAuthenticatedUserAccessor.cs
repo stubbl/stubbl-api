@@ -5,5 +5,7 @@ namespace Stubbl.Api.Authentication
     public interface IAuthenticatedUserAccessor
     {
         User AuthenticatedUser { get; }
+
+        void Reload();
     }
 }

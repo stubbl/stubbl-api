@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Gunnsoft.Api.Authentication;
 using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Exceptions.UnknownSub.Version1;
@@ -10,49 +12,43 @@ namespace Stubbl.Api.Authentication
 {
     public class MongoAuthenticatedUserAccessor : IAuthenticatedUserAccessor
     {
-        private readonly ICache _cache;
-        private readonly ICacheKey _cacheKey;
-        private readonly ISubAccessor _subAccessor;
-        private User _user;
-        private readonly IMongoCollection<User> _usersCollection;
+        private Lazy<User> _authenticatedUser;
+        private readonly Func<User> _authenticatedUserFactory;
 
         public MongoAuthenticatedUserAccessor(ICache cache, ICacheKey cacheKey,
             ISubAccessor subAccessor, IMongoCollection<User> usersCollection)
         {
-            _cache = cache;
-            _cacheKey = cacheKey;
-            _subAccessor = subAccessor;
-            _usersCollection = usersCollection;
-        }
-
-        public User AuthenticatedUser
-        {
-            get
+            _authenticatedUserFactory = () =>
             {
-                if (_user != null)
-                {
-                    return _user;
-                }
-
-                if (_subAccessor.Sub == null)
+                if (subAccessor.Sub == null)
                 {
                     throw new UnknownSubException();
                 }
 
-                _user = _cache.GetOrSet
+                var user = cache.GetOrSet
                 (
-                    _cacheKey.FindAuthenticatedUser(_subAccessor.Sub),
-                    () => _usersCollection.Find(m => m.Sub == _subAccessor.Sub)
-                        .SingleOrDefault()
+                    cacheKey.FindAuthenticatedUser(subAccessor.Sub),
+                    () => usersCollection.Find(m => m.Sub == subAccessor.Sub)
+                        .SortByDescending(u => u.Id)
+                        .FirstOrDefault()
                 );
 
-                if (_user == null)
+                if (user == null)
                 {
-                    throw new AuthenticatedUserNotFoundException(_subAccessor.Sub);
+                    throw new AuthenticatedUserNotFoundException(subAccessor.Sub);
                 }
 
-                return _user;
-            }
+                return user;
+            };
+
+            _authenticatedUser = new Lazy<User>(_authenticatedUserFactory);
+        }
+
+        public User AuthenticatedUser => _authenticatedUser.Value;
+
+        public void Reload()
+        {
+            _authenticatedUser = new Lazy<User>(_authenticatedUserFactory);
         }
     }
 }

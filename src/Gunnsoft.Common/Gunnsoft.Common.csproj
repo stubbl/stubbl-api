@@ -9,4 +9,13 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\..\..\Users\hello\.nuget\packages\autofac\4.6.2\lib\netstandard1.1\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\..\..\..\Users\hello\.nuget\packages\windowsazure.storage\9.1.0\lib\netstandard1.3\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

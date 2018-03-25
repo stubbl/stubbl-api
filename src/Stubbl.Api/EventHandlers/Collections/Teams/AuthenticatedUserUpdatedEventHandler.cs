@@ -25,6 +25,12 @@ namespace Stubbl.Api.EventHandlers.Collections.Teams
         public async Task HandleAsync(AuthenticatedUserUpdatedEvent @event, CancellationToken cancellationToken)
         {
             var requests = new List<WriteModel<Team>>();
+            var authenticatedUserId = _authenticatedUserAccessor.AuthenticatedUser.Id;
+
+            if (!_authenticatedUserAccessor.AuthenticatedUser.Teams.Any())
+            {
+                return;
+            }
 
             foreach (var teamId in _authenticatedUserAccessor.AuthenticatedUser.Teams.Select(t => t.Id))
             {
@@ -35,8 +41,7 @@ namespace Stubbl.Api.EventHandlers.Collections.Teams
                 };
 
                 var filter = Builders<Team>.Filter.Where(t => t.Id == teamId);
-                var pullUpdate = Builders<Team>.Update.PullFilter(t => t.Members,
-                    t => t.Id == _authenticatedUserAccessor.AuthenticatedUser.Id);
+                var pullUpdate = Builders<Team>.Update.PullFilter(t => t.Members, t => t.Id == authenticatedUserId);
                 var pushUpdate = Builders<Team>.Update.Push(t => t.Members, member);
 
                 requests.Add(new UpdateOneModel<Team>(filter, pullUpdate));

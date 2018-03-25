@@ -37,19 +37,7 @@ namespace Gunnsoft.Cqs.Commands
 
             TEvent @event;
 
-            try
-            {
-                @event = await (dynamic) handleMethod.Invoke(commandHandler, new object[] {command, cancellationToken});
-            }
-            catch (TargetInvocationException exception)
-            {
-                if (exception.InnerException != null)
-                {
-                    throw exception.InnerException;
-                }
-
-                throw;
-            }
+            @event = await (dynamic) handleMethod.Invoke(commandHandler, new object[] {command, cancellationToken});
 
             try
             {
