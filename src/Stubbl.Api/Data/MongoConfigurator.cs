@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
-using Stubbl.Api.Data.Collections.DefaultRoles;
 using Stubbl.Api.Data.Collections.Invitations;
 using Stubbl.Api.Data.Collections.Logs;
 using Stubbl.Api.Data.Collections.Migrations;
@@ -24,16 +23,6 @@ namespace Stubbl.Api.Data
 
             ConventionRegistry.Remove(conventionName);
             ConventionRegistry.Register(conventionName, conventionPack, t => true);
-
-            if (!BsonClassMap.IsClassMapRegistered(typeof(DefaultRole)))
-            {
-                BsonClassMap.RegisterClassMap<DefaultRole>(cm =>
-                {
-                    cm.AutoMap();
-                    cm.MapIdMember(c => c.Id);
-                    cm.SetIgnoreExtraElements(true);
-                });
-            }
 
             if (!BsonClassMap.IsClassMapRegistered(typeof(Invitation)))
             {

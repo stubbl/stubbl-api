@@ -6,7 +6,6 @@ namespace Gunnsoft.Api.Versioning
 {
     public static class Versions
     {
-        private static readonly IReadOnlyCollection<int> s_detectedVersions;
         private static readonly Regex s_versionRegex;
 
         static Versions()

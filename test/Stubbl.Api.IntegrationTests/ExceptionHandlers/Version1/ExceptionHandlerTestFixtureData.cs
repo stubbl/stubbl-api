@@ -7,7 +7,6 @@ using Gunnsoft.Api.Models.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Models.Error.Version1;
 using Gunnsoft.Api.Models.UnknownSub.Version1;
 using MongoDB.Bson;
-using Stubbl.Api.Exceptions.AdministratorRoleNotFound.Version1;
 using Stubbl.Api.Exceptions.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Exceptions.InvitationNotFound.Version1;
 using Stubbl.Api.Exceptions.LogNotFound.Version1;
@@ -27,7 +26,6 @@ using Stubbl.Api.Exceptions.StubNotFound.Version1;
 using Stubbl.Api.Exceptions.TeamNotFound.Version1;
 using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.UserNotInvitedToTeam.Version1;
-using Stubbl.Api.Exceptions.UserRoleNotFound.Version1;
 using Stubbl.Api.Models.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Models.InvitationNotFound.Version1;
 using Stubbl.Api.Models.LogNotFound.Version1;
@@ -55,13 +53,11 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
         public IEnumerator GetEnumerator()
         {
             yield return new object[]
-                {new AdministratorRoleNotFoundException(), HttpStatusCode.InternalServerError, new ErrorResponse()};
-            yield return new object[]
             {
-                new AuthenticatedUserNotFoundException(null), HttpStatusCode.Unauthorized,
+                new AuthenticatedUserNotFoundException(null), HttpStatusCode.Forbidden,
                 new AuthenticatedUserNotFoundResponse()
             };
-            yield return new object[] {new Exception(), HttpStatusCode.InternalServerError, new ErrorResponse()};
+            yield return new object[] { new Exception(), HttpStatusCode.InternalServerError, new ErrorResponse() };
             yield return new object[]
             {
                 new InvitationAlreadyUsedException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
@@ -158,8 +154,6 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
             };
             yield return new object[]
                 {new UnknownSubException(), HttpStatusCode.Unauthorized, new UnknownSubResponse()};
-            yield return new object[]
-                {new UserRoleNotFoundException(), HttpStatusCode.InternalServerError, new ErrorResponse()};
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Stubbl.Api.EventHandlers.Collections.Invitations
         public async Task HandleAsync(TeamRoleDeletedEvent @event, CancellationToken cancellationToken)
         {
             var userRole = await _teamsCollection.Find(t => t.Id == @event.TeamId)
-                .Project(t => t.Roles.Single(r => r.Name.ToLower() == DefaultRoleNames.User.ToLower() && r.IsDefault))
+                .Project(t => t.Roles.Single(r => r.Name.ToLower() == DefaultRoles.User.Name.ToLower() && r.IsDefault))
                 .SingleAsync(cancellationToken);
 
             var filter =

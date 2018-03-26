@@ -8,12 +8,9 @@ using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.CreateTeam.Version1;
 using Stubbl.Api.Data;
-using Stubbl.Api.Data.Collections.DefaultRoles;
 using Stubbl.Api.Data.Collections.Teams;
 using Stubbl.Api.Events.Shared.Version1;
 using Stubbl.Api.Events.TeamCreated.Version1;
-using Stubbl.Api.Exceptions.AdministratorRoleNotFound.Version1;
-using Stubbl.Api.Exceptions.UserRoleNotFound.Version1;
 using Member = Stubbl.Api.Data.Collections.Teams.Member;
 using Role = Stubbl.Api.Data.Collections.Teams.Role;
 
@@ -22,38 +19,17 @@ namespace Stubbl.Api.CommandHandlers
     public class CreateTeamCommandHandler : ICommandHandler<CreateTeamCommand, TeamCreatedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
-        private readonly IMongoCollection<DefaultRole> _defaultRolesCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
 
         public CreateTeamCommandHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            IMongoCollection<DefaultRole> defaultRolesCollection, IMongoCollection<Team> teamsCollection)
+            IMongoCollection<Team> teamsCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _defaultRolesCollection = defaultRolesCollection;
             _teamsCollection = teamsCollection;
         }
 
         public async Task<TeamCreatedEvent> HandleAsync(CreateTeamCommand command, CancellationToken cancellationToken)
         {
-            var defaultRoles = await _defaultRolesCollection.Find(Builders<DefaultRole>.Filter.Empty)
-                .ToListAsync(cancellationToken);
-
-            var administratorRole = defaultRoles.SingleOrDefault(r =>
-                string.Equals(r.Name, DefaultRoleNames.Administrator, StringComparison.OrdinalIgnoreCase));
-
-            if (administratorRole == null)
-            {
-                throw new AdministratorRoleNotFoundException();
-            }
-
-            var userRole = defaultRoles.SingleOrDefault(r =>
-                string.Equals(r.Name, DefaultRoleNames.User, StringComparison.OrdinalIgnoreCase));
-
-            if (userRole == null)
-            {
-                throw new UserRoleNotFoundException();
-            }
-
             var administratorRoleId = ObjectId.GenerateNewId();
 
             var team = new Team
@@ -69,8 +45,8 @@ namespace Stubbl.Api.CommandHandlers
                         Role = new Role
                         {
                             Id = administratorRoleId,
-                            Name = administratorRole.Name,
-                            Permissions = administratorRole.Permissions
+                            Name = DefaultRoles.Administrator.Name,
+                            Permissions = DefaultRoles.Administrator.Permissions
                         }
                     }
                 },
@@ -80,15 +56,15 @@ namespace Stubbl.Api.CommandHandlers
                     {
                         Id = administratorRoleId,
                         IsDefault = true,
-                        Name = administratorRole.Name,
-                        Permissions = administratorRole.Permissions
+                        Name = DefaultRoles.Administrator.Name,
+                        Permissions = DefaultRoles.Administrator.Permissions
                     },
                     new Role
                     {
                         Id = ObjectId.GenerateNewId(),
                         IsDefault = true,
-                        Name = userRole.Name,
-                        Permissions = userRole.Permissions
+                        Name = DefaultRoles.User.Name,
+                        Permissions = DefaultRoles.User.Permissions
                     }
                 }
             };

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using Autofac;
 using MongoDB.Driver;
-using Stubbl.Api.Data.Collections.DefaultRoles;
 using Stubbl.Api.Data.Collections.Invitations;
 using Stubbl.Api.Data.Collections.Logs;
 using Stubbl.Api.Data.Collections.Migrations;
@@ -44,7 +42,6 @@ namespace Stubbl.Api.Data
                 .SingleInstance()
                 .AsImplementedInterfaces();
 
-            extended.AddMongoCollection<DefaultRole>(CollectionNames.DefaultRoles);
             extended.AddMongoCollection<Invitation>(CollectionNames.Invitations);
             extended.AddMongoCollection<Log>(CollectionNames.Logs);
             extended.AddMongoCollection<User>(CollectionNames.Users);

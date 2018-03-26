@@ -12,7 +12,7 @@ namespace Gunnsoft.Api.ExceptionHandlers.AuthenticatedUserNotFound.Version1
         {
             var response = new AuthenticatedUserNotFoundResponse();
 
-            await context.Response.WriteJsonAsync(HttpStatusCode.Unauthorized, response,
+            await context.Response.WriteJsonAsync(HttpStatusCode.Forbidden, response,
                 JsonConstants.JsonSerializerSettings);
         }
     }

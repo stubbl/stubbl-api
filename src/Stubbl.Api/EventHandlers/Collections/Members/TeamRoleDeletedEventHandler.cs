@@ -34,7 +34,7 @@ namespace Stubbl.Api.EventHandlers.Collections.Members
             {
                 var userRole = await _teamsCollection.Find(t => t.Id == @event.TeamId)
                     .Project(t =>
-                        t.Roles.Single(r => r.Name.ToLower() == DefaultRoleNames.User.ToLower() && r.IsDefault))
+                        t.Roles.Single(r => r.Name.ToLower() == DefaultRoles.User.Name.ToLower() && r.IsDefault))
                     .SingleAsync(cancellationToken);
 
                 var team = user.Teams.Single(t => t.Id == @event.TeamId);

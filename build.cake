@@ -52,7 +52,7 @@ Task("Test")
             {
                 StartAndReturnProcess("dotnet", new ProcessSettings
                     {
-                        Arguments = $"test {filePath} --configuration {configuration} --logger:nunit --no-build --no-restore"
+                        Arguments = $"test {filePath} --configuration {configuration} --no-build --no-restore"
                     })
                     .WaitForExit();
             }
