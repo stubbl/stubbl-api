@@ -1,4 +1,6 @@
-﻿namespace FluentValidation.Validators.ObjectId
+﻿using FluentValidation.Validators;
+
+namespace Gunnsoft.Api.FluentValidation.Validators
 {
     public class ObjectIdValidator : PropertyValidator
     {

@@ -1,5 +1,5 @@
 using FluentValidation;
-using FluentValidation.Validators.ObjectId;
+using Gunnsoft.Api.FluentValidation.Validators;
 
 namespace Stubbl.Api.Models.CreateTeamInvitation.Version1
 {

@@ -14,7 +14,6 @@ using Gunnsoft.Api.Middleware;
 using Gunnsoft.Api.Versioning;
 using Gunnsoft.CloudflareApi;
 using Gunnsoft.Common.Microsoft.WindowsAzure.Storage;
-using Gunnsoft.Cqs;
 using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Events;
 using Gunnsoft.Cqs.Queries;

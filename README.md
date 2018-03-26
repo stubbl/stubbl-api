@@ -6,12 +6,13 @@
 
 | Name | Method | URL |
 | ---- | ------ | --- |
-| **Misc** |
-| Ping | `GET` | `/ping` |
+| **Health** |
 | Canary | `GET` | `/canary` |
+| Ping | `GET` | `/ping` |
 | **Authenticated User** |
 | Find Authenticated User | `GET`  | `/user/find` |
 | Update Authenticated User | `POST` | `/user/update` |
+| **Authenticated User Invitations** |
 | Count Authenticated User Invitations | `GET` | `/user/invitations/count` |
 | List Authenticated User Invitations | `GET` | `/user/invitations/list` |
 | Accept Authenticated User Invitation | `POST` | `/user/invitations/:invitationId/accept` |
@@ -58,3 +59,13 @@
 | **Permissions** |
 | Count Permissions | `GET` | `/permissions/count` |
 | List Permissions | `GET` | `/permissions/list` |
+
+## Development
+
+You will need:
+
+- MongoDB
+- Storage Emulator
+- Visual Studio ran as an Administrator (to allow for subdomains via [xip.io](http://xip.io))
+
+The Stubbl API is secured by Identity Server, but you can bypass this during development by specifying a `X-Sub` header with a value corresponding the a user stored in MongoDB, which will be prepopulated with test data (e.g. `X-Sub: 1`). [Swagger](http://stubblapi.127.0.0.1.xip.io/swagger/) also supports the ability to specify the sub header.
