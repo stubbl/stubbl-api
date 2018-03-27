@@ -12,7 +12,7 @@ namespace Stubbl.Api.IntegrationTests.Filters.Version1
         private readonly string _path;
 
         public WhenSendingMalformedJson(HttpMethod httpMethod, string path)
-            : base(1, HttpStatusCode.BadRequest, null)
+            : base(1, HttpStatusCode.BadRequest)
         {
             _httpMethod = httpMethod;
             _path = path;

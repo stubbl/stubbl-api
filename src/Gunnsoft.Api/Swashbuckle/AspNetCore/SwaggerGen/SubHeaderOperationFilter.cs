@@ -9,7 +9,8 @@ namespace Swashbuckle.AspNetCore.SwaggerGen
     {
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            if (context.ApiDescription.ControllerAttributes().SingleOrDefault(a => a is AllowAnonymousAttribute) != null)
+            if (context.ApiDescription.ControllerAttributes().SingleOrDefault(a => a is AllowAnonymousAttribute) !=
+                null)
             {
                 return;
             }

@@ -22,8 +22,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(CreateTeamRoleResponse), 201)]
-        [SwaggerOperation(Tags = new[] { "Team Roles" })]
+        [ProducesResponseType(typeof(object), 204)]
+        [SwaggerOperation(Tags = new[] {"Team Roles"})]
         [ValidateModelState]
         public async Task<IActionResult> DeleteTeamRole([FromRoute] string teamId, [FromRoute] string roleId,
             CancellationToken cancellationToken)

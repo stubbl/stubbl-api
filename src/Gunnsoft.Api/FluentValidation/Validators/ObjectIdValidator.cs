@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Validators;
+using MongoDB.Bson;
 
 namespace Gunnsoft.Api.FluentValidation.Validators
 {
@@ -13,7 +14,7 @@ namespace Gunnsoft.Api.FluentValidation.Validators
         {
             var value = context.PropertyValue;
 
-            return value != null && MongoDB.Bson.ObjectId.TryParse(value.ToString(), out MongoDB.Bson.ObjectId _);
+            return value != null && ObjectId.TryParse(value.ToString(), out ObjectId _);
         }
     }
 }

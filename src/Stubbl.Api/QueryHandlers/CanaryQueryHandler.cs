@@ -40,11 +40,10 @@ namespace Stubbl.Api.QueryHandlers
 
             try
             {
-
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}",
+                await database.RunCommandAsync((Command<BsonDocument>) "{ping:1}",
                     cancellationToken: cancellationToken);
 
                 stopwatch.Stop();
@@ -67,7 +66,6 @@ namespace Stubbl.Api.QueryHandlers
 
             try
             {
-
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
@@ -80,7 +78,8 @@ namespace Stubbl.Api.QueryHandlers
 
                 var elapsed = stopwatch.Elapsed.TotalMilliseconds;
 
-                storageAccountStatus = elapsed < 1000 ? ComponentStatus.Operational : ComponentStatus.DegradedPerformance;
+                storageAccountStatus =
+                    elapsed < 1000 ? ComponentStatus.Operational : ComponentStatus.DegradedPerformance;
             }
             catch
             {

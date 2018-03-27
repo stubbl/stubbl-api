@@ -10,7 +10,8 @@ namespace Stubbl.Api
     {
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            if (context.ApiDescription.ControllerAttributes().SingleOrDefault(a => a is AllowAnonymousAttribute) != null)
+            if (context.ApiDescription.ControllerAttributes().SingleOrDefault(a => a is AllowAnonymousAttribute) !=
+                null)
             {
                 return;
             }
@@ -19,7 +20,7 @@ namespace Stubbl.Api
             {
                 new Dictionary<string, IEnumerable<string>>
                 {
-                    { "oauth2", new[] { "stubbl-api" }}
+                    {"oauth2", new[] {"stubbl-api"}}
                 }
             };
         }

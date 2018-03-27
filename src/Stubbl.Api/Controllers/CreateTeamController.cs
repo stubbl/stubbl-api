@@ -22,7 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CreateTeamResponse), 201)]
-        [SwaggerOperation(Tags = new[] { "Teams" })]
+        [SwaggerOperation(Tags = new[] {"Teams"})]
         [ValidateModelState]
         public async Task<IActionResult> CreateTeam([FromBody] CreateTeamRequest request,
             CancellationToken cancellationToken)

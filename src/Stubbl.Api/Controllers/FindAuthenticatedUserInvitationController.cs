@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(FindAuthenticatedUserInvitationProjection), 200)]
-        [SwaggerOperation(Tags = new[] { "Authenticated User Invitations" })]
+        [SwaggerOperation(Tags = new[] {"Authenticated User Invitations"})]
         public async Task<IActionResult> FindAuthenticatedUserInvitation([FromRoute] string invitationId,
             CancellationToken cancellationToken)
         {

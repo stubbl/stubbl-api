@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<Invitation>), 200)]
-        [SwaggerOperation(Tags = new[] { "Authenticated User Invitations" })]
+        [SwaggerOperation(Tags = new[] {"Authenticated User Invitations"})]
         public async Task<IActionResult> ListAuthenticatedUserInvitations(CancellationToken cancellationToken)
         {
             var query = new ListAuthenticatedUserInvitationsQuery();

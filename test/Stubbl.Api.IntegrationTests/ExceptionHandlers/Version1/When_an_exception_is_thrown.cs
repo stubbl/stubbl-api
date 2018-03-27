@@ -19,6 +19,7 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
                 .Throws(exception);
         }
 
-        protected override HttpRequestMessage RequestMessage => new HttpRequestMessage(HttpMethod.Get, "/canary?secret=secret");
+        protected override HttpRequestMessage RequestMessage =>
+            new HttpRequestMessage(HttpMethod.Get, "/canary?secret=secret");
     }
 }

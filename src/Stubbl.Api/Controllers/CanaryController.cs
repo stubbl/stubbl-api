@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Gunnsoft.Cqs.Queries;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Stubbl.Api.Options;
@@ -28,7 +27,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(CanaryProjection), 200)]
-        [SwaggerOperation(Tags = new[] { "Health" })]
+        [SwaggerOperation(Tags = new[] {"Health"})]
         public async Task<IActionResult> Canary([FromQuery] string secret, CancellationToken cancellationToken)
         {
             if (_stubblApiOptions.ApiKey == null

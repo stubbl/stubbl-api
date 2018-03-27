@@ -22,7 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<Log>), 200)]
-        [SwaggerOperation(Tags = new[] { "Team Logs" })]
+        [SwaggerOperation(Tags = new[] {"Team Logs"})]
         public async Task<IActionResult> ListTeamLogs([FromRoute] string teamId,
             [FromQuery] IReadOnlyCollection<string> stubId,
             [FromQuery] int? pageNumber, [FromQuery] int? pageSize, CancellationToken cancellationToken)

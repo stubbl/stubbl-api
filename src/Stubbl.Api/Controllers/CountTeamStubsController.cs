@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(CountTeamStubsProjection), 200)]
-        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
+        [SwaggerOperation(Tags = new[] {"Team Stubs"})]
         public async Task<IActionResult> CountTeamStubs([FromRoute] string teamId, CancellationToken cancellationToken)
         {
             var query = new CountTeamStubsQuery

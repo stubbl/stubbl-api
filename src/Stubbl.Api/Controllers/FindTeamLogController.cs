@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(FindTeamLogProjection), 200)]
-        [SwaggerOperation(Tags = new[] { "Team Logs" })]
+        [SwaggerOperation(Tags = new[] {"Team Logs"})]
         public async Task<IActionResult> FindTeamLog([FromRoute] string teamId, [FromRoute] string logId,
             CancellationToken cancellationToken)
         {

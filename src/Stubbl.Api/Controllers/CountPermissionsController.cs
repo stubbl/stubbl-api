@@ -20,7 +20,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(CountPermissionsProjection), 200)]
-        [SwaggerOperation(Tags = new[] { "Permissions" })]
+        [SwaggerOperation(Tags = new[] {"Permissions"})]
         public async Task<IActionResult> CountPermissions(CancellationToken cancellationToken)
         {
             var query = new CountPermissionsQuery();

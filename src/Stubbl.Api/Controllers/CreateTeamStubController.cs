@@ -25,7 +25,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CreateTeamStubResponse), 201)]
-        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
+        [SwaggerOperation(Tags = new[] {"Team Stubs"})]
         [ValidateModelState]
         public async Task<IActionResult> CreateTeamStub([FromRoute] string teamId,
             [FromBody] CreateTeamStubRequest request, CancellationToken cancellationToken)

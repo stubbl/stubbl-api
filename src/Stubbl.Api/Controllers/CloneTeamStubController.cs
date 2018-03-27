@@ -23,7 +23,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CloneTeamStubResponse), 201)]
-        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
+        [SwaggerOperation(Tags = new[] {"Team Stubs"})]
         [ValidateModelState]
         public async Task<IActionResult> CloneTeamStub([FromRoute] string teamId, [FromRoute] string stubId,
             [FromBody] CloneTeamStubRequest request,

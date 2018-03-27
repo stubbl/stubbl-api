@@ -22,7 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
-        [SwaggerOperation(Tags = new[] { "Authenticated User Invitations" })]
+        [SwaggerOperation(Tags = new[] {"Authenticated User Invitations"})]
         [ValidateModelState]
         public async Task<IActionResult> AcceptAuthenticatedUserInvitation([FromRoute] string invitationId,
             CancellationToken cancellationToken)

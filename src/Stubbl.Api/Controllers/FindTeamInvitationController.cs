@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(FindTeamInvitationProjection), 200)]
-        [SwaggerOperation(Tags = new[] { "Team Invitations" })]
+        [SwaggerOperation(Tags = new[] {"Team Invitations"})]
         public async Task<IActionResult> FindTeamInvitation([FromRoute] string teamId, [FromRoute] string invitationId,
             CancellationToken cancellationToken)
         {

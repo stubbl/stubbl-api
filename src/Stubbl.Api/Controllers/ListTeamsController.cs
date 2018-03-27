@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<Team>), 200)]
-        [SwaggerOperation(Tags = new[] { "Teams" })]
+        [SwaggerOperation(Tags = new[] {"Teams"})]
         public async Task<IActionResult> ListTeams(CancellationToken cancellationToken)
         {
             var query = new ListTeamsQuery();

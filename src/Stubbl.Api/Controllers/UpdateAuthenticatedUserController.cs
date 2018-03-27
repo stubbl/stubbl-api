@@ -22,7 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
-        [SwaggerOperation(Tags = new[] { "Authenticated User" })]
+        [SwaggerOperation(Tags = new[] {"Authenticated User"})]
         [ValidateModelState]
         public async Task<IActionResult> UpdateAuthenticatedUser([FromBody] UpdateAuthenticatedUserRequest request,
             CancellationToken cancellationToken)

@@ -6,11 +6,10 @@ using MongoDB.Driver;
 using Stubbl.Api.Authentication;
 using Stubbl.Api.Commands.UpdateTeam.Version1;
 using Stubbl.Api.Data.Collections.Shared;
-using Stubbl.Api.Data.Collections.Users;
+using Stubbl.Api.Data.Collections.Teams;
 using Stubbl.Api.Events.TeamUpdated.Version1;
 using Stubbl.Api.Exceptions.MemberCannotManageTeams.Version1;
 using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
-using Team = Stubbl.Api.Data.Collections.Teams.Team;
 
 namespace Stubbl.Api.CommandHandlers
 {

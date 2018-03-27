@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(FindTeamRoleProjection), 200)]
-        [SwaggerOperation(Tags = new[] { "Team Roles" })]
+        [SwaggerOperation(Tags = new[] {"Team Roles"})]
         public async Task<IActionResult> FindTeamRole([FromRoute] string teamId, [FromRoute] string roleId,
             CancellationToken cancellationToken)
         {

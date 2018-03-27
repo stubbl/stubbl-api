@@ -22,7 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<Invitation>), 200)]
-        [SwaggerOperation(Tags = new[] { "Team Invitations" })]
+        [SwaggerOperation(Tags = new[] {"Team Invitations"})]
         public async Task<IActionResult> ListTeamInvitations([FromRoute] string teamId,
             CancellationToken cancellationToken)
         {

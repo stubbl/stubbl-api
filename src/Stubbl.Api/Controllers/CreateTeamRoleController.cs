@@ -26,7 +26,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CreateTeamRoleResponse), 201)]
-        [SwaggerOperation(Tags = new[] { "Team Roles" })]
+        [SwaggerOperation(Tags = new[] {"Team Roles"})]
         [ValidateModelState]
         public async Task<IActionResult> CreateTeamRole([FromRoute] string teamId,
             [FromBody] CreateTeamRoleRequest request, CancellationToken cancellationToken)

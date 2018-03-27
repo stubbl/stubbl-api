@@ -20,7 +20,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(object), 200)]
-        [SwaggerOperation(Tags = new[] { "Health" })]
+        [SwaggerOperation(Tags = new[] {"Health"})]
         public IActionResult Ping([FromQuery] string secret)
         {
             if (_stubblApiOptions.ApiKey == null

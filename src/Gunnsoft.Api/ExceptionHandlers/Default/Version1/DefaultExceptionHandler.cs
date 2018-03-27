@@ -4,6 +4,7 @@ using Gunnsoft.Api.Models.Error.Version1;
 using Gunnsoft.Api.Models.Exception.Version1;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Exception = System.Exception;
 
 namespace Gunnsoft.Api.ExceptionHandlers.Default.Version1
 {
@@ -16,7 +17,7 @@ namespace Gunnsoft.Api.ExceptionHandlers.Default.Version1
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public async Task HandleAsync(HttpContext context, System.Exception exception)
+        public async Task HandleAsync(HttpContext context, Exception exception)
         {
             ErrorResponse response;
 
@@ -24,7 +25,7 @@ namespace Gunnsoft.Api.ExceptionHandlers.Default.Version1
             {
                 response = new ExceptionResponse
                 (
-                    new Exception(exception)
+                    new Models.Exception.Version1.Exception(exception)
                 );
             }
             else

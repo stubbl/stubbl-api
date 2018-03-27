@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
-        [SwaggerOperation(Tags = new[] { "Team Invitations" })]
+        [SwaggerOperation(Tags = new[] {"Team Invitations"})]
         public async Task<IActionResult> ResendTeamInvitation([FromRoute] string teamId,
             [FromRoute] string invitationId,
             CancellationToken cancellationToken)

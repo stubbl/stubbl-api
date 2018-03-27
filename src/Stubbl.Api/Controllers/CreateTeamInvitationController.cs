@@ -22,8 +22,8 @@ namespace Stubbl.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(object), 204)]
-        [SwaggerOperation(Tags = new[] { "Team Invitations" })]
+        [ProducesResponseType(typeof(CreateTeamInvitationResponse), 201)]
+        [SwaggerOperation(Tags = new[] {"Team Invitations"})]
         [ValidateModelState]
         public async Task<IActionResult> CreateTeamInvitation([FromRoute] string teamId, [FromRoute] string roleId,
             [FromBody] CreateTeamInvitationRequest request, CancellationToken cancellationToken)

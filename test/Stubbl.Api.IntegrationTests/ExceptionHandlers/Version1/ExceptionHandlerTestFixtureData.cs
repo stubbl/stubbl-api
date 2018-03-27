@@ -57,7 +57,7 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
                 new AuthenticatedUserNotFoundException(null), HttpStatusCode.Forbidden,
                 new AuthenticatedUserNotFoundResponse()
             };
-            yield return new object[] { new Exception(), HttpStatusCode.InternalServerError, new ErrorResponse() };
+            yield return new object[] {new Exception(), HttpStatusCode.InternalServerError, new ErrorResponse()};
             yield return new object[]
             {
                 new InvitationAlreadyUsedException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),

@@ -10,7 +10,7 @@ namespace Gunnsoft.CloudflareApi
             CloudflareApiSettings cloudflareApiSettings)
         {
             extended.Register(cc =>
-                new CloudflareApiHttpClient(cloudflareApiSettings, cc.Resolve<HttpClient>()))
+                    new CloudflareApiHttpClient(cloudflareApiSettings, cc.Resolve<HttpClient>()))
                 .AsSelf()
                 .InstancePerDependency();
             extended.RegisterType<CloudflareApi>()

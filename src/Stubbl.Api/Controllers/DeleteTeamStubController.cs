@@ -21,7 +21,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(object), 204)]
-        [SwaggerOperation(Tags = new[] { "Team Stubs" })]
+        [SwaggerOperation(Tags = new[] {"Team Stubs"})]
         public async Task<IActionResult> DeleteTeamStub([FromRoute] string teamId, [FromRoute] string stubId,
             CancellationToken cancellationToken)
         {

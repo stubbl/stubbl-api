@@ -21,7 +21,8 @@ namespace Stubbl.Api.Data
 
                     if (url.DatabaseName == null)
                     {
-                        throw new ArgumentException("The connection string must contain a database name.", mongoSettings.ConnectionString);
+                        throw new ArgumentException("The connection string must contain a database name.",
+                            mongoSettings.ConnectionString);
                     }
 
                     return url;

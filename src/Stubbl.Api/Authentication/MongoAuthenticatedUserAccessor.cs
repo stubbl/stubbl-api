@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Gunnsoft.Api.Authentication;
 using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Exceptions.UnknownSub.Version1;
@@ -12,8 +11,8 @@ namespace Stubbl.Api.Authentication
 {
     public class MongoAuthenticatedUserAccessor : IAuthenticatedUserAccessor
     {
-        private Lazy<User> _authenticatedUser;
         private readonly Func<User> _authenticatedUserFactory;
+        private Lazy<User> _authenticatedUser;
 
         public MongoAuthenticatedUserAccessor(ICache cache, ICacheKey cacheKey,
             ISubAccessor subAccessor, IMongoCollection<User> usersCollection)

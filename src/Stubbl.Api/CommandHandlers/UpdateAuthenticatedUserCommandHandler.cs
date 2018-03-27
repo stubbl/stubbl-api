@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Cqs.Commands;
@@ -13,7 +12,7 @@ using Stubbl.Api.Exceptions.EmailAdressAlreadyUsed.Version1;
 namespace Stubbl.Api.CommandHandlers
 {
     public class
-            UpdateAuthenticatedUserCommandHandler : ICommandHandler<UpdateAuthenticatedUserCommand,
+        UpdateAuthenticatedUserCommandHandler : ICommandHandler<UpdateAuthenticatedUserCommand,
             AuthenticatedUserUpdatedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
@@ -33,7 +32,9 @@ namespace Stubbl.Api.CommandHandlers
             {
                 var authenticatedUserId = _authenticatedUserAccessor.AuthenticatedUser.Id;
 
-                if (await _usersCollection.CountAsync(u => u.Id != authenticatedUserId && u.EmailAddress == command.EmailAddress, cancellationToken: cancellationToken) > 0)
+                if (await _usersCollection.CountAsync(
+                        u => u.Id != authenticatedUserId && u.EmailAddress == command.EmailAddress,
+                        cancellationToken: cancellationToken) > 0)
                 {
                     throw new EmailAddressAlreadyTakenException
                     (
@@ -49,7 +50,8 @@ namespace Stubbl.Api.CommandHandlers
             }
             catch (AuthenticatedUserNotFoundException exception)
             {
-                if (await _usersCollection.CountAsync(u => u.EmailAddress == command.EmailAddress, cancellationToken: cancellationToken) > 0)
+                if (await _usersCollection.CountAsync(u => u.EmailAddress == command.EmailAddress,
+                        cancellationToken: cancellationToken) > 0)
                 {
                     throw new EmailAddressAlreadyTakenException
                     (

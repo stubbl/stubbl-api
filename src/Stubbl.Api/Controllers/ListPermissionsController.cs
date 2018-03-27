@@ -22,7 +22,7 @@ namespace Stubbl.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<Permission>), 200)]
-        [SwaggerOperation(Tags = new[] { "Permissions" })]
+        [SwaggerOperation(Tags = new[] {"Permissions"})]
         public async Task<IActionResult> ListPermissions(CancellationToken cancellationToken)
         {
             var query = new ListPermissionsQuery();

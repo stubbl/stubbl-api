@@ -181,7 +181,7 @@ namespace Gunnsoft.Api.Middleware.JsonExceptions
                 );
             }
 
-            var version = context.GetRequestedApiVersion()?.MajorVersion ?? (int)Versions.Latest;
+            var version = context.GetRequestedApiVersion()?.MajorVersion ?? (int) Versions.Latest;
 
             IDefaultExceptionHandler defaultExceptionHandler;
 

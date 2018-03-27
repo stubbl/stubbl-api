@@ -107,6 +107,8 @@ namespace Stubbl.Api
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
+
             services.AddApiVersioning(o =>
             {
                 o.ApiVersionReader = new AcceptHeaderApiVersionReader();
@@ -118,7 +120,7 @@ namespace Stubbl.Api
                 .AddIdentityServerAuthentication(o =>
                 {
                     o.ApiName = "stubbl-api";
-                    o.Authority = _configuration.GetValue<string>("IdentityServer:Authority");
+                    o.Authority = identityServerAuthority;
                     o.RequireHttpsMetadata = _hostingEnvironment.IsProduction();
                 });
 
@@ -161,15 +163,13 @@ namespace Stubbl.Api
             {
                 if (_hostingEnvironment.IsProduction())
                 {
-                    var identityServerAuthority = _configuration.GetValue<string>("IdentityServer:Authority");
-
                     o.AddSecurityDefinition("Swagger", new OAuth2Scheme
                     {
                         AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
                         Flow = "implicit",
                         Scopes = new Dictionary<string, string>
                         {
-                            { "stubbl-api", "Stubbl API" }
+                            {"stubbl-api", "Stubbl API"}
                         },
                         TokenUrl = $"{identityServerAuthority}/connect/token",
                         Type = "oauth2"
@@ -178,7 +178,6 @@ namespace Stubbl.Api
 
                 o.CustomSchemaIds(x => x.FullName);
                 o.DescribeAllEnumsAsStrings();
-                o.DocumentFilter<LowercaseDocumentOperationFilter>();
                 o.OperationFilter<AuthorizeOperationFilter>();
                 o.OperationFilter<CancellationTokenOperationFilter>();
 

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,7 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Stubbl.Api.Data.Collections.Stubs;
+using Stubbl.Api.Data.Collections.Teams;
 using Stubbl.Api.Data.Collections.Users;
+using Role = Stubbl.Api.Data.Collections.Users.Role;
 using Team = Stubbl.Api.Data.Collections.Teams.Team;
 
 namespace Stubbl.Api.Data.Migrations
@@ -18,7 +19,8 @@ namespace Stubbl.Api.Data.Migrations
         private readonly IMongoCollection<Team> _teamsCollection;
         private readonly IMongoCollection<User> _usersCollection;
 
-        public _000000000000000000000003_CreateSeedData(IHostingEnvironment hostingEnvironment, IMongoCollection<Stub> stubsCollection,
+        public _000000000000000000000003_CreateSeedData(IHostingEnvironment hostingEnvironment,
+            IMongoCollection<Stub> stubsCollection,
             IMongoCollection<Team> teamsCollection, IMongoCollection<User> usersCollection)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -74,7 +76,7 @@ namespace Stubbl.Api.Data.Migrations
                 Name = user.Teams.First().Name,
                 Members = new[]
                 {
-                    new Collections.Teams.Member
+                    new Member
                     {
                         Id = user.Id,
                         Name = user.Name,

@@ -7,7 +7,6 @@ using Stubbl.Api.Authentication;
 using Stubbl.Api.Data.Collections.Users;
 using Stubbl.Api.Events.Shared.Version1;
 using Stubbl.Api.Events.TeamCreated.Version1;
-using User = Stubbl.Api.Data.Collections.Users.User;
 using Role = Stubbl.Api.Data.Collections.Users.Role;
 
 namespace Stubbl.Api.EventHandlers.Collections.Members

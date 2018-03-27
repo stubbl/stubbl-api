@@ -11,7 +11,8 @@ using Team = Stubbl.Api.Data.Collections.Users.Team;
 
 namespace Stubbl.Api.EventHandlers.Collections.Members
 {
-    public class AuthenticatedUserInvitationAcceptedEventHandler : IEventHandler<AuthenticatedUserInvitationAcceptedEvent>
+    public class
+        AuthenticatedUserInvitationAcceptedEventHandler : IEventHandler<AuthenticatedUserInvitationAcceptedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
         private readonly IMongoCollection<Invitation> _invitationsCollection;
