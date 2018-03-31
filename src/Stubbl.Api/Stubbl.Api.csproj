@@ -15,6 +15,10 @@
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
+    <PackageReference Include="Gunnsoft.Api" Version="0.1.2" />
+    <PackageReference Include="Gunnsoft.CloudflareApi" Version="0.1.0" />
+    <PackageReference Include="Gunnsoft.Common" Version="0.1.3" />
+    <PackageReference Include="Gunnsoft.Cqs" Version="0.1.2" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.4.0" />
     <PackageReference Include="MailKit" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
@@ -40,13 +44,6 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Gunnsoft.Api\Gunnsoft.Api.csproj" />
-    <ProjectReference Include="..\Gunnsoft.CloudflareApi\Gunnsoft.CloudflareApi.csproj" />
-    <ProjectReference Include="..\Gunnsoft.Common\Gunnsoft.Common.csproj" />
-    <ProjectReference Include="..\Gunnsoft.Cqs\Gunnsoft.Cqs.csproj" />
   </ItemGroup>
 
   <ItemGroup>

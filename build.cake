@@ -1,7 +1,5 @@
 var target = Argument("target", "Default");
-
 var configuration = Argument("configuration", EnvironmentVariable("CONFIGURATION") ?? "Release");
-
 var artifactsDirectory = @".\artifacts";
 
 Task("Clean")

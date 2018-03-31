@@ -24,14 +24,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stubbl.Api", "src\Stubbl.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stubbl.Api.IntegrationTests", "test\Stubbl.Api.IntegrationTests\Stubbl.Api.IntegrationTests.csproj", "{0A8C337C-F36F-47B8-B271-F187AACCBC19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gunnsoft.Api", "src\Gunnsoft.Api\Gunnsoft.Api.csproj", "{0A0AD633-FD44-4268-BEB4-EA0174705A7A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gunnsoft.Common", "src\Gunnsoft.Common\Gunnsoft.Common.csproj", "{206781DA-046D-45A5-8A04-CE47D327EB89}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gunnsoft.Cqs", "src\Gunnsoft.Cqs\Gunnsoft.Cqs.csproj", "{6E771CCC-DB26-4C6A-8989-8DAC9D200F78}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gunnsoft.CloudflareApi", "src\Gunnsoft.CloudflareApi\Gunnsoft.CloudflareApi.csproj", "{73EDDF57-F156-4B63-A0FA-2C9B84FFDA5A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,22 +38,6 @@ Global
 		{0A8C337C-F36F-47B8-B271-F187AACCBC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A8C337C-F36F-47B8-B271-F187AACCBC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A8C337C-F36F-47B8-B271-F187AACCBC19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A0AD633-FD44-4268-BEB4-EA0174705A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A0AD633-FD44-4268-BEB4-EA0174705A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A0AD633-FD44-4268-BEB4-EA0174705A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A0AD633-FD44-4268-BEB4-EA0174705A7A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{206781DA-046D-45A5-8A04-CE47D327EB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{206781DA-046D-45A5-8A04-CE47D327EB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{206781DA-046D-45A5-8A04-CE47D327EB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{206781DA-046D-45A5-8A04-CE47D327EB89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E771CCC-DB26-4C6A-8989-8DAC9D200F78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E771CCC-DB26-4C6A-8989-8DAC9D200F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E771CCC-DB26-4C6A-8989-8DAC9D200F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E771CCC-DB26-4C6A-8989-8DAC9D200F78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73EDDF57-F156-4B63-A0FA-2C9B84FFDA5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73EDDF57-F156-4B63-A0FA-2C9B84FFDA5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73EDDF57-F156-4B63-A0FA-2C9B84FFDA5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73EDDF57-F156-4B63-A0FA-2C9B84FFDA5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,10 +45,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{01DFAD15-BF16-4D31-8066-7B16387FCBF2} = {94F88EF1-D61D-4F51-BB8F-47ABC1410BF7}
 		{0A8C337C-F36F-47B8-B271-F187AACCBC19} = {A667CEA3-B42F-4F90-B92B-006C351FE87E}
-		{0A0AD633-FD44-4268-BEB4-EA0174705A7A} = {94F88EF1-D61D-4F51-BB8F-47ABC1410BF7}
-		{206781DA-046D-45A5-8A04-CE47D327EB89} = {94F88EF1-D61D-4F51-BB8F-47ABC1410BF7}
-		{6E771CCC-DB26-4C6A-8989-8DAC9D200F78} = {94F88EF1-D61D-4F51-BB8F-47ABC1410BF7}
-		{73EDDF57-F156-4B63-A0FA-2C9B84FFDA5A} = {94F88EF1-D61D-4F51-BB8F-47ABC1410BF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {088E6B8B-9B44-42CC-9794-13A7795D86DA}

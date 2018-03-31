@@ -13,7 +13,7 @@ namespace Stubbl.Api.Data.Collections.Teams
 
         public ObjectId Id { get; set; }
         public IReadOnlyCollection<Member> Members { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; }    
         public IReadOnlyCollection<Role> Roles { get; set; }
     }
 }
