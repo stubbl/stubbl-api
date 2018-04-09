@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Gunnsoft.Api.Authentication;
 using Gunnsoft.Api.Exceptions.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Exceptions.UnknownSub.Version1;
@@ -15,26 +17,28 @@ namespace Stubbl.Api.Authentication
         private Lazy<User> _authenticatedUser;
 
         public MongoAuthenticatedUserAccessor(ICache cache, ICacheKey cacheKey,
-            ISubAccessor subAccessor, IMongoCollection<User> usersCollection)
+            IReadOnlyCollection<ISubAccessor> subAccessors, IMongoCollection<User> usersCollection)
         {
             _authenticatedUserFactory = () =>
             {
-                if (subAccessor.Sub == null)
+                var sub = subAccessors.FirstOrDefault(sa => sa.Sub != null)?.Sub;
+
+                if (sub == null)
                 {
                     throw new UnknownSubException();
                 }
 
                 var user = cache.GetOrSet
                 (
-                    cacheKey.FindAuthenticatedUser(subAccessor.Sub),
-                    () => usersCollection.Find(m => m.Sub == subAccessor.Sub)
+                    cacheKey.FindAuthenticatedUser(sub),
+                    () => usersCollection.Find(m => m.Sub == sub)
                         .SortByDescending(u => u.Id)
                         .FirstOrDefault()
                 );
 
                 if (user == null)
                 {
-                    throw new AuthenticatedUserNotFoundException(subAccessor.Sub);
+                    throw new AuthenticatedUserNotFoundException(sub);
                 }
 
                 return user;

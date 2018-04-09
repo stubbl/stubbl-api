@@ -161,20 +161,17 @@ namespace Stubbl.Api
 
             services.AddSwaggerGen(o =>
             {
-                if (_hostingEnvironment.IsProduction())
+                o.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
-                    o.AddSecurityDefinition("Swagger", new OAuth2Scheme
-                    {
-                        AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
-                        Flow = "implicit",
-                        Scopes = new Dictionary<string, string>
+                    AuthorizationUrl = $"{identityServerAuthority}/connect/authorize",
+                    Flow = "implicit",
+                    Scopes = new Dictionary<string, string>
                         {
                             {"stubbl-api", "Stubbl API"}
                         },
-                        TokenUrl = $"{identityServerAuthority}/connect/token",
-                        Type = "oauth2"
-                    });
-                }
+                    TokenUrl = $"{identityServerAuthority}/connect/token",
+                    Type = "oauth2"
+                });
 
                 o.CustomSchemaIds(x => x.FullName);
                 o.DescribeAllEnumsAsStrings();
