@@ -208,6 +208,7 @@ namespace Stubbl.Api
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.AddCaching()
+                .AddClaimsSubAccessor()
                 .AddCloudflareApi(new CloudflareApiSettings
                 (
                     _configuration.GetValue<string>("CloudflareApi:BaseUrl"),
@@ -221,6 +222,7 @@ namespace Stubbl.Api
                 .AddEventHandlerDecorators()
                 .AddEventHandlers()
                 .AddExceptionHandlers()
+                .AddHeaderSubAccessor()
                 .AddMongo(new MongoSettings
                 (
                     _configuration.GetValue<string>("MongoDB:ConnectionString")
@@ -229,8 +231,7 @@ namespace Stubbl.Api
                 .AddQueryDispatcher()
                 .AddQueryHandlerDecorators()
                 .AddQueryHandlers()
-                .AddStorageAccount(_configuration.GetValue<string>("StorageAccount:ConnectionString"))
-                .AddSubAccessor();
+                .AddStorageAccount(_configuration.GetValue<string>("StorageAccount:ConnectionString"));
 
             containerBuilder.RegisterAssemblyModules(s_assembly);
             containerBuilder.Populate(services);
