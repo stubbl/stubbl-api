@@ -12,13 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Autofac" Version="4.7.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
     <PackageReference Include="Gunnsoft.Api" Version="3.0.0" />
     <PackageReference Include="Gunnsoft.CloudflareApi" Version="0.1.4" />
     <PackageReference Include="Gunnsoft.Common" Version="0.1.8" />
-    <PackageReference Include="Gunnsoft.Cqs" Version="0.1.2" />
+    <PackageReference Include="Gunnsoft.Cqs" Version="0.1.11" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.5.0" />
     <PackageReference Include="MailKit" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
