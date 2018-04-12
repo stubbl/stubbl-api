@@ -89,7 +89,7 @@ namespace Stubbl.Api.CommandHandlers
             {
                 throw new MemberAlreadyInvitedToTeamException
                 (
-                    user.Id,
+                    command.EmailAddress,
                     team.Id
                 );
             }

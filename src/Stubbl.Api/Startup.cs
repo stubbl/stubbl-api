@@ -36,6 +36,7 @@ using Stubbl.Api.Caching;
 using Stubbl.Api.Data;
 using Stubbl.Api.Middleware;
 using Stubbl.Api.Options;
+using Stubbl.Api.Services.EmailSender;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -232,6 +233,10 @@ namespace Stubbl.Api
                 .AddQueryHandlerDecorators()
                 .AddQueryHandlers()
                 .AddStorageAccount(_configuration.GetValue<string>("StorageAccount:ConnectionString"));
+
+            containerBuilder.RegisterType<EmailSender>()
+                .As<IEmailSender>()
+                .SingleInstance();
 
             containerBuilder.RegisterAssemblyModules(s_assembly);
             containerBuilder.Populate(services);

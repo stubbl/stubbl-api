@@ -2,31 +2,39 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Commands;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Stubbl.Api.Commands.SendEmail.Version1;
-using Stubbl.Api.Events.EmailSent.Version1;
+using MimeKit;
 
-namespace Stubbl.Api.CommandHandlers
+namespace Stubbl.Api.Services.EmailSender
 {
-    public class SendEmailCommandHandler : ICommandHandler<SendEmailCommand, EmailSentEvent>
+    public class EmailSender : IEmailSender
     {
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public SendEmailCommandHandler(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        public EmailSender(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
         }
-
-        public async Task<EmailSentEvent> HandleAsync(SendEmailCommand command, CancellationToken cancellationToken)
+        public async Task SendEmailAsync(IEmail email, CancellationToken cancellationToken)
         {
+            throw new Exception();
+
+            var message = new MimeMessage();
+            message.From.AddRange(email.From);
+            message.To.AddRange(email.To);
+            message.Subject = email.Subject;
+            message.Body = new TextPart("html")
+            {
+                Text = email.Body
+            };
+
             if (_hostingEnvironment.IsDevelopment())
             {
-                command.Email.Message.WriteTo(Path.Combine(AppContext.BaseDirectory, $"{Guid.NewGuid()}.eml"));
+                await message.WriteToAsync(Path.Combine(AppContext.BaseDirectory, $"{message.To}-{DateTime.UtcNow:yyyy-MM-ddThh-mm-ss}.eml"), cancellationToken);
             }
             else
             {
@@ -41,15 +49,10 @@ namespace Stubbl.Api.CommandHandlers
                     await smtpClient.ConnectAsync(host, port, cancellationToken: cancellationToken);
                     smtpClient.Authenticate(username, password, cancellationToken);
 
-                    await smtpClient.SendAsync(command.Email.Message, cancellationToken);
+                    await smtpClient.SendAsync(message, cancellationToken);
                     await smtpClient.DisconnectAsync(true, cancellationToken);
                 }
             }
-
-            return new EmailSentEvent
-            (
-                command.Email.Message
-            );
         }
     }
 }

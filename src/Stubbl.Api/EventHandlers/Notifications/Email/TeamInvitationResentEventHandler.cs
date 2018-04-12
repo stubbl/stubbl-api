@@ -4,10 +4,10 @@ using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
-using Stubbl.Api.Commands.SendEmail.Version1;
 using Stubbl.Api.Data.Collections.Invitations;
 using Stubbl.Api.Events.TeamInvitationResent.Version1;
 using Stubbl.Api.Notifications.Email.TeamInvitation.Version1;
+using Stubbl.Api.Services.EmailSender;
 using Team = Stubbl.Api.Data.Collections.Teams.Team;
 
 namespace Stubbl.Api.EventHandlers.Notifications.Email
@@ -15,16 +15,17 @@ namespace Stubbl.Api.EventHandlers.Notifications.Email
     public class TeamInvitationResentEventHandler : IEventHandler<TeamInvitationResentEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
+        private readonly IEmailSender _emailSender;
         private readonly ICommandDispatcher _commandDispatcher;
         private readonly IMongoCollection<Invitation> _invitationsCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
 
         public TeamInvitationResentEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            ICommandDispatcher commandDispatcher, IMongoCollection<Invitation> invitationsCollection,
+            IEmailSender emailSender, IMongoCollection<Invitation> invitationsCollection,
             IMongoCollection<Team> teamsCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _commandDispatcher = commandDispatcher;
+            _emailSender = emailSender;
             _invitationsCollection = invitationsCollection;
             _teamsCollection = teamsCollection;
         }
@@ -46,12 +47,7 @@ namespace Stubbl.Api.EventHandlers.Notifications.Email
                 @event.InvitationId
             );
 
-            var command = new SendEmailCommand
-            (
-                email
-            );
-
-            await _commandDispatcher.DispatchAsync(command, cancellationToken);
+            await _emailSender.SendEmailAsync(email, cancellationToken);
         }
     }
 }

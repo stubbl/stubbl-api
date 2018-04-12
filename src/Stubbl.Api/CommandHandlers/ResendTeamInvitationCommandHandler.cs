@@ -73,6 +73,8 @@ namespace Stubbl.Api.CommandHandlers
                 );
             }
 
+            // TODO Resend the invitation
+
             return new TeamInvitationResentEvent
             (
                 team.Id,

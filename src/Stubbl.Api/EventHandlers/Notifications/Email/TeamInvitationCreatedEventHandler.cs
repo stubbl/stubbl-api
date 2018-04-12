@@ -4,24 +4,24 @@ using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
-using Stubbl.Api.Commands.SendEmail.Version1;
 using Stubbl.Api.Data.Collections.Teams;
 using Stubbl.Api.Events.TeamInvitationCreated.Version1;
 using Stubbl.Api.Notifications.Email.TeamInvitation.Version1;
+using Stubbl.Api.Services.EmailSender;
 
 namespace Stubbl.Api.EventHandlers.Notifications.Email
 {
     public class TeamInvitationCreatedEventHandler : IEventHandler<TeamInvitationCreatedEvent>
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
-        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IEmailSender _emailSender;
         private readonly IMongoCollection<Team> _teamsCollection;
 
         public TeamInvitationCreatedEventHandler(IAuthenticatedUserAccessor authenticatedUserAccessor,
-            ICommandDispatcher commandDispatcher, IMongoCollection<Team> teamsCollection)
+            IEmailSender emailSender, IMongoCollection<Team> teamsCollection)
         {
             _authenticatedUserAccessor = authenticatedUserAccessor;
-            _commandDispatcher = commandDispatcher;
+            _emailSender = emailSender;
             _teamsCollection = teamsCollection;
         }
 
@@ -38,12 +38,7 @@ namespace Stubbl.Api.EventHandlers.Notifications.Email
                 @event.InvitationId
             );
 
-            var command = new SendEmailCommand
-            (
-                email
-            );
-
-            await _commandDispatcher.DispatchAsync(command, cancellationToken);
+            await _emailSender.SendEmailAsync(email, cancellationToken);
         }
     }
 }

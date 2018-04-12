@@ -80,7 +80,7 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
             };
             yield return new object[]
             {
-                new MemberAlreadyInvitedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
+                new MemberAlreadyInvitedToTeamException(null, ObjectId.GenerateNewId()),
                 HttpStatusCode.Conflict, new MemberAlreadyInvitedToTeamResponse()
             };
             yield return new object[]

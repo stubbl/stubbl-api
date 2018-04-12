@@ -25,13 +25,12 @@ namespace Stubbl.Api.Controllers
         [ProducesResponseType(typeof(CreateTeamInvitationResponse), 201)]
         [SwaggerOperation(Tags = new[] {"Team Invitations"})]
         [ValidateModelState]
-        public async Task<IActionResult> CreateTeamInvitation([FromRoute] string teamId, [FromRoute] string roleId,
-            [FromBody] CreateTeamInvitationRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateTeamInvitation([FromRoute] string teamId, [FromBody] CreateTeamInvitationRequest request, CancellationToken cancellationToken)
         {
             var command = new CreateTeamInvitationCommand
             (
                 ObjectId.Parse(teamId),
-                ObjectId.Parse(roleId),
+                ObjectId.Parse(request.RoleId),
                 request.EmailAddress
             );
 
