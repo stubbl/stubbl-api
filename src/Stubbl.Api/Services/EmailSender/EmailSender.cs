@@ -21,8 +21,6 @@ namespace Stubbl.Api.Services.EmailSender
         }
         public async Task SendEmailAsync(IEmail email, CancellationToken cancellationToken)
         {
-            throw new Exception();
-
             var message = new MimeMessage();
             message.From.AddRange(email.From);
             message.To.AddRange(email.To);
