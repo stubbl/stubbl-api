@@ -117,7 +117,7 @@ namespace Stubbl.Api.Data.Migrations
                 Request = new Request
                 {
                     HttpMethod = "GET",
-                    Path = "stuba"
+                    Path = "/stuba"
                 },
                 Response = new Response
                 {

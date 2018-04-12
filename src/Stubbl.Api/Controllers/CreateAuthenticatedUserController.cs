@@ -3,19 +3,19 @@ using System.Threading.Tasks;
 using Gunnsoft.Api.Filters;
 using Gunnsoft.Cqs.Commands;
 using Microsoft.AspNetCore.Mvc;
-using Stubbl.Api.Commands.UpdateAuthenticatedUser.Version1;
-using Stubbl.Api.Models.UpdateAuthenticatedUser.Version1;
+using Stubbl.Api.Commands.CreateAuthenticatedUser.Version1;
+using Stubbl.Api.Models.CreateAuthenticatedUser.Version1;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stubbl.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("user/update", Name = "UpdateAuthenticatedUser")]
-    public class UpdateAuthenticatedUserController : Controller
+    [Route("user/create", Name = "CreateAuthenticatedUser")]
+    public class CreateAuthenticatedUserController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;
 
-        public UpdateAuthenticatedUserController(ICommandDispatcher commandDispatcher)
+        public CreateAuthenticatedUserController(ICommandDispatcher commandDispatcher)
         {
             _commandDispatcher = commandDispatcher;
         }
@@ -24,10 +24,10 @@ namespace Stubbl.Api.Controllers
         [ProducesResponseType(typeof(object), 204)]
         [SwaggerOperation(Tags = new[] {"Authenticated User"})]
         [ValidateModelState]
-        public async Task<IActionResult> UpdateAuthenticatedUser([FromBody] UpdateAuthenticatedUserRequest request,
+        public async Task<IActionResult> CreateAuthenticatedUser([FromBody] CreateAuthenticatedUserRequest request,
             CancellationToken cancellationToken)
         {
-            var command = new UpdateAuthenticatedUserCommand
+            var command = new CreateAuthenticatedUserCommand
             (
                 request.Name,
                 request.EmailAddress

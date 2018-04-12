@@ -3,7 +3,7 @@ using Stubbl.Api.Middleware.Stub;
 
 namespace Stubbl.Api.Middleware
 {
-    public static class ApplicationBuilderExrensions
+    public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseStub(this IApplicationBuilder extended)
         {

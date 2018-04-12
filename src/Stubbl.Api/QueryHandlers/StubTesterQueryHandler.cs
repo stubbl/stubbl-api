@@ -42,7 +42,6 @@ namespace Stubbl.Api.QueryHandlers
                          && s.Request.Path.ToLower() == query.Request.Path.ToLower()
                          && s.Request.HttpMethod.ToLower() == query.Request.HttpMethod.ToLower()
                          && s.Request.QueryStringParameters.Count == query.Request.QueryStringParameterCount
-                         && s.Request.Headers.Count <= query.Request.HeaderCount
                 )
                 .ToListAsync(cancellationToken);
 

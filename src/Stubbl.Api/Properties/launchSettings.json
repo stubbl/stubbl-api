@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://stubblapi.127.0.0.1.xip.io",
+      "applicationUrl": "http://localhost:38578",
       "sslPort": 0
     }
   },
@@ -18,10 +18,10 @@
     "Stubbl.Api": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://stubblapi.127.0.0.1.xip.io",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "launchUrl": "http://stubblapi.127.0.0.1.xip.io"
+      }
     }
   }
 }

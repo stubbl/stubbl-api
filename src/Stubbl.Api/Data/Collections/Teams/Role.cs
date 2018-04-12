@@ -10,7 +10,6 @@ namespace Stubbl.Api.Data.Collections.Teams
         public ObjectId Id { get; set; }
         public bool IsDefault { get; set; }
         public string Name { get; set; }
-
         [BsonRepresentation(BsonType.String)] public IReadOnlyCollection<Permission> Permissions { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Gunnsoft.Api;
 using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Queries;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
@@ -42,7 +43,7 @@ namespace Stubbl.Api.Middleware.Stub
         public async Task Invoke(HttpContext context)
         {
             var cancellationToken = context?.RequestAborted ?? default(CancellationToken);
-            var teamId = ParseTeamId(context.Request.Host);
+            var teamId = ParseTeamId(context.Request);
 
             if (teamId == null)
             {
@@ -166,8 +167,8 @@ namespace Stubbl.Api.Middleware.Stub
             {
                 var response = new
                 {
-                    Code = "500",
-                    Message = $"{stubs.Count} stubs were found for this request.",
+                    ErrorCode = "MultipleMatchingStubs",
+                    ErrorMessage = $"{stubs.Count} stubs were found for this request.",
                     Stubs = stubs.Select(x => new
                     {
                         x.StubId
@@ -232,8 +233,8 @@ namespace Stubbl.Api.Middleware.Stub
         {
             var response = new
             {
-                Code = "404",
-                Message = "0 stubs were found for this request."
+                Code = "NoMatchingStubs",
+                Message = "No stubs were found for this request."
             };
 
             var responseJson =
@@ -253,16 +254,25 @@ namespace Stubbl.Api.Middleware.Stub
             await UpdateLogs(context, teamId, null, response404, cancellationToken);
         }
 
-        private ObjectId? ParseTeamId(HostString host)
+        private ObjectId? ParseTeamId(HttpRequest request)
         {
-            var subdomainMatch = Regex.Match(host.Value, $"^([^\\.]*)\\.{_stubblApiOptions.Host}$");
+            var subdomain = request.Headers["X-Stubbl-Subdomain"];
 
-            if (!subdomainMatch.Success)
+            if (string.IsNullOrWhiteSpace(subdomain))
             {
-                return null;
-            }
+                var subdomainMatch = Regex.Match(request.Host.Value, $"^([^\\.]*)\\.{_stubblApiOptions.Host}$");
 
-            var subdomain = subdomainMatch.Groups[1].Value;
+                if (!subdomainMatch.Success)
+                {
+                    return null;
+                }
+
+                subdomain = subdomainMatch.Groups[1].Value;
+            }
+            else
+            {
+                request.Headers.Remove(subdomain);
+            }
 
             if (!ObjectId.TryParse(subdomain, out var teamId))
             {

@@ -8,7 +8,7 @@ namespace Stubbl.Api.IntegrationTests.Filters.Version1
     {
         public IEnumerator GetEnumerator()
         {
-            yield return new object[] {HttpMethod.Post, "/user/update"};
+            yield return new object[] {HttpMethod.Post, "/user/create"};
             yield return new object[] {HttpMethod.Post, "/teams/create"};
             yield return new object[] {HttpMethod.Post, $"/teams/{ObjectId.GenerateNewId()}/update"};
             yield return new object[] {HttpMethod.Post, $"/teams/{ObjectId.GenerateNewId()}/invitations/create"};

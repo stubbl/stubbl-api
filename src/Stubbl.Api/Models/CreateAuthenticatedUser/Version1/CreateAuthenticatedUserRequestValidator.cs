@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace Stubbl.Api.Models.UpdateAuthenticatedUser.Version1
+namespace Stubbl.Api.Models.CreateAuthenticatedUser.Version1
 {
-    public class UpdateAuthenticatedUserRequestValidator : AbstractValidator<UpdateAuthenticatedUserRequest>
+    public class CreateAuthenticatedUserRequestValidator : AbstractValidator<CreateAuthenticatedUserRequest>
     {
-        public UpdateAuthenticatedUserRequestValidator()
+        public CreateAuthenticatedUserRequestValidator()
         {
             RuleFor(m => m.Name)
                 .NotEmpty()

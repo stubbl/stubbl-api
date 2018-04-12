@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Stubbl.Api.Exceptions.EmailAdressAlreadyUsed.Version1
+namespace Stubbl.Api.Exceptions.EmailAdressAlreadyTaken.Version1
 {
     public class EmailAddressAlreadyTakenException : Exception
     {

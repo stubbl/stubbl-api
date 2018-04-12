@@ -2,11 +2,11 @@ using System.Collections;
 using System.Net.Http;
 using MongoDB.Bson;
 using Stubbl.Api.Models.CloneTeamStub.Version1;
+using Stubbl.Api.Models.CreateAuthenticatedUser.Version1;
 using Stubbl.Api.Models.CreateTeam.Version1;
 using Stubbl.Api.Models.CreateTeamInvitation.Version1;
 using Stubbl.Api.Models.CreateTeamRole.Version1;
 using Stubbl.Api.Models.CreateTeamStub.Version1;
-using Stubbl.Api.Models.UpdateAuthenticatedUser.Version1;
 using Stubbl.Api.Models.UpdateTeam.Version1;
 using Stubbl.Api.Models.UpdateTeamRole.Version1;
 using Stubbl.Api.Models.UpdateTeamStub.Version1;
@@ -19,8 +19,8 @@ namespace Stubbl.Api.IntegrationTests.Filters.Version1
         {
             yield return new object[]
             {
-                HttpMethod.Post, "/user/update", new UpdateAuthenticatedUserRequest(),
-                typeof(UpdateAuthenticatedUserRequestValidator)
+                HttpMethod.Post, "/user/create", new CreateAuthenticatedUserRequest(),
+                typeof(CreateAuthenticatedUserRequestValidator)
             };
 
             yield return new object[]

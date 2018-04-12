@@ -9,7 +9,6 @@ namespace Stubbl.Api.Data.Collections.Users
     {
         public ObjectId Id { get; set; }
         public string Name { get; set; }
-
         [BsonRepresentation(BsonType.String)] public IReadOnlyCollection<Permission> Permissions { get; set; }
     }
 }
