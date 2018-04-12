@@ -9,8 +9,8 @@ namespace Stubbl.Api.Models.UpdateTeam.Version1
             RuleFor(m => m.Name)
                 .NotEmpty()
                 .WithMessage("'{PropertyName}' is required.")
-                .Matches(@"^[\w\d]*$")
-                .WithMessage(@"'{PropertyName}' must match '^[\w\d]*$'.");
+                .Matches(@"^[\w\d-]*$")
+                .WithMessage(@"'{PropertyName}' must match '^[\w\d-]*$'.");
         }
     }
 }
