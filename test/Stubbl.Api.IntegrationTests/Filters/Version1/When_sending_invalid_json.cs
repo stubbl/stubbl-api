@@ -37,9 +37,7 @@ namespace Stubbl.Api.IntegrationTests.Filters.Version1
 
         private static object GenerateExpectedResponse(object instance, Type validatorType)
         {
-            var validator = Activator.CreateInstance(validatorType) as IValidator;
-
-            if (validator == null)
+            if (!(Activator.CreateInstance(validatorType) is IValidator validator))
             {
                 return null;
             }
@@ -50,7 +48,7 @@ namespace Stubbl.Api.IntegrationTests.Filters.Version1
             return new ValidationFailedResponse
             (
                 validationErrors.GroupBy(ve => ve.PropertyName)
-                    .Select(g => g.First())
+                    .SelectMany(g => g)
                     .Select(ve => new ValidationError(ve.PropertyName, ve.ErrorMessage))
                     .ToList()
             );

@@ -8,7 +8,6 @@ namespace Stubbl.Api.Caching
         string CountTeamInvitations(ObjectId teamId);
         string CountTeamStubs(ObjectId teamId);
         string FindAuthenticatedUser(string sub);
-        string FindAuthenticatedUserInvitation(string emailAddress, ObjectId invitationId);
         string FindTeam(ObjectId teamId);
         string FindTeamInvitation(ObjectId teamId, ObjectId invitationId);
         string FindTeamLog(ObjectId teamId, ObjectId logId);

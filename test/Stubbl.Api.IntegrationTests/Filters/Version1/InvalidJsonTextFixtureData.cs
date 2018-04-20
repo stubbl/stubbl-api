@@ -47,7 +47,6 @@ namespace Stubbl.Api.IntegrationTests.Filters.Version1
                 HttpMethod.Post, $"/teams/{ObjectId.GenerateNewId()}/roles/{ObjectId.GenerateNewId()}/update",
                 new UpdateTeamRoleRequest(), typeof(UpdateTeamRoleRequestValidator)
             };
-
             yield return new object[]
             {
                 HttpMethod.Post, $"/teams/{ObjectId.GenerateNewId()}/stubs/create", new CreateTeamStubRequest(),

@@ -62,7 +62,6 @@ Task("Publish")
     .IsDependentOn("Test")
     .Does(() => 
     {
-
         StartAndReturnProcess("dotnet", new ProcessSettings
             {
                 Arguments = $@"publish src\Stubbl.Api --configuration {configuration} --no-restore /p:Version={version}"

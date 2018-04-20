@@ -81,14 +81,14 @@ namespace Stubbl.Api
                 app.UseSecureRequests();
             }
 
+            app.UseStubMatcher();
+
             if (_hostingEnvironment.IsDevelopment() || _hostingEnvironment.IsEnvironment("IntegrationTesting"))
             {
                 app.UseSubHeader();
             }
 
             app.UseAuthentication();
-
-            app.UseStub();
 
             app.UseMvc();
 
@@ -151,6 +151,7 @@ namespace Stubbl.Api
 
             services.AddOptions()
                 .Configure<CloudflareOptions>(o => _configuration.GetSection("Cloudflare").Bind(o))
+                .Configure<SmtpOptions>(o => _configuration.GetSection("Smtp").Bind(o))
                 .Configure<StubblApiOptions>(o => _configuration.GetSection("StubblApi").Bind(o));
 
             services.AddRouting(o =>

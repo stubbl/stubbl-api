@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Builder;
-using Stubbl.Api.Middleware.Stub;
+using Stubbl.Api.Middleware.StubMatcher;
 
 namespace Stubbl.Api.Middleware
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder UseStub(this IApplicationBuilder extended)
+        public static IApplicationBuilder UseStubMatcher(this IApplicationBuilder extended)
         {
-            extended.UseMiddleware<StubMiddleware>();
+            extended.UseMiddleware<StubMatcherMiddleware>();
 
             return extended;
         }

@@ -4,7 +4,7 @@ using Gunnsoft.Api;
 using Gunnsoft.Api.ExceptionHandlers;
 using Microsoft.AspNetCore.Http;
 using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
-using Stubbl.Api.Models.MemberNotAddedToTeam.Version1;
+using Stubbl.Api.Models.UserNotAddedToTeam.Version1;
 
 namespace Stubbl.Api.ExceptionHandlers
 {
@@ -12,7 +12,7 @@ namespace Stubbl.Api.ExceptionHandlers
     {
         public async Task HandleAsync(HttpContext context, UserNotAddedToTeamException exception)
         {
-            var response = new MemberNotAddedToTeamResponse();
+            var response = new UserNotAddedToTeamResponse();
 
             await context.Response.WriteJsonAsync(HttpStatusCode.Forbidden, response,
                 JsonConstants.JsonSerializerSettings);

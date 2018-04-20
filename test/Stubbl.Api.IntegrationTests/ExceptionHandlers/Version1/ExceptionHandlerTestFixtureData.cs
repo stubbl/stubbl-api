@@ -7,6 +7,7 @@ using Gunnsoft.Api.Models.AuthenticatedUserNotFound.Version1;
 using Gunnsoft.Api.Models.Error.Version1;
 using Gunnsoft.Api.Models.UnknownSub.Version1;
 using MongoDB.Bson;
+using Stubbl.Api.Exceptions.EmailAdressAlreadyTaken.Version1;
 using Stubbl.Api.Exceptions.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Exceptions.InvitationNotFound.Version1;
 using Stubbl.Api.Exceptions.LogNotFound.Version1;
@@ -24,8 +25,10 @@ using Stubbl.Api.Exceptions.RoleCannotBeUpdated.Version1;
 using Stubbl.Api.Exceptions.RoleNotFound.Version1;
 using Stubbl.Api.Exceptions.StubNotFound.Version1;
 using Stubbl.Api.Exceptions.TeamNotFound.Version1;
+using Stubbl.Api.Exceptions.UserAlreadyExists.Version1;
 using Stubbl.Api.Exceptions.UserNotAddedToTeam.Version1;
 using Stubbl.Api.Exceptions.UserNotInvitedToTeam.Version1;
+using Stubbl.Api.Models.EmailAddressAlreadyTaken.Version1;
 using Stubbl.Api.Models.InvitationAlreadyUsed.Version1;
 using Stubbl.Api.Models.InvitationNotFound.Version1;
 using Stubbl.Api.Models.LogNotFound.Version1;
@@ -37,7 +40,6 @@ using Stubbl.Api.Models.MemberCannotManageMembers.Version1;
 using Stubbl.Api.Models.MemberCannotManageRoles.Version1;
 using Stubbl.Api.Models.MemberCannotManageStubs.Version1;
 using Stubbl.Api.Models.MemberCannotManageTeams.Version1;
-using Stubbl.Api.Models.MemberNotAddedToTeam.Version1;
 using Stubbl.Api.Models.MemberNotFound.Version1;
 using Stubbl.Api.Models.MemberNotInvitedToTeam.Version1;
 using Stubbl.Api.Models.RoleAlreadyExists.Version1;
@@ -45,6 +47,8 @@ using Stubbl.Api.Models.RoleCannotBeUpdated.Version1;
 using Stubbl.Api.Models.RoleNotFound.Version1;
 using Stubbl.Api.Models.StubNotFound.Version1;
 using Stubbl.Api.Models.TeamNotFound.Version1;
+using Stubbl.Api.Models.UserAlreadyExists.Version1;
+using Stubbl.Api.Models.UserNotAddedToTeam.Version1;
 
 namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
 {
@@ -56,6 +60,11 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
             {
                 new AuthenticatedUserNotFoundException(null), HttpStatusCode.Forbidden,
                 new AuthenticatedUserNotFoundResponse()
+            };
+            yield return new object[]
+            {
+                new EmailAddressAlreadyTakenException(null), HttpStatusCode.Conflict,
+                new EmailAddressAlreadyTakenResponse()
             };
             yield return new object[] {new Exception(), HttpStatusCode.InternalServerError, new ErrorResponse()};
             yield return new object[]
@@ -115,18 +124,8 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
             };
             yield return new object[]
             {
-                new UserNotAddedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
-                HttpStatusCode.Forbidden, new MemberNotAddedToTeamResponse()
-            };
-            yield return new object[]
-            {
                 new MemberNotFoundException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
                 HttpStatusCode.Conflict, new MemberNotFoundResponse()
-            };
-            yield return new object[]
-            {
-                new UserNotInvitedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
-                HttpStatusCode.Conflict, new MemberNotInvitedToTeamResponse()
             };
             yield return new object[]
             {
@@ -154,6 +153,21 @@ namespace Stubbl.Api.IntegrationTests.ExceptionHandlers.Version1
             };
             yield return new object[]
                 {new UnknownSubException(), HttpStatusCode.Unauthorized, new UnknownSubResponse()};
+            yield return new object[]
+            {
+                new UserAlreadyExistsException(null),
+                HttpStatusCode.Conflict, new UserAlreadyExistsResponse()
+            };
+            yield return new object[]
+            {
+                new UserNotAddedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
+                HttpStatusCode.Forbidden, new UserNotAddedToTeamResponse()
+            };
+            yield return new object[]
+            {
+                new UserNotInvitedToTeamException(ObjectId.GenerateNewId(), ObjectId.GenerateNewId()),
+                HttpStatusCode.Conflict, new MemberNotInvitedToTeamResponse()
+            };
         }
     }
 }

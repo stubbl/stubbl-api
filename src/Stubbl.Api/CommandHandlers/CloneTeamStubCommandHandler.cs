@@ -83,7 +83,7 @@ namespace Stubbl.Api.CommandHandlers
                     clonedStub.Request.HttpMethod,
                     clonedStub.Request.Path,
                     clonedStub.Request.QueryStringParameters
-                        ?.Select(qcc => new QueryStringParameter(qcc.Key, qcc.Value)).ToList(),
+                        ?.Select(qsp => new QueryStringParameter(qsp.Key, qsp.Value)).ToList(),
                     clonedStub.Request.BodyTokens?.Select(bt => new BodyToken(bt.Path, bt.Type, bt.Value)).ToList(),
                     clonedStub.Request.Headers?.Select(h => new Header(h.Key, h.Value)).ToList()
                 ),

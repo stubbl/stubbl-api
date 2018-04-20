@@ -63,16 +63,16 @@ namespace Stubbl.Api.QueryHandlers
                     (
                         l.Request.Path,
                         l.Request.HttpMethod,
-                        l.Request.QueryStringParameters.Select(qcc => new QueryStringParameter(qcc.Key, qcc.Value))
+                        l.Request.QueryStringParameters.Select(qsp => new QueryStringParameter(qsp.Key, qsp.Value))
                             .ToList(),
                         l.Request.Body,
-                        l.Request.Headers.Select(qcc => new Header(qcc.Key, qcc.Value)).ToList()
+                        l.Request.Headers.Select(qsp => new Header(qsp.Key, qsp.Value)).ToList()
                     ),
                     new ResponseLog
                     (
                         l.Response.HttpStatusCode,
                         l.Response.Body,
-                        l.Response.Headers.Select(qcc => new Header(qcc.Key, qcc.Value)).ToList()
+                        l.Response.Headers.Select(qsp => new Header(qsp.Key, qsp.Value)).ToList()
                     ),
                     l.Id.CreationTime
                 ))

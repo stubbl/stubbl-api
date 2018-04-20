@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Gunnsoft.Cqs.Commands;
 using Gunnsoft.Cqs.Events;
 using MongoDB.Driver;
 using Stubbl.Api.Authentication;
@@ -16,7 +15,6 @@ namespace Stubbl.Api.EventHandlers.Notifications.Email
     {
         private readonly IAuthenticatedUserAccessor _authenticatedUserAccessor;
         private readonly IEmailSender _emailSender;
-        private readonly ICommandDispatcher _commandDispatcher;
         private readonly IMongoCollection<Invitation> _invitationsCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
 

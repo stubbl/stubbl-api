@@ -61,7 +61,7 @@ namespace Stubbl.Api.QueryHandlers
                         s.Request.QueryStringParameters == null
                             ? null
                             : s.Request.QueryStringParameters
-                                .Select(qcc => new QueryStringParameter(qcc.Key, qcc.Value)).ToList(),
+                                .Select(qsp => new QueryStringParameter(qsp.Key, qsp.Value)).ToList(),
                         s.Request.BodyTokens == null
                             ? null
                             : s.Request.BodyTokens.Select(bt => new BodyToken(bt.Path, bt.Type, bt.Value)).ToList(),

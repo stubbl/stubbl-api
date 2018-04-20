@@ -4,21 +4,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using MimeKit;
+using Stubbl.Api.Options;
 
 namespace Stubbl.Api.Services.EmailSender
 {
     public class EmailSender : IEmailSender
     {
-        private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly SmtpOptions _smtpOptions;
 
-        public EmailSender(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        public EmailSender(IHostingEnvironment hostingEnvironment, IOptions<SmtpOptions> smtpOptions)
         {
-            _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
+            _smtpOptions = smtpOptions.Value;
         }
+
         public async Task SendEmailAsync(IEmail email, CancellationToken cancellationToken)
         {
             var message = new MimeMessage();
@@ -38,11 +40,10 @@ namespace Stubbl.Api.Services.EmailSender
             {
                 using (var smtpClient = new SmtpClient())
                 {
-                    var configurationSection = _configuration.GetSection("Smtp");
-                    var host = configurationSection.GetValue<string>("Host");
-                    var port = configurationSection.GetValue<int>("Port");
-                    var username = configurationSection.GetValue<string>("Username");
-                    var password = configurationSection.GetValue<string>("Password");
+                    var host = _smtpOptions.Host;
+                    var port = _smtpOptions.Port;
+                    var username = _smtpOptions.Username;
+                    var password = _smtpOptions.Password;
 
                     await smtpClient.ConnectAsync(host, port, cancellationToken: cancellationToken);
                     smtpClient.Authenticate(username, password, cancellationToken);

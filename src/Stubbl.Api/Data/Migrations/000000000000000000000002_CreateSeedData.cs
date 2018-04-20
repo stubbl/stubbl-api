@@ -12,14 +12,14 @@ using Team = Stubbl.Api.Data.Collections.Teams.Team;
 
 namespace Stubbl.Api.Data.Migrations
 {
-    public class _000000000000000000000003_CreateSeedData : IMongoMigration
+    public class _000000000000000000000002_CreateSeedData : IMongoMigration
     {
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IMongoCollection<Stub> _stubsCollection;
         private readonly IMongoCollection<Team> _teamsCollection;
         private readonly IMongoCollection<User> _usersCollection;
 
-        public _000000000000000000000003_CreateSeedData(IHostingEnvironment hostingEnvironment,
+        public _000000000000000000000002_CreateSeedData(IHostingEnvironment hostingEnvironment,
             IMongoCollection<Stub> stubsCollection,
             IMongoCollection<Team> teamsCollection, IMongoCollection<User> usersCollection)
         {
@@ -29,7 +29,7 @@ namespace Stubbl.Api.Data.Migrations
             _usersCollection = usersCollection;
         }
 
-        public ObjectId Id => ObjectId.Parse("000000000000000000000003");
+        public ObjectId Id => ObjectId.Parse("000000000000000000000002");
         public string Name => "CreateSeedData";
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)

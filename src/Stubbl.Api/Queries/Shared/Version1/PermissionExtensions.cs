@@ -23,12 +23,12 @@ namespace Stubbl.Api.Queries.Shared.Version1
                     new Permission("Manage roles", "Create/update/delete roles.")
                 },
                 {
-                    Data.Collections.Shared.Permission.ManageTeams,
-                    new Permission("Manage teams", "Create/update/delete teams.")
-                },
-                {
                     Data.Collections.Shared.Permission.ManageStubs,
                     new Permission("Manage stubs", "Create/update/delete stubs.")
+                },
+                {
+                    Data.Collections.Shared.Permission.ManageTeams,
+                    new Permission("Manage teams", "Create/update/delete teams.")
                 }
             };
         }

@@ -13,10 +13,10 @@
 | Find Authenticated User | `GET`  | `/user/find` |
 | Create Authenticated User | `POST` | `/user/create` |
 | **Authenticated User Invitations** |
-| Count Authenticated User Invitations | `GET` | `/user/invitations/count` |
-| List Authenticated User Invitations | `GET` | `/user/invitations/list` |
-| Accept Authenticated User Invitation | `POST` | `/user/invitations/:invitationId/accept` |
-| Decline Authenticated User Invitation | `POST` | `/user/invitations/:invitationId/decline` |
+| Count Authenticated User Team Invitations | `GET` | `/user/team-invitations/count` |
+| List Authenticated User Team Invitations | `GET` | `/user/team-invitations/list` |
+| Accept Authenticated User Team Invitation | `POST` | `/user/team-invitations/:invitationId/accept` |
+| Decline Authenticated User Team Invitation | `POST` | `/user/team-invitations/:invitationId/decline` |
 | **Teams** |
 | Count Teams | `GET` | `/teams/count` |
 | List Teams | `GET` | `/teams/list` |

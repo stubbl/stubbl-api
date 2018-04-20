@@ -38,7 +38,7 @@ namespace Stubbl.Api.Controllers
                 (
                     request.Request.HttpMethod,
                     request.Request.Path,
-                    request.Request.QueryStringParameters?.Select(qcc => new QueryStringParameter(qcc.Key, qcc.Value))
+                    request.Request.QueryStringParameters?.Select(qsp => new QueryStringParameter(qsp.Key, qsp.Value))
                         .ToList(),
                     request.Request.BodyTokens?.Select(bt => new BodyToken(bt.Path, bt.Type, bt.Value)).ToList(),
                     request.Request.Headers?.Select(h => new Header(h.Key, h.Value)).ToList()

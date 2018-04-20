@@ -24,12 +24,12 @@ namespace Stubbl.Api.Events.Shared.Version1
                     Permission.ManageRoles
                 },
                 {
-                    Data.Collections.Shared.Permission.ManageTeams,
-                    Permission.ManageTeams
-                },
-                {
                     Data.Collections.Shared.Permission.ManageStubs,
                     Permission.ManageStubs
+                },
+                {
+                    Data.Collections.Shared.Permission.ManageTeams,
+                    Permission.ManageTeams
                 }
             };
         }

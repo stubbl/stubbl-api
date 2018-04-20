@@ -59,7 +59,7 @@ namespace Stubbl.Api.CommandHandlers
                     HttpMethod = command.Request.HttpMethod,
                     Path = command.Request.Path,
                     QueryStringParameters = command.Request.QueryStringParameters
-                        ?.Select(qcc => new QueryStringParameter {Key = qcc.Key, Value = qcc.Value}).ToList(),
+                        ?.Select(qsp => new QueryStringParameter {Key = qsp.Key, Value = qsp.Value}).ToList(),
                     BodyTokens = command.Request.BodyTokens
                         ?.Select(bt => new BodyToken {Path = bt.Path, Type = bt.Type, Value = bt.Value}).ToList(),
                     Headers = command.Request.Headers?.Select(h => new Header {Key = h.Key, Value = h.Value}).ToList()
@@ -85,7 +85,7 @@ namespace Stubbl.Api.CommandHandlers
                     stub.Request.HttpMethod,
                     stub.Request.Path,
                     stub.Request.QueryStringParameters
-                        ?.Select(qcc => new Events.Shared.Version1.QueryStringParameter(qcc.Key, qcc.Value)).ToList(),
+                        ?.Select(qsp => new Events.Shared.Version1.QueryStringParameter(qsp.Key, qsp.Value)).ToList(),
                     stub.Request.BodyTokens
                         ?.Select(bt => new Events.Shared.Version1.BodyToken(bt.Path, bt.Type, bt.Value)).ToList(),
                     stub.Request.Headers?.Select(h => new Events.Shared.Version1.Header(h.Key, h.Value)).ToList()
