@@ -116,6 +116,6 @@ Task("Copy")
     });
 
 Task("Default")
-    .IsDependentOn("Publish");
+    .IsDependentOn("Copy");
 
 RunTarget(target);
